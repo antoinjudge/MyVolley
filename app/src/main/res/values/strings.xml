@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">MyVolley</string>
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_show_all">showAll</string>
+    <string name="title_activity_login">login</string>
+    <string name="btnRegister">Register</string>
+    <string name="btnNewView">Search Database</string>
+    <string name="usernameTag">Username</string>
+    <string name="passwordTag">Password</string>
+    <string name="emailTag">Email</string>
+    <string name="empId">Employee ID</string>
+    <string name="btnLogin">Login </string>
+    <string name="btnLinkToLogin">Already Registered? Login</string>
+    <string name="btnLinkToRegister">Not Signed up? Click to Register </string>
+
+</resources>
