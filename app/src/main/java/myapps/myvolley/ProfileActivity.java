@@ -9,6 +9,8 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.google.android.gms.appindexing.Action;
@@ -21,6 +23,7 @@ import com.google.android.gms.common.api.GoogleApiClient;
 public class ProfileActivity extends AppCompatActivity {
     //Textview to show currently logged in user
     private TextView textView;
+    private Button changeLogJourney;
     /**
      * ATTENTION: This was auto-generated to implement the App Indexing API.
      * See https://g.co/AppIndexing/AndroidStudio for more information.
@@ -34,6 +37,17 @@ public class ProfileActivity extends AppCompatActivity {
 
         //Initializing textview
         textView = (TextView) findViewById(R.id.textView);
+        changeLogJourney =(Button) findViewById(R.id.buttonLogJourney);
+
+        changeLogJourney.setOnClickListener(new View.OnClickListener() {
+
+            public void onClick(View view) {
+                Intent i = new Intent(getApplicationContext(),
+                        JourneyActivity.class);
+                startActivity(i);
+                finish();
+            }
+        });
 
         //Fetching email from shared preferences
         SharedPreferences sharedPreferences = getSharedPreferences(LoginActivity.SHARED_PREF_NAME, LoginActivity.MODE_PRIVATE);

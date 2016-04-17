@@ -10,7 +10,31 @@
     <string name="emailTag">Email</string>
     <string name="empId">Employee ID</string>
     <string name="btnLogin">Login </string>
+    <string name="btnTimeSheet"> Submit Timesheet </string>
     <string name="btnLinkToLogin">Already Registered? Login</string>
     <string name="btnLinkToRegister">Not Signed up? Click to Register </string>
+    <string name="userHint">enter username</string>
+    <string name="passHint">enter password</string>
+    <string name="emailHint">enter email address</string>
+    <string name="idHint">enter employee id number</string>
+    <string name="logJourney">Log a Journey</string>
+    <string name="google_api_key">AIzaSyDevFA_yVFsdZaZfpq1ydk24R1DnrBLXq4</string>
+
+    <string name="feedbacktype1">Praise</string>
+    <string name="feedbacktype2">Gripe</string>
+    <string name="feedbacktype3">Suggestion</string>
+    <string name="feedbacktype4">Bug</string>
+    <string name="feedbackbutton">Log a Journey</string>
+    <string name="feedbackresponse">response</string>
+    <string name="feedbackbody">feedback</string>
+    <string name="feedbackemail">email</string>
+    <string name="feedbackname">name</string>
+    <string name="feedbacktitle">title</string>
+    <string name="title_activity_journey">JourneyActivity</string>
+    <string name="startString">Enter Start Address</string>
+    <string name="startAddressHint"></string>
+    <string name="finishAddress">Finish Address</string>
+    <string name="addressBtnTxt">Show Lat/Long</string>
+    <string name="addItem">Add Expense</string>
 
 </resources>

@@ -23,7 +23,8 @@
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/editTextUsername" />
+        android:id="@+id/editTextUsername"
+        android:hint="@string/userHint" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -33,7 +34,9 @@
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/editTextPassword" />
+        android:id="@+id/editTextPassword"
+        android:inputType="text"
+        android:hint="@string/passHint" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -44,7 +47,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:password="true"
-        android:id="@+id/editTextEmail" />
+        android:id="@+id/editTextEmail"
+        android:hint="@string/emailHint" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -55,7 +59,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:password="true"
-            android:id="@+id/editTextEmpID" />
+            android:id="@+id/editTextEmpID"
+            android:hint="@string/idHint" />
 
     <Button
         android:layout_width="match_parent"
@@ -75,7 +80,7 @@
             android:text="@string/btnLinkToLogin"
             android:textAllCaps="false"
             android:textColor="@color/white"
-            android:textSize="15dp" />
+            android:textSize="15sp" />
 
 
 

@@ -23,12 +23,10 @@ import java.util.Map;
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     private static final String REGISTER_URL = "http://www.antoinjudge.hol.es/myVolley/checkExist.php";
-
     public static final String KEY_USERNAME = "username";
     public static final String KEY_PASSWORD = "password";
     public static final String KEY_EMAIL = "email";
     public static final String KEY_EMPID = "empid";
-
     public static final String JSON_ARRAY = "result";
 
 
@@ -108,6 +106,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         requestQueue.add(stringRequest);
     }
+
     public void changeLogin(View view) {
 
         Intent intent = new Intent(MainActivity.this, LoginActivity.class);
