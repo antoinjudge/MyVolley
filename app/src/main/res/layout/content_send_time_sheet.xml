@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ScrollView
+    android:layout_width="fill_parent"
+    android:windowActionBar="false"
+    android:layout_height="fill_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/bg_login"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:padding="10dp"
+    tools:context="myapps.myvolley.SendTimeSheet"
+    tools:showIn="@layout/activity_send_time_sheet"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:orientation="vertical"
+        android:layout_height="fill_parent">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:gravity="center"
+            android:text="@string/app_name"
+            android:id="@+id/textView2"
+            android:textSize="30dp"
+            android:textColor="#ffffffff" />
+
+        <TextView
+            android:id="@+id/textViewBasic"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:textSize="18sp"
+            android:text="Basic Hours" />
+
+        <EditText
+            android:id="@+id/editTextBasic"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginTop="5dp"
+            android:inputType="text"
+            android:textSize="17sp"
+            android:ems="10" >
+
+            <requestFocus />
+        </EditText>
+
+        <TextView
+            android:id="@+id/textViewOverTime"
+            android:layout_gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="18sp"
+            android:text="Overtime Hours" />
+
+        <EditText
+            android:id="@+id/editTextOverTime"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginTop="5dp"
+            android:inputType="text"
+            android:textSize="17sp"
+            android:ems="10" >
+        </EditText>
+
+        <TextView
+            android:id="@+id/textViewMeals"
+            android:layout_gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="18sp"
+            android:text="Meal Allowance" />
+
+        <EditText
+            android:id="@+id/editTextMeals"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginTop="5dp"
+            android:inputType="text"
+            android:textSize="17sp"
+            android:ems="10" >
+        </EditText>
+
+        <TextView
+            android:id="@+id/textViewMileage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:textSize="18sp"
+            android:text="Mileage" />
+
+        <EditText
+            android:id="@+id/editTextMileage"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginTop="5dp"
+            android:inputType="textPassword"
+            android:textSize="17sp"
+            android:ems="10" >
+        </EditText>
+
+        <TextView
+            android:id="@+id/textViewEmpID"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:textSize="18sp"
+            android:text="Employee ID" />
+
+        <EditText
+            android:id="@+id/editTextEmpID"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginTop="5dp"
+            android:inputType="textPassword"
+            android:textSize="17sp"
+            android:ems="10" >
+        </EditText>
+
+        <Button
+            android:id="@+id/buttonSubmit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="40dp"
+            android:text="Submit" />
+
+
+
+
+    </LinearLayout>
+
+</ScrollView>
