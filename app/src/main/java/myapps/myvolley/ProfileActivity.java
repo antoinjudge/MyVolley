@@ -24,6 +24,7 @@ public class ProfileActivity extends AppCompatActivity {
     //Textview to show currently logged in user
     private TextView textView;
     private Button changeLogJourney;
+    private Button changeAddItem;
     /**
      * ATTENTION: This was auto-generated to implement the App Indexing API.
      * See https://g.co/AppIndexing/AndroidStudio for more information.
@@ -38,6 +39,8 @@ public class ProfileActivity extends AppCompatActivity {
         //Initializing textview
         textView = (TextView) findViewById(R.id.textView);
         changeLogJourney =(Button) findViewById(R.id.buttonLogJourney);
+        changeAddItem=(Button) findViewById(R.id.buttonAddItem);
+
 
         changeLogJourney.setOnClickListener(new View.OnClickListener() {
 
@@ -48,6 +51,19 @@ public class ProfileActivity extends AppCompatActivity {
                 finish();
             }
         });
+        changeAddItem.setOnClickListener(new View.OnClickListener() {
+
+            public void onClick(View view) {
+                Intent i = new Intent(getApplicationContext(),
+                        TimeSheet.class);
+                startActivity(i);
+                finish();
+            }
+        });
+
+
+
+
 
         //Fetching email from shared preferences
         SharedPreferences sharedPreferences = getSharedPreferences(LoginActivity.SHARED_PREF_NAME, LoginActivity.MODE_PRIVATE);
