@@ -1,5 +1,6 @@
 package myapps.myvolley;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -22,17 +23,20 @@ import java.util.Map;
 
 public class SendTimeSheet extends AppCompatActivity implements View.OnClickListener {
     private static final String REGISTER_URL = "http://www.antoinjudge.hol.es/test/addTpDb.php";
+    private static final String UPDATE_URL = "http://www.antoinjudge.hol.es/test/updateTS.php";
     public static final String KEY_BASIC = "basic";
     public static final String KEY_OVERTIME = "overtime";
     public static final String KEY_MEAL = "meals";
     public static final String KEY_EMPID = "empid";
     public static final String KEY_MILEAGE = "mileage";
+    public static final String KEY_PWORD = "password";
 
     private EditText editTextBasic;
     private EditText editTextOver;
     private EditText editTextMeal;
     private EditText editTextEmpid;
     private EditText editTextMileage;
+    private Button buttonUpdate;
     private Button buttonSubmit;
 
     @Override
@@ -49,6 +53,9 @@ public class SendTimeSheet extends AppCompatActivity implements View.OnClickList
         editTextMileage = (EditText) findViewById(R.id.editTextMileage);
         buttonSubmit = (Button) findViewById(R.id.buttonSubmit);
         buttonSubmit.setOnClickListener(this);
+        buttonUpdate= (Button ) findViewById(R.id.buttonUpdate);
+        buttonUpdate.setOnClickListener(this);
+
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -60,18 +67,31 @@ public class SendTimeSheet extends AppCompatActivity implements View.OnClickList
         });
     }
 
-    @Override
     public void onClick(View v) {
+        if(v == buttonSubmit){
 
+            sendTimesheet();
+
+        }
+        else if(v == buttonUpdate){
+            updateTimesheet();
+        }
     }
 
 
     private void sendTimesheet() {
+        //Fetching email from shared preferences
+        SharedPreferences sharedPreferences = getSharedPreferences(LoginActivity.SHARED_PREF_NAME, LoginActivity.MODE_PRIVATE);
+        String email = sharedPreferences.getString(LoginActivity.EMAIL_SHARED_PREF, "Not Available");
+        final String pword =sharedPreferences.getString(LoginActivity.PASSWORD_SHARED_PREF,"Not Available");
+
+
         final String basic = editTextBasic.getText().toString().trim();
         final String overtime = editTextOver.getText().toString().trim();
         final String meals = editTextMeal.getText().toString().trim();
         final String empid = editTextEmpid.getText().toString().trim();
         final String mileage = editTextMileage.getText().toString().trim();
+        final String password = pword.toString().trim();
 
         StringRequest stringRequest = new StringRequest(Request.Method.POST, REGISTER_URL,
                 new Response.Listener<String>() {
@@ -92,10 +112,12 @@ public class SendTimeSheet extends AppCompatActivity implements View.OnClickList
             protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<String, String>();
                 params.put(KEY_EMPID, empid);
+                params.put(KEY_PWORD, password);
                 params.put(KEY_BASIC, basic);
                 params.put(KEY_OVERTIME, overtime);
                 params.put(KEY_MEAL, meals);
                 params.put(KEY_MILEAGE, mileage);
+
                 return params;
             }
 
@@ -105,4 +127,56 @@ public class SendTimeSheet extends AppCompatActivity implements View.OnClickList
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         requestQueue.add(stringRequest);
     }
+
+    private void updateTimesheet(){
+        //Fetching email from shared preferences
+        SharedPreferences sharedPreferences = getSharedPreferences(LoginActivity.SHARED_PREF_NAME, LoginActivity.MODE_PRIVATE);
+        String email = sharedPreferences.getString(LoginActivity.EMAIL_SHARED_PREF, "Not Available");
+        final String pword =sharedPreferences.getString(LoginActivity.PASSWORD_SHARED_PREF,"Not Available");
+
+
+        final String basic = editTextBasic.getText().toString().trim();
+        final String overtime = editTextOver.getText().toString().trim();
+        final String meals = editTextMeal.getText().toString().trim();
+        final String empid = editTextEmpid.getText().toString().trim();
+        final String mileage = editTextMileage.getText().toString().trim();
+        final String password = pword.toString().trim();
+
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, UPDATE_URL,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        Toast.makeText(SendTimeSheet.this, response, Toast.LENGTH_LONG).show();
+                    }
+
+
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Toast.makeText(SendTimeSheet.this, error.toString(), Toast.LENGTH_LONG).show();
+                    }
+                }) {
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put(KEY_EMPID, empid);
+                params.put(KEY_PWORD, password);
+                params.put(KEY_BASIC, basic);
+                params.put(KEY_OVERTIME, overtime);
+                params.put(KEY_MEAL, meals);
+                params.put(KEY_MILEAGE, mileage);
+
+                return params;
+            }
+
+
+        };
+
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        requestQueue.add(stringRequest);
+
+    }
+
+
 }

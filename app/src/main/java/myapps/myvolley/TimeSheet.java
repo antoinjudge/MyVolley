@@ -2,6 +2,7 @@ package myapps.myvolley;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -48,6 +49,14 @@ public class TimeSheet extends AppCompatActivity implements View.OnClickListener
 
         btnAdd.setOnClickListener(this);
         btnView.setOnClickListener(this);
+
+
+        //Fetching email from shared preferences
+        SharedPreferences sharedPreferences = getSharedPreferences(LoginActivity.SHARED_PREF_NAME, LoginActivity.MODE_PRIVATE);
+        String email = sharedPreferences.getString(LoginActivity.EMAIL_SHARED_PREF, "Not Available");
+        String pword =sharedPreferences.getString(LoginActivity.PASSWORD_SHARED_PREF,"Not Available");
+
+
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {

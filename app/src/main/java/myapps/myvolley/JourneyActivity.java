@@ -1,5 +1,6 @@
 package myapps.myvolley;
 
+import android.content.Intent;
 import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
@@ -33,6 +34,7 @@ import java.net.URL;
 public class JourneyActivity extends AppCompatActivity {
 
     Button addressButton;
+    Button changeTS;
     TextView addressTV;
     TextView latLongTV;
     TextView endLatLongTV;
@@ -65,8 +67,21 @@ public class JourneyActivity extends AppCompatActivity {
         latLongTV = (TextView) findViewById(R.id.latLongTV);
         endLatLongTV =(TextView) findViewById(R.id.endLatLongTV);
         addressButton = (Button) findViewById(R.id.addressButton);
+        changeTS =(Button) findViewById(R.id.changeSubmit);
         requestQueue = Volley.newRequestQueue(this);
         output = (TextView) findViewById(R.id.latLongTV);
+
+        changeTS.setOnClickListener(new View.OnClickListener() {
+
+            public void onClick(View view) {
+                Intent i = new Intent(getApplicationContext(),
+                        SendTimeSheet.class);
+                startActivity(i);
+                finish();
+            }
+        });
+
+
 
 
 
@@ -157,6 +172,8 @@ public class JourneyActivity extends AppCompatActivity {
         });
 
 
+
+
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -165,6 +182,8 @@ public class JourneyActivity extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
+
+
 
 
 

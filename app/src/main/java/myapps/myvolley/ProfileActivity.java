@@ -68,9 +68,10 @@ public class ProfileActivity extends AppCompatActivity {
         //Fetching email from shared preferences
         SharedPreferences sharedPreferences = getSharedPreferences(LoginActivity.SHARED_PREF_NAME, LoginActivity.MODE_PRIVATE);
         String email = sharedPreferences.getString(LoginActivity.EMAIL_SHARED_PREF, "Not Available");
+        String pword =sharedPreferences.getString(LoginActivity.PASSWORD_SHARED_PREF,"Not Available");
 
         //Showing the current logged in email to textview
-        textView.setText(email + " Is Logged in "  );
+        textView.setText( pword+ " Is Logged in " + email );
         // ATTENTION: This was auto-generated to implement the App Indexing API.
         // See https://g.co/AppIndexing/AndroidStudio for more information.
         client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();

@@ -55,6 +55,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     //This would be used to store the email of current logged in user
     public static final String EMAIL_SHARED_PREF = "email";
+    public static final String PASSWORD_SHARED_PREF = "password";
 
     //We will use this to store the boolean in sharedpreference to track user is loggedin or not
     public static final String LOGGEDIN_SHARED_PREF = "loggedin";
@@ -124,6 +125,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                             //Adding values to editor
                             editor.putBoolean(LOGGEDIN_SHARED_PREF, true);
                             editor.putString(EMAIL_SHARED_PREF, email);
+                            editor.putString(PASSWORD_SHARED_PREF, password);
 
                             //Saving values to editor
                             editor.commit();
