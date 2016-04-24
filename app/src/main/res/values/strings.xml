@@ -34,7 +34,7 @@
     <string name="startString">Enter Start Address</string>
     <string name="startAddressHint"></string>
     <string name="finishAddress">Finish Address</string>
-    <string name="addressBtnTxt">Show Lat/Long</string>
+    <string name="addressBtnTxt">Get Distance</string>
     <string name="addItem">Add Expense</string>
     <string name="title_activity_time_sheet">TimeSheet</string>
     <string name="title_activity_view_time_sheet">ViewTimeSheet</string>

@@ -17,6 +17,9 @@ import com.google.android.gms.appindexing.Action;
 import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.common.api.GoogleApiClient;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 /**
  * Created by Antoin on 25/01/2016.
  */
@@ -65,13 +68,17 @@ public class ProfileActivity extends AppCompatActivity {
 
 
 
-        //Fetching email from shared preferences
+        //Fetching employee id from shared preferences
         SharedPreferences sharedPreferences = getSharedPreferences(LoginActivity.SHARED_PREF_NAME, LoginActivity.MODE_PRIVATE);
-        String email = sharedPreferences.getString(LoginActivity.EMAIL_SHARED_PREF, "Not Available");
+        String empid = sharedPreferences.getString(LoginActivity.EMPID_SHARED_PREF, "Not Available");
         String pword =sharedPreferences.getString(LoginActivity.PASSWORD_SHARED_PREF,"Not Available");
 
+        SimpleDateFormat currentDate = new SimpleDateFormat("dd/MM/yyyy");
+        Date todayDate = new Date();
+        String thisDate = currentDate.format(todayDate);
+
         //Showing the current logged in email to textview
-        textView.setText( pword+ " Is Logged in " + email );
+        textView.setText( pword+ " Is Logged in " + empid + " " + todayDate );
         // ATTENTION: This was auto-generated to implement the App Indexing API.
         // See https://g.co/AppIndexing/AndroidStudio for more information.
         client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
@@ -95,8 +102,8 @@ public class ProfileActivity extends AppCompatActivity {
                         //Puting the value false for loggedin
                         editor.putBoolean(LoginActivity.LOGGEDIN_SHARED_PREF, false);
 
-                        //Putting blank value to email
-                        editor.putString(LoginActivity.EMAIL_SHARED_PREF, "");
+                        //Putting blank value to emp;oyeeId
+                        editor.putString(LoginActivity.EMPID_SHARED_PREF, "");
 
                         //Saving the sharedpreferences
                         editor.commit();

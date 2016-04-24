@@ -4,7 +4,7 @@
     android:windowActionBar="false"
     android:layout_height="fill_parent"
     xmlns:tools="http://schemas.android.com/tools"
-    android:background="@color/bg_login"
+    android:background="@drawable/grad"
     android:gravity="center"
     android:orientation="vertical"
     android:padding="10dp"

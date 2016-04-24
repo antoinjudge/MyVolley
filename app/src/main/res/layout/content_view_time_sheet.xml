@@ -16,11 +16,7 @@
         android:text="ID"
         android:id="@+id/textViewId" />
 
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:enabled="false"
-        android:id="@+id/editTextId" />
+
 
     <TextView
         android:layout_width="wrap_content"
@@ -28,10 +24,7 @@
         android:text="Basic"
         android:id="@+id/textViewBasic" />
 
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/editTextBasic" />
+
 
     <TextView
         android:layout_width="wrap_content"
@@ -39,30 +32,32 @@
         android:text="Overtime"
         android:id="@+id/textViewOverTime" />
 
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/editTextOverTime" />
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Meals"
         android:id="@+id/textViewMeals" />
 
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/editTextMeals" />
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Mileage"
         android:id="@+id/textViewMileage" />
 
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Mileage"
+        android:id="@+id/textViewDate" />
+
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/editTextMileage" />
+
 
     <LinearLayout
         android:orientation="horizontal"

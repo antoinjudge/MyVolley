@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:background="@color/bg_login"
+    android:background="@drawable/grad"
     android:gravity="center"
     android:orientation="vertical"
     tools:context="myapps.myvolley.JourneyActivity"
@@ -41,6 +41,12 @@
         android:layout_height="wrap_content"
         android:text="@string/addressBtnTxt"
         android:id="@+id/addressButton"
+        android:layout_marginTop="50dp" />
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Submit Timesheet"
+        android:id="@+id/changeSubmit"
         android:layout_marginTop="50dp" />
 
     <TextView

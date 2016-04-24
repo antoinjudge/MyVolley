@@ -141,18 +141,22 @@ public class JourneyActivity extends AppCompatActivity {
 
                                             JSONObject jObjt = new JSONObject(theObj);
                                             String finalDist = jObjt.getString("value");
+                                            Integer myDist = Integer.valueOf(finalDist);
+                                            int distKm = (myDist / 1000);
 
 
                                             // int id = Integer.parseInt(jsonObject.optString("id").toString());
                                             //String title = jsonObject.getString();
                                             //String url = jsonObject.getString("URL");
 
-                                            data += finalDist + "\n";
+                                            data += distKm + "\n";
                                         }
                                     }
 
 
-                                    output.setText("final distance is: "+ data);
+
+
+                                    output.setText("Distance  : " + data + " Kilometers");
                                 }catch(JSONException e){e.printStackTrace();}
                             }
                         },

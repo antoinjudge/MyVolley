@@ -54,7 +54,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     public static final String SHARED_PREF_NAME = "myloginapp";
 
     //This would be used to store the email of current logged in user
-    public static final String EMAIL_SHARED_PREF = "email";
+    public static final String EMPID_SHARED_PREF = "empid";
     public static final String PASSWORD_SHARED_PREF = "password";
 
     //We will use this to store the boolean in sharedpreference to track user is loggedin or not
@@ -106,7 +106,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     private void login(){
         //Getting values from edit texts
-        final String email = editTextUsername.getText().toString().trim();
+        final String empid = editTextUsername.getText().toString().trim();
         final String password = editTextPassword.getText().toString().trim();
 
         //Creating a string request
@@ -124,7 +124,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
                             //Adding values to editor
                             editor.putBoolean(LOGGEDIN_SHARED_PREF, true);
-                            editor.putString(EMAIL_SHARED_PREF, email);
+                            editor.putString(EMPID_SHARED_PREF, empid);
                             editor.putString(PASSWORD_SHARED_PREF, password);
 
                             //Saving values to editor
@@ -150,7 +150,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String,String> params = new HashMap<>();
                 //Adding parameters to request
-                params.put(Config.KEY_EMAIL, email);
+                params.put(Config.KEY_EMPID, empid);
                 params.put(Config.KEY_PASSWORD, password);
 
                 //returning parameter

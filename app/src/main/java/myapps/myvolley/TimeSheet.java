@@ -14,6 +14,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 public class TimeSheet extends AppCompatActivity implements View.OnClickListener {
 
     private SQLiteDatabase db;
@@ -53,7 +56,7 @@ public class TimeSheet extends AppCompatActivity implements View.OnClickListener
 
         //Fetching email from shared preferences
         SharedPreferences sharedPreferences = getSharedPreferences(LoginActivity.SHARED_PREF_NAME, LoginActivity.MODE_PRIVATE);
-        String email = sharedPreferences.getString(LoginActivity.EMAIL_SHARED_PREF, "Not Available");
+       // String email = sharedPreferences.getString(LoginActivity.EMAIL_SHARED_PREF, "Not Available");
         String pword =sharedPreferences.getString(LoginActivity.PASSWORD_SHARED_PREF,"Not Available");
 
 
@@ -69,25 +72,33 @@ public class TimeSheet extends AppCompatActivity implements View.OnClickListener
     }
 
     protected void openDatabase() {
-        db = openOrCreateDatabase("TimesheetDB", Context.MODE_PRIVATE, null);
+        db = openOrCreateDatabase("TimesheetDB2", Context.MODE_PRIVATE, null);
     }
 
     protected void createDatabase(){
-        db=openOrCreateDatabase("TimesheetDB", Context.MODE_PRIVATE, null);
-        db.execSQL("CREATE TABLE IF NOT EXISTS timesheet(empid INTEGER PRIMARY KEY  NOT NULL, basic INTEGER,overtime INTEGER, meals INTEGER, mileage INTEGER);");
+        db=openOrCreateDatabase("TimesheetDB2", Context.MODE_PRIVATE, null);
+        db.execSQL("CREATE TABLE IF NOT EXISTS times(empid INTEGER PRIMARY KEY  NOT NULL, basic INTEGER,overtime INTEGER, meals INTEGER, mileage INTEGER, date TEXT);");
     }
 
+
     protected void insertIntoDB(){
-        String empID = editTOT.getText().toString().trim();
+        SharedPreferences sharedPreferences = getSharedPreferences(LoginActivity.SHARED_PREF_NAME, LoginActivity.MODE_PRIVATE);
+        String myempid = sharedPreferences.getString(LoginActivity.EMPID_SHARED_PREF, "Not Available");
+        SimpleDateFormat currentDate = new SimpleDateFormat("dd/MM/yyyy");
+        Date todayDate = new Date();
+        String thisDate = currentDate.format(todayDate);
+
+        String empID = myempid.toString().trim();
         String basic = editTBasic.getText().toString().trim();
         String overtime = editTOT.getText().toString().trim();
         String meals = editTMeals.getText().toString().trim();
         String mileage = editTMiles.getText().toString().trim();
+        String date = thisDate.toUpperCase().trim();
         if( basic.equals("") || overtime.equals("") || meals.equals("") || mileage.equals("") || empID.equals("")   ){
             Toast.makeText(getApplicationContext(), "Please fill all fields", Toast.LENGTH_LONG).show();
             return;
         }
-        String query = "INSERT INTO timesheet (empID,basic,overtime, meals, mileage) VALUES('"+empID+"', '"+basic+"', '"+overtime+"', '"+meals+"', '"+mileage+"'  );";
+        String query = "INSERT INTO times (empID,basic,overtime, meals, mileage, date) VALUES('"+empID+"', '"+basic+"', '"+overtime+"', '"+meals+"', '"+mileage+"', '"+date+"' );";
         db.execSQL(query);
         Toast.makeText(getApplicationContext(),"Saved Successfully", Toast.LENGTH_LONG).show();
     }

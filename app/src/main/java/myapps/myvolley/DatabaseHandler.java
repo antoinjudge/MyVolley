@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,21 +16,21 @@ import java.util.List;
 public class DatabaseHandler extends SQLiteOpenHelper {
     // All Static variables
     // Database Version
-    private static final int DATABASE_VERSION = 1;
+    private static final int DATABASE_VERSION = 9;
 
     // Database Name
-    private static final String DATABASE_NAME = "MyTimesheet";
+    private static final String DATABASE_NAME = "MyTimesheets";
 
     // Timesheet table name
-    private static final String TABLE_TIMESHEET = "timesheet";
+    private static final String TABLE_TIMESHEET = "times";
 
     // Contacts Table Columns names
-    private static final String KEY_DATE = "Date";
     private static final String KEY_EMPID = "id";
     private static final String KEY_BASIC = "Basic";
     private static final String KEY_OVERTIME = "Overtime";
     private static final String KEY_MEALS = "Meals";
     private static final String KEY_MILEAGE = "Mileage";
+    private static final String KEY_DATE = "Date";
 
     public DatabaseHandler(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -40,7 +41,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         String CREATE_TIMESHEET_TABLE = "CREATE TABLE " + TABLE_TIMESHEET + "("
                 + KEY_EMPID + " INTEGER PRIMARY KEY," + KEY_BASIC + " TEXT,"
-                + KEY_OVERTIME + " TEXT" + KEY_DATE +"DATETIME" + ")";
+                + KEY_OVERTIME + " TEXT" +  KEY_MEALS + "TEXT" + KEY_MILEAGE +"TEXT" + KEY_DATE +"TEXT" + ")";
         db.execSQL(CREATE_TIMESHEET_TABLE);
     }
 
@@ -52,6 +53,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
         // Create tables again
         onCreate(db);
+
     }
 
     /**
@@ -64,7 +66,11 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
         ContentValues values = new ContentValues();
         values.put(KEY_BASIC, weeklyTS.getBasic()); // Contact Name
-        values.put(KEY_OVERTIME, weeklyTS.getOvertime()); // Contact Phone
+        values.put(KEY_OVERTIME, weeklyTS.getOvertime()); // Contact Overtime
+        values.put(KEY_MEALS, weeklyTS.getMeals());
+        values.put(KEY_MILEAGE, weeklyTS.getMileage());
+        values.put(KEY_EMPID, weeklyTS.getID());
+        values.put (KEY_DATE,weeklyTS.getDate());
 
 
         // Inserting Row
@@ -77,13 +83,13 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getReadableDatabase();
 
         Cursor cursor = db.query(TABLE_TIMESHEET, new String[] { KEY_EMPID,
-                        KEY_BASIC, KEY_OVERTIME, KEY_DATE }, KEY_EMPID + "=?",
+                        KEY_BASIC, KEY_OVERTIME, KEY_DATE , KEY_MEALS, KEY_MILEAGE, KEY_DATE}, KEY_EMPID + "=?",
                 new String[] { String.valueOf(id) }, null, null, null, null);
         if (cursor != null)
             cursor.moveToFirst();
 
         WeeklyTS weeklyTS = new WeeklyTS(cursor.getInt(0),
-                cursor.getInt(1), cursor.getInt(2));
+                cursor.getInt(1), cursor.getInt(2), cursor.getInt(3), cursor.getInt(4),cursor.getString(5));
         // return contact
         return weeklyTS;
     }

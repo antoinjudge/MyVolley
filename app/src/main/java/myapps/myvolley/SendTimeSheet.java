@@ -82,16 +82,17 @@ public class SendTimeSheet extends AppCompatActivity implements View.OnClickList
     private void sendTimesheet() {
         //Fetching email from shared preferences
         SharedPreferences sharedPreferences = getSharedPreferences(LoginActivity.SHARED_PREF_NAME, LoginActivity.MODE_PRIVATE);
-        String email = sharedPreferences.getString(LoginActivity.EMAIL_SHARED_PREF, "Not Available");
+        String email = sharedPreferences.getString(LoginActivity.EMPID_SHARED_PREF, "Not Available");
         final String pword =sharedPreferences.getString(LoginActivity.PASSWORD_SHARED_PREF,"Not Available");
-
+        final String myempid =sharedPreferences.getString(LoginActivity.EMPID_SHARED_PREF,"Not Available");
 
         final String basic = editTextBasic.getText().toString().trim();
         final String overtime = editTextOver.getText().toString().trim();
         final String meals = editTextMeal.getText().toString().trim();
-        final String empid = editTextEmpid.getText().toString().trim();
+       // final String empid = editTextEmpid.getText().toString().trim();
         final String mileage = editTextMileage.getText().toString().trim();
         final String password = pword.toString().trim();
+        final String empid = myempid.toString().trim();
 
         StringRequest stringRequest = new StringRequest(Request.Method.POST, REGISTER_URL,
                 new Response.Listener<String>() {
@@ -131,7 +132,7 @@ public class SendTimeSheet extends AppCompatActivity implements View.OnClickList
     private void updateTimesheet(){
         //Fetching email from shared preferences
         SharedPreferences sharedPreferences = getSharedPreferences(LoginActivity.SHARED_PREF_NAME, LoginActivity.MODE_PRIVATE);
-        String email = sharedPreferences.getString(LoginActivity.EMAIL_SHARED_PREF, "Not Available");
+        //String email = sharedPreferences.getString(LoginActivity.EMAIL_SHARED_PREF, "Not Available");
         final String pword =sharedPreferences.getString(LoginActivity.PASSWORD_SHARED_PREF,"Not Available");
 
 

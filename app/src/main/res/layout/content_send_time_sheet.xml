@@ -5,7 +5,7 @@
     android:windowActionBar="false"
     android:layout_height="fill_parent"
     xmlns:tools="http://schemas.android.com/tools"
-    android:background="@color/bg_login"
+    android:background="@drawable/grad"
     android:gravity="center"
     android:orientation="vertical"
     android:padding="10dp"
@@ -139,6 +139,15 @@
             android:layout_centerHorizontal="true"
             android:layout_marginTop="40dp"
             android:text="Submit" />
+
+        <Button
+            android:id="@+id/buttonUpdate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="40dp"
+            android:text="update" />
 
 
 

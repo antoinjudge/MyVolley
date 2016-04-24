@@ -8,6 +8,8 @@ public class WeeklyTS {
     int id;
     int basic;
     int overtime;
+    int meals;
+    int mileage;
     String date;
 
     // Empty constructor
@@ -15,19 +17,16 @@ public class WeeklyTS {
 
     }
     // constructor
-    public WeeklyTS(int id, int basic, int overtime, String date){
+    public WeeklyTS(int id, int basic, int overtime,int meals, int mileage, String date){
         this.id = id;
         this.basic = basic;
         this.overtime = overtime;
+        this.meals= meals;
+        this.mileage = mileage;
         this.date = date;
     }
 
-    // constructor
-    public WeeklyTS(int id, int basic, int overtime){
-        this.id = id;
-        this.basic = basic;
-        this.overtime= overtime;
-    }
+
     // getting ID
     public int getID(){
         return this.id;
@@ -39,26 +38,45 @@ public class WeeklyTS {
     }
 
     //setting dte
-    public void setDate(String date) {this.date= date;};
 
-    // getting name
+    public String getDate() {
+        return this.date;
+    }
+
+    public void setDate(String date) {
+        this.date= date;
+    };
+
+
+    // setting name
     public int getBasic(){
         return this.basic;
     }
-
-    // setting name
     public void setBasic(int basic){
         this.basic = basic;
     }
 
-    // getting phone number
+    // getting overtime
     public int getOvertime(){
         return this.overtime;
     }
 
-    // setting phone number
     public void setOvertime(int overtime){
         this.overtime = overtime;
+    }
+    //get meals
+    public int getMeals(){
+      return this.meals;
+    }
+    public void  setMeals(int meals){
+        this.meals= meals;
+    }
+    //get mileage
+    public int getMileage(){
+        return  this.mileage;
+    }
+    public  void setMileage(int mileage){
+        this.mileage= mileage;
     }
 }
 
