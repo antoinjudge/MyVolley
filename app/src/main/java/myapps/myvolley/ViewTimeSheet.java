@@ -76,7 +76,7 @@ public class ViewTimeSheet extends AppCompatActivity implements View.OnClickList
 
 
     protected void openDatabase() {
-        db = openOrCreateDatabase("TimesheetDB2", Context.MODE_PRIVATE, null);
+        db = openOrCreateDatabase("DailyTS", Context.MODE_PRIVATE, null);
     }
 
     protected void showRecords() {

@@ -20,7 +20,9 @@
             android:layout_height="wrap_content"
             android:background="@drawable/mobiletimesheet"/>
 
-    <TextView
+
+
+        <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/usernameTag" />
