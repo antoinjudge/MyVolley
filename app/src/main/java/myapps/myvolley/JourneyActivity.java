@@ -1,6 +1,9 @@
 package myapps.myvolley;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.database.sqlite.SQLiteDatabase;
 import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
@@ -16,6 +19,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.location.Geocoder;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -29,16 +33,24 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.net.URL;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 
 public class JourneyActivity extends AppCompatActivity {
 
     Button addressButton;
     Button changeTS;
+    Button addButton;
     TextView addressTV;
     TextView latLongTV;
     TextView endLatLongTV;
     TextView output ;
+    TextView distanceTV;
+
+    private static final String SELECT_SQL = "SELECT * FROM times  ";
+    private SQLiteDatabase db;
+
     String journeyStart ="https://maps.googleapis.com/maps/api/distancematrix/json?origins=";
     String mid ="&destinations=";
     String journeyEnd ="&key=AIzaSyDDW-ZGLBHF8DybvfYmvXPY20l-4CIw-e4";
@@ -56,6 +68,8 @@ public class JourneyActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_journey);
+        openDatabase();
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -65,9 +79,13 @@ public class JourneyActivity extends AppCompatActivity {
 
         addressTV = (TextView) findViewById(R.id.startAddressTV);
         latLongTV = (TextView) findViewById(R.id.latLongTV);
-        endLatLongTV =(TextView) findViewById(R.id.endLatLongTV);
+
         addressButton = (Button) findViewById(R.id.addressButton);
         changeTS =(Button) findViewById(R.id.changeSubmit);
+        addButton =(Button) findViewById(R.id.addtoDatabase);
+        addButton.setVisibility(View.INVISIBLE);
+        distanceTV =(TextView) findViewById(R.id.distanceTV);
+        distanceTV.setVisibility(View.INVISIBLE);
         requestQueue = Volley.newRequestQueue(this);
         output = (TextView) findViewById(R.id.latLongTV);
 
@@ -88,6 +106,7 @@ public class JourneyActivity extends AppCompatActivity {
         addressButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View arg0) {
+                output = (TextView) findViewById(R.id.latLongTV);
                 output.setText("");
                 EditText editText = (EditText) findViewById(R.id.startAddressET);
                 startAddress = editText.getText().toString();
@@ -119,9 +138,6 @@ public class JourneyActivity extends AppCompatActivity {
                         .appendQueryParameter("key", "AIzaSyDDW-ZGLBHF8DybvfYmvXPY20l-4CIw-e4");
                 String myUrl = builder.build().toString();
 
-                //String route = builder.build().toString();
-
-
                 JsonObjectRequest jor = new JsonObjectRequest(Request.Method.GET, myUrl, null,
                         new Response.Listener<JSONObject>() {
                             @Override
@@ -144,19 +160,15 @@ public class JourneyActivity extends AppCompatActivity {
                                             Integer myDist = Integer.valueOf(finalDist);
                                             int distKm = (myDist / 1000);
 
+                                            data = distKm + "\n";
+                                            addButton.setVisibility(View.VISIBLE);
+                                            distanceTV.setVisibility(View.VISIBLE);
 
-                                            // int id = Integer.parseInt(jsonObject.optString("id").toString());
-                                            //String title = jsonObject.getString();
-                                            //String url = jsonObject.getString("URL");
-
-                                            data += distKm + "\n";
                                         }
                                     }
 
+                                    output.setText( data );
 
-
-
-                                    output.setText("Distance  : " + data + " Kilometers");
                                 }catch(JSONException e){e.printStackTrace();}
                             }
                         },
@@ -173,6 +185,17 @@ public class JourneyActivity extends AppCompatActivity {
 
             }
 
+
+
+        });
+
+
+        addButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                insertIntoDB();
+
+            }
         });
 
 
@@ -195,28 +218,35 @@ public class JourneyActivity extends AppCompatActivity {
 
 
     }
-
-    private class getDistance  {
-
-        private String myDistance(LatLng my_latlong,LatLng frnd_latlong){
-          Location l1=new Location("One");
-           l1.setLatitude(my_latlong.latitude);l1.setLongitude(my_latlong.longitude);
-
-            Location l2=new Location("Two");
-            l2.setLatitude(frnd_latlong.latitude);
-            l2.setLongitude(frnd_latlong.longitude);
-
-            float distance=l1.distanceTo(l2);
-            String dist=distance+" M";
-
-            if(distance>1000.0f)
-            {
-                distance=distance/1000.0f;
-                dist=distance+" KM";
-            }
-            return dist;
-        }
+    protected void openDatabase() {
+        db = openOrCreateDatabase("MyDailyTS", Context.MODE_PRIVATE, null);
     }
+    protected void insertIntoDB(){
+        SharedPreferences sharedPreferences = getSharedPreferences(LoginActivity.SHARED_PREF_NAME, LoginActivity.MODE_PRIVATE);
+        String myempid = sharedPreferences.getString(LoginActivity.EMPID_SHARED_PREF, "Not Available");
+        SimpleDateFormat currentDate = new SimpleDateFormat("yyyy/MM/dd");
+        Date todayDate = new Date();
+        String thisDate = currentDate.format(todayDate);
+
+        String empID = myempid.toString().trim();
+        int myEmpId= Integer.parseInt(empID);
+        String mileage = output.getText().toString().trim();
+        int myMileage = Integer.parseInt(mileage);
+        String date = thisDate.toUpperCase().trim();
+
+        //if(isEntry(date)){
+        //  String myQuery = "UPDATE times SET empid = '"+empID+"', basic ='"+(basic + basic)+"', overtime = '"+(overtime+overtime)+"', meals = '"+(meals+meals)+"', mileage ='"+(mileage+mileage)+"', date ='"+date+"';";
+        //db.execSQL(myQuery);
+        //}
+        //else {
+        String query = "INSERT OR IGNORE INTO times (empID, date) VALUES('" + myEmpId + "',  '" + date + "' );";// UPDATE times SET( empId = '"+empID+"',basic = '"+(basic+ 100)+" WHERE date = '"+date+");";
+        db.execSQL(query);
+        String query2 = "UPDATE times SET   mileage = mileage + '"+myMileage+"' WHERE date = '"+date+"' AND empID = '"+myEmpId+"'";
+        db.execSQL(query2);
+        Toast.makeText(getApplicationContext(), "Saved Successfully", Toast.LENGTH_LONG).show();
+        //}
+    }
+
 
 
 

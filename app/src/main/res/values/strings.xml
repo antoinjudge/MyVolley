@@ -39,5 +39,7 @@
     <string name="title_activity_time_sheet">TimeSheet</string>
     <string name="title_activity_view_time_sheet">ViewTimeSheet</string>
     <string name="title_activity_send_time_sheet">SendTimeSheet</string>
+    <string name="addToDatabase">Add to Database</string>
+    <string name="distanceTV">Distance Km\'s is</string>
 
 </resources>

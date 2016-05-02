@@ -1,6 +1,8 @@
 package myapps.myvolley;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
@@ -14,6 +16,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.text.SimpleDateFormat;
@@ -29,6 +32,7 @@ public class TimeSheet extends AppCompatActivity implements View.OnClickListener
     private EditText editTOT;
     private EditText editTMeals;
     private  EditText editTEmpID;
+    private TextView dateTV;
     private Button btnAdd;
     private EditText editTMiles;
     private  Button btnView;
@@ -52,6 +56,11 @@ public class TimeSheet extends AppCompatActivity implements View.OnClickListener
         editTMeals = (EditText) findViewById(R.id.editTextMeals);
         editTMiles = (EditText) findViewById(R.id.editTextMileage);
         editTEmpID =(EditText) findViewById(R.id.editTextEmpID);
+        dateTV=(TextView) findViewById(R.id.textView3);
+        SimpleDateFormat sdf = new SimpleDateFormat("EEEE");
+        Date d = new Date();
+        String dayOfTheWeek = sdf.format(d);
+        dateTV.setText(dayOfTheWeek);
 
         btnAdd = (Button) findViewById(R.id.buttonAddToTimeSheet);
         btnView = (Button) findViewById(R.id.buttonViewTimeSheet);
@@ -78,12 +87,13 @@ public class TimeSheet extends AppCompatActivity implements View.OnClickListener
     }
 
     protected void openDatabase() {
-        db = openOrCreateDatabase("DailyTS", Context.MODE_PRIVATE, null);
+        db = openOrCreateDatabase("MyDailyTS", Context.MODE_PRIVATE, null);
     }
 
     protected void createDatabase(){
-        db=openOrCreateDatabase("DailyTS", Context.MODE_PRIVATE, null);
+        db=openOrCreateDatabase("MyDailyTS", Context.MODE_PRIVATE, null);
         db.execSQL("CREATE TABLE IF NOT EXISTS times(empid INTEGER , basic INTEGER  NOT NULL DEFAULT 0,overtime INTEGER NOT NULL DEFAULT 0, meals INTEGER NOT NULL DEFAULT 0, mileage INTEGER NOT NULL DEFAULT 0, date TEXT PRIMARY KEY  NOT NULL);");
+
     }
 
 
@@ -105,6 +115,7 @@ public class TimeSheet extends AppCompatActivity implements View.OnClickListener
         String mileage = editTMiles.getText().toString().trim();
         int myMileage = Integer.parseInt(mileage);
         String date = thisDate.toUpperCase().trim();
+
         if( basic.equals("") || overtime.equals("") || meals.equals("") || mileage.equals("") || empID.equals("")   ){
             Toast.makeText(getApplicationContext(), "Please fill all fields", Toast.LENGTH_LONG).show();
             return;
@@ -116,7 +127,7 @@ public class TimeSheet extends AppCompatActivity implements View.OnClickListener
         //else {
             String query = "INSERT OR IGNORE INTO times (empID, date) VALUES('" + myEmpId + "',  '" + date + "' );";// UPDATE times SET( empId = '"+empID+"',basic = '"+(basic+ 100)+" WHERE date = '"+date+");";
         db.execSQL(query);
-            String query2 = "UPDATE times SET basic = basic +'"+mybasic+"',overtime= overtime+ '"+myOT+"', meals = meals +'"+myMeals+"', mileage = mileage + '"+myMileage+"' WHERE date = '"+date+"'";
+            String query2 = "UPDATE times SET basic = basic +'"+mybasic+"',overtime= overtime+ '"+myOT+"', meals = meals +'"+myMeals+"', mileage = mileage + '"+myMileage+"' WHERE date = '"+date+"' AND empID = '"+myEmpId+"'";
            db.execSQL(query2);
             Toast.makeText(getApplicationContext(), "Saved Successfully", Toast.LENGTH_LONG).show();
         //}
@@ -141,7 +152,31 @@ public class TimeSheet extends AppCompatActivity implements View.OnClickListener
     @Override
     public void onClick(View v) {
         if(v == btnAdd){
-            insertIntoDB();
+            AlertDialog.Builder alertDialog = new AlertDialog.Builder(TimeSheet.this);
+            // Setting Dialog Title
+            alertDialog.setTitle("Confirm Submission...");
+            // Setting Icon to Dialog
+            alertDialog.setIcon(R.drawable.common_plus_signin_btn_icon_light_focused);
+            // Setting Dialog Message
+            alertDialog.setMessage("Are you sure you want submit this timesheet??");
+            // Setting Positive "Yes" Button
+            alertDialog.setPositiveButton("YES", new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int which) {
+
+                    // Write your code here to invoke YES event
+                    insertIntoDB();
+                }
+            });
+            // Setting Negative "NO" Button
+            alertDialog.setNegativeButton("NO", new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int which) {
+                    // Write your code here to invoke NO event
+                    Toast.makeText(getApplicationContext(), "You clicked on NO", Toast.LENGTH_SHORT).show();
+                    dialog.cancel();
+                }
+            });
+            // Showing Alert Message
+            alertDialog.show();
         }
         if(v==btnView){
             showPeoples();

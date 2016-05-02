@@ -76,7 +76,7 @@ public class ViewTimeSheet extends AppCompatActivity implements View.OnClickList
 
 
     protected void openDatabase() {
-        db = openOrCreateDatabase("DailyTS", Context.MODE_PRIVATE, null);
+        db = openOrCreateDatabase("MyDailyTS", Context.MODE_PRIVATE, null);
     }
 
     protected void showRecords() {
@@ -87,7 +87,7 @@ public class ViewTimeSheet extends AppCompatActivity implements View.OnClickList
         String mileage = c.getString(4);
         String date =c.getString(5);
 
-        editTEmpID.setText("Employee Id : "+emplid);
+        editTEmpID.setText(emplid);
         editTBasic.setText("Basic Hours : "+basic);
         editTOT.setText("Overtime Hours : "+overtime);
         editTMeals.setText("Meals : "+meals);
@@ -114,7 +114,7 @@ public class ViewTimeSheet extends AppCompatActivity implements View.OnClickList
         String basic = editTBasic.getText().toString().trim();
         String overtime = editTOT.getText().toString().trim();
 
-        String sql = "UPDATE times SET empid='" + empid + "', basic='" + basic + "' WHERE empid=" + empid + ";";
+        String sql = "UPDATE times SET empid='" + empid + "', basic='" + basic + "' WHERE empid=" + empid + "';";
 
         if (basic.equals("") || overtime.equals("") || empid.equals("")) {
             Toast.makeText(getApplicationContext(), "You cannot save blank values", Toast.LENGTH_LONG).show();
@@ -123,6 +123,27 @@ public class ViewTimeSheet extends AppCompatActivity implements View.OnClickList
 
         db.execSQL(sql);
         Toast.makeText(getApplicationContext(), "Records Saved Successfully", Toast.LENGTH_LONG).show();
+        c = db.rawQuery(SELECT_SQL, null);
+        c.moveToPosition(Integer.parseInt(empid));
+    }
+
+    protected void deleteRecord() {
+        String empid = editTEmpID.getText().toString().trim();
+        String thisemp = empid.replaceFirst(".*?(\\d+).*", "$1");
+        int myempid = Integer.parseInt(thisemp);
+        String date = editDate.getText().toString().trim();
+        String overtime = editTOT.getText().toString().trim();
+
+        String sql = "DELETE FROM  times WHERE  empid='" + myempid
+                + "'";
+
+      //  if (basic.equals("") || overtime.equals("") || empid.equals("")) {
+           // Toast.makeText(getApplicationContext(), "You cannot save blank values", Toast.LENGTH_LONG).show();
+           // return;
+       // }
+
+        db.execSQL(sql);
+        Toast.makeText(getApplicationContext(), "Records Deleted Successfully", Toast.LENGTH_LONG).show();
         c = db.rawQuery(SELECT_SQL, null);
         c.moveToPosition(Integer.parseInt(empid));
     }
@@ -139,6 +160,9 @@ public class ViewTimeSheet extends AppCompatActivity implements View.OnClickList
 
         if (v == btnSave) {
             saveRecord();
+        }
+        if (v == btnDelete) {
+            deleteRecord();
         }
 
 
