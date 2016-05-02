@@ -1,6 +1,7 @@
 package myapps.myvolley;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
@@ -22,6 +23,7 @@ public class ViewTimeSheet extends AppCompatActivity implements View.OnClickList
     private TextView editTMileage;
     private TextView editTOT;
     private TextView editDate;
+    private TextView statusTV;
     private Button btnPrev;
     private Button btnNext;
     private Button btnSave;
@@ -45,6 +47,7 @@ public class ViewTimeSheet extends AppCompatActivity implements View.OnClickList
         editTMeals = (TextView) findViewById(R.id.textViewMeals);
         editTMileage = (TextView) findViewById(R.id.textViewMileage);
         editDate =(TextView) findViewById(R.id.textViewDate);
+        statusTV =(TextView) findViewById(R.id.textViewStatus);
 
         btnPrev = (Button) findViewById(R.id.btnPrev);
         btnNext = (Button) findViewById(R.id.btnNext);
@@ -55,10 +58,28 @@ public class ViewTimeSheet extends AppCompatActivity implements View.OnClickList
         btnPrev.setOnClickListener(this);
         btnSave.setOnClickListener(this);
         btnDelete.setOnClickListener(this);
+        //SharedPreferences sharedPreferences = getSharedPreferences(LoginActivity.SHARED_PREF_NAME, LoginActivity.MODE_PRIVATE);
+       // String myempid = sharedPreferences.getString(LoginActivity.EMPID_SHARED_PREF, "Not Available");
+        //String empID = myempid.toString().trim();
+        //int myEmpId= Integer.parseInt(empID);
 
-        c = db.rawQuery(SELECT_SQL, null);
-        c.moveToFirst();
-        showRecords();
+
+
+           c = db.rawQuery(SELECT_SQL, null);
+        if ( c.moveToFirst() ) {
+            // start activity a
+            c.moveToFirst();
+            showRecords();
+        }
+        else{
+            Toast.makeText(getApplicationContext(), "No records in Database", Toast.LENGTH_LONG).show();
+        }
+
+
+
+
+
+
 
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -76,7 +97,7 @@ public class ViewTimeSheet extends AppCompatActivity implements View.OnClickList
 
 
     protected void openDatabase() {
-        db = openOrCreateDatabase("MyDailyTS", Context.MODE_PRIVATE, null);
+        db = openOrCreateDatabase("ThisDailyTS", Context.MODE_PRIVATE, null);
     }
 
     protected void showRecords() {
@@ -86,13 +107,21 @@ public class ViewTimeSheet extends AppCompatActivity implements View.OnClickList
         String meals = c.getString(3);
         String mileage = c.getString(4);
         String date =c.getString(5);
+        String status=c.getString(6);
+        String sts ="";
+        if(status.equals("0")){
+             sts="Not Submitted";
+        }else{
+            sts ="Submitted";
+        }
 
-        editTEmpID.setText(emplid);
+        editTEmpID.setText("Employee ID :"+emplid);
         editTBasic.setText("Basic Hours : "+basic);
         editTOT.setText("Overtime Hours : "+overtime);
         editTMeals.setText("Meals : "+meals);
         editTMileage.setText("Mileage : "+ mileage);
         editDate.setText("Date : "+ date);
+        statusTV.setText("Status :"+ sts);
     }
 
     protected void moveNext() {
@@ -120,6 +149,7 @@ public class ViewTimeSheet extends AppCompatActivity implements View.OnClickList
             Toast.makeText(getApplicationContext(), "You cannot save blank values", Toast.LENGTH_LONG).show();
             return;
         }
+
 
         db.execSQL(sql);
         Toast.makeText(getApplicationContext(), "Records Saved Successfully", Toast.LENGTH_LONG).show();

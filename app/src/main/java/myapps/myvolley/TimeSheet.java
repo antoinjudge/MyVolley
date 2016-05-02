@@ -33,6 +33,7 @@ public class TimeSheet extends AppCompatActivity implements View.OnClickListener
     private EditText editTMeals;
     private  EditText editTEmpID;
     private TextView dateTV;
+
     private Button btnAdd;
     private EditText editTMiles;
     private  Button btnView;
@@ -69,10 +70,6 @@ public class TimeSheet extends AppCompatActivity implements View.OnClickListener
         btnView.setOnClickListener(this);
 
 
-        //Fetching email from shared preferences
-        SharedPreferences sharedPreferences = getSharedPreferences(LoginActivity.SHARED_PREF_NAME, LoginActivity.MODE_PRIVATE);
-       // String email = sharedPreferences.getString(LoginActivity.EMAIL_SHARED_PREF, "Not Available");
-        String pword =sharedPreferences.getString(LoginActivity.PASSWORD_SHARED_PREF,"Not Available");
 
 
 
@@ -87,17 +84,17 @@ public class TimeSheet extends AppCompatActivity implements View.OnClickListener
     }
 
     protected void openDatabase() {
-        db = openOrCreateDatabase("MyDailyTS", Context.MODE_PRIVATE, null);
+        db = openOrCreateDatabase("ThisDailyTS", Context.MODE_PRIVATE, null);
     }
 
     protected void createDatabase(){
-        db=openOrCreateDatabase("MyDailyTS", Context.MODE_PRIVATE, null);
-        db.execSQL("CREATE TABLE IF NOT EXISTS times(empid INTEGER , basic INTEGER  NOT NULL DEFAULT 0,overtime INTEGER NOT NULL DEFAULT 0, meals INTEGER NOT NULL DEFAULT 0, mileage INTEGER NOT NULL DEFAULT 0, date TEXT PRIMARY KEY  NOT NULL);");
+        db=openOrCreateDatabase("ThisDailyTS", Context.MODE_PRIVATE, null);
+        db.execSQL("CREATE TABLE IF NOT EXISTS times(empid INTEGER , basic INTEGER  NOT NULL DEFAULT 0,overtime INTEGER NOT NULL DEFAULT 0, meals INTEGER NOT NULL DEFAULT 0, mileage INTEGER NOT NULL DEFAULT 0, date TEXT PRIMARY KEY  NOT NULL, sent INTEGER NOT NULL DEFAULT 0);");
 
     }
 
 
-    protected void insertIntoDB(){
+    protected void insertIntoDB() {
         SharedPreferences sharedPreferences = getSharedPreferences(LoginActivity.SHARED_PREF_NAME, LoginActivity.MODE_PRIVATE);
         String myempid = sharedPreferences.getString(LoginActivity.EMPID_SHARED_PREF, "Not Available");
         SimpleDateFormat currentDate = new SimpleDateFormat("yyyy/MM/dd");
@@ -105,32 +102,33 @@ public class TimeSheet extends AppCompatActivity implements View.OnClickListener
         String thisDate = currentDate.format(todayDate);
 
         String empID = myempid.toString().trim();
-        int myEmpId= Integer.parseInt(empID);
+        int myEmpId = Integer.parseInt(empID);
         String basic = editTBasic.getText().toString().trim();
         int mybasic = Integer.parseInt(basic);
         String overtime = editTOT.getText().toString().trim();
         int myOT = Integer.parseInt(overtime);
         String meals = editTMeals.getText().toString().trim();
-        int myMeals= Integer.parseInt(meals);
+        int myMeals = Integer.parseInt(meals);
         String mileage = editTMiles.getText().toString().trim();
         int myMileage = Integer.parseInt(mileage);
         String date = thisDate.toUpperCase().trim();
 
-        if( basic.equals("") || overtime.equals("") || meals.equals("") || mileage.equals("") || empID.equals("")   ){
+        if (basic.equals("") || overtime.equals("") || meals.equals("") || mileage.equals("") || empID.equals("")) {
             Toast.makeText(getApplicationContext(), "Please fill all fields", Toast.LENGTH_LONG).show();
             return;
         }
         //if(isEntry(date)){
-          //  String myQuery = "UPDATE times SET empid = '"+empID+"', basic ='"+(basic + basic)+"', overtime = '"+(overtime+overtime)+"', meals = '"+(meals+meals)+"', mileage ='"+(mileage+mileage)+"', date ='"+date+"';";
-            //db.execSQL(myQuery);
+        //  String myQuery = "UPDATE times SET empid = '"+empID+"', basic ='"+(basic + basic)+"', overtime = '"+(overtime+overtime)+"', meals = '"+(meals+meals)+"', mileage ='"+(mileage+mileage)+"', date ='"+date+"';";
+        //db.execSQL(myQuery);
         //}
-        //else {
-            String query = "INSERT OR IGNORE INTO times (empID, date) VALUES('" + myEmpId + "',  '" + date + "' );";// UPDATE times SET( empId = '"+empID+"',basic = '"+(basic+ 100)+" WHERE date = '"+date+");";
-        db.execSQL(query);
-            String query2 = "UPDATE times SET basic = basic +'"+mybasic+"',overtime= overtime+ '"+myOT+"', meals = meals +'"+myMeals+"', mileage = mileage + '"+myMileage+"' WHERE date = '"+date+"' AND empID = '"+myEmpId+"'";
-           db.execSQL(query2);
+        else {
+            String query = "INSERT OR IGNORE INTO times (empid, date) VALUES('" + myEmpId + "',  '" + date + "' );";// UPDATE times SET( empId = '"+empID+"',basic = '"+(basic+ 100)+" WHERE date = '"+date+");";
+            db.execSQL(query);
+            String query2 = "UPDATE times SET basic = basic +'" + mybasic + "',overtime= overtime+ '" + myOT + "', meals = meals +'" + myMeals + "', mileage = mileage + '" + myMileage + "' WHERE date = '" + date + "' AND empid = '" + myEmpId + "'";
+            db.execSQL(query2);
             Toast.makeText(getApplicationContext(), "Saved Successfully", Toast.LENGTH_LONG).show();
-        //}
+            //}
+        }
     }
 
     public boolean isEntry(String date ){

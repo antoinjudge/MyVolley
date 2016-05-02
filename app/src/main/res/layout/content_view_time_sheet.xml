@@ -52,11 +52,18 @@
         android:layout_height="wrap_content"
         android:text="Mileage"
         android:id="@+id/textViewDate" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Status"
+        android:id="@+id/textViewStatus" />
+
 
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/editTextMileage" />
+
 
 
     <LinearLayout

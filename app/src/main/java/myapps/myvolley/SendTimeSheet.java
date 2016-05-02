@@ -1,6 +1,8 @@
 package myapps.myvolley;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -12,6 +14,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -45,10 +48,23 @@ public class SendTimeSheet extends AppCompatActivity implements View.OnClickList
     private EditText editTextDate;
     private Button buttonUpdate;
     private Button buttonSubmit;
-    private static final String SELECT_SQL = "SELECT * FROM times";
+    private Button btnPrev;
+    private Button btnNext;
+    private Button btnSave;
+    private TextView dayView;
+    private EditText searchEditText;
+
+    SimpleDateFormat currentDate = new SimpleDateFormat("yyyy/MM/dd");
+    Date todayDate = new Date();
+    String thisDate = currentDate.format(todayDate);
+    String today = thisDate.toUpperCase().trim();
+    String SELECT_SQL = "SELECT * FROM times WHERE sent = '0'";
+
+
     private SQLiteDatabase db;
 
     private Cursor c;
+    private Cursor cur;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,14 +80,38 @@ public class SendTimeSheet extends AppCompatActivity implements View.OnClickList
         editTextMeal = (EditText) findViewById(R.id.editTextMeals);
         editTextMileage = (EditText) findViewById(R.id.editTextMileage);
         editTextDate = (EditText) findViewById(R.id.editTextDate);
+        searchEditText =(EditText)findViewById(R.id.searchDateEditText);
+        dayView =(TextView)findViewById(R.id.dayTv);
+        btnNext=(Button)findViewById(R.id.buttonnNext);
+        btnNext.setOnClickListener(this);
+        btnPrev=(Button)findViewById(R.id.buttonPrev);
+        btnPrev.setOnClickListener(this);
         buttonSubmit = (Button) findViewById(R.id.buttonSubmit);
         buttonSubmit.setOnClickListener(this);
         buttonUpdate= (Button ) findViewById(R.id.buttonUpdate);
         buttonUpdate.setOnClickListener(this);
+        btnSave=(Button)findViewById(R.id.buttonSave);
+        btnSave.setOnClickListener(this);
+
+
+
+
+
 
         c = db.rawQuery(SELECT_SQL, null);
-        c.moveToFirst();
-        showRecords();
+        if ( c.moveToFirst() ) {
+            // start activity a
+            c.moveToFirst();
+            showRecords();
+        }
+        else{
+            Toast.makeText(getApplicationContext(), "No records in Database", Toast.LENGTH_LONG).show();
+            dayView.setText(today);
+        }
+
+
+
+
 
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
@@ -86,16 +126,62 @@ public class SendTimeSheet extends AppCompatActivity implements View.OnClickList
 
     public void onClick(View v) {
         if(v == buttonSubmit){
+            AlertDialog.Builder alertDialog = new AlertDialog.Builder(SendTimeSheet.this);
+            // Setting Dialog Title
+            alertDialog.setTitle("Confirm Submission...");
+            // Setting Icon to Dialog
+            alertDialog.setIcon(R.drawable.common_plus_signin_btn_icon_light_focused);
+            // Setting Dialog Message
+            alertDialog.setMessage("Are you sure?? Cannot be undone!!");
+            // Setting Positive "Yes" Button
+            alertDialog.setPositiveButton("YES", new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int which) {
 
             sendTimesheet();
-
+                }
+            });
+            // Setting Negative "NO" Button
+            alertDialog.setNegativeButton("NO", new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int which) {
+                    // Write your code here to invoke NO event
+                    Toast.makeText(getApplicationContext(), "You clicked on NO", Toast.LENGTH_SHORT).show();
+                    dialog.cancel();
+                }
+            });
+            // Showing Alert Message
+            alertDialog.show();
         }
-        else if(v == buttonUpdate){
-            updateTimesheet();
+
+
+
+
+        if (v == btnNext) {
+            movePrev();
+        }
+        if (v == btnPrev) {
+            moveNext();
+        }
+
+         if(v == buttonUpdate){
+             String date= searchEditText.getText().toString().trim();
+             String SINGLE_SQL = "SELECT * FROM times WHERE date ='"+date+"' ";
+             cur = db.rawQuery(SINGLE_SQL, null);
+             if (  cur.moveToFirst() ) {
+                 // start activity a
+                 cur.moveToFirst();
+                 showDaily();
+                 btnNext.setVisibility(View.INVISIBLE);
+                 btnSave.setVisibility(View.INVISIBLE);
+                 btnPrev.setVisibility(View.INVISIBLE);
+             }
+             else{
+                 Toast.makeText(getApplicationContext(), "No records in Database", Toast.LENGTH_LONG).show();
+                 dayView.setText(today);
+             }
         }
     }
     protected void openDatabase() {
-        db = openOrCreateDatabase("DailyTS", Context.MODE_PRIVATE, null);
+        db = openOrCreateDatabase("ThisDailyTS", Context.MODE_PRIVATE, null);
     }
 
     protected void showRecords() {
@@ -112,6 +198,40 @@ public class SendTimeSheet extends AppCompatActivity implements View.OnClickList
         editTextMeal.setText(meals);
         editTextMileage.setText(mileage);
         editTextDate.setText(date);
+        dayView.setText(date);
+    }
+    protected void showDaily(){
+
+        String emplid = cur.getString(0);
+        String basic = cur.getString(1);
+        String overtime = cur.getString(2);
+        String meals = cur.getString(3);
+        String mileage = cur.getString(4);
+        String date =cur.getString(5);
+
+        editTextEmpid.setText(emplid);
+        editTextBasic.setText(basic);
+        editTextOver.setText(overtime);
+        editTextMeal.setText(meals);
+        editTextMileage.setText(mileage);
+        editTextDate.setText(date);
+        dayView.setText(date);
+    }
+
+
+    protected void moveNext() {
+        if (!c.isLast())
+            c.moveToNext();
+
+        showRecords();
+    }
+
+    protected void movePrev() {
+        if (!c.isFirst())
+            c.moveToPrevious();
+
+        showRecords();
+
     }
 
 
@@ -134,6 +254,11 @@ public class SendTimeSheet extends AppCompatActivity implements View.OnClickList
         Date todayDate = new Date();
         final String thisDate = currentDate.format(todayDate);
 
+        if (basic.equals("") || overtime.equals("") || meals.equals("") || mileage.equals("") || date.equals("")) {
+            Toast.makeText(getApplicationContext(), "Please fill all fields", Toast.LENGTH_LONG).show();
+            return;
+        }
+
         StringRequest stringRequest = new StringRequest(Request.Method.POST, UPDATE_URL,
                 new Response.Listener<String>() {
                     @Override
@@ -148,6 +273,7 @@ public class SendTimeSheet extends AppCompatActivity implements View.OnClickList
                     public void onErrorResponse(VolleyError error) {
                         Toast.makeText(SendTimeSheet.this, error.toString(), Toast.LENGTH_LONG).show();
                     }
+
                 }) {
             @Override
             protected Map<String, String> getParams() {
@@ -163,10 +289,17 @@ public class SendTimeSheet extends AppCompatActivity implements View.OnClickList
             }
 
 
+
+
+
         };
 
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         requestQueue.add(stringRequest);
+        String sql = "UPDATE times SET sent='1' WHERE empid = '"+empid+"' AND date ='"+date+"'";
+        db.execSQL(sql);
+        Toast.makeText(getApplicationContext(), "Records Saved Successfully", Toast.LENGTH_LONG).show();
+
     }
 
     private void updateTimesheet(){
@@ -210,6 +343,8 @@ public class SendTimeSheet extends AppCompatActivity implements View.OnClickList
 
                 return params;
             }
+
+
 
 
         };

@@ -219,7 +219,7 @@ public class JourneyActivity extends AppCompatActivity {
 
     }
     protected void openDatabase() {
-        db = openOrCreateDatabase("MyDailyTS", Context.MODE_PRIVATE, null);
+        db = openOrCreateDatabase("ThisDailyTS", Context.MODE_PRIVATE, null);
     }
     protected void insertIntoDB(){
         SharedPreferences sharedPreferences = getSharedPreferences(LoginActivity.SHARED_PREF_NAME, LoginActivity.MODE_PRIVATE);

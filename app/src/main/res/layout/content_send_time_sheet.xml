@@ -26,6 +26,15 @@
             android:id="@+id/textView2"
             android:textSize="30dp"
             android:textColor="#ffffffff" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:gravity="center"
+            android:text="day"
+            android:id="@+id/dayTv"
+            android:textSize="30dp"
+            android:textColor="#ffffffff" />
 
         <TextView
             android:id="@+id/textViewBasic"
@@ -151,6 +160,35 @@
             android:textSize="17sp"
             android:ems="10" >
         </EditText>
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:weightSum="1">
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Previous"
+                android:id="@+id/buttonPrev"
+                android:layout_weight="0.20" />
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Save"
+                android:id="@+id/buttonSave"
+                android:layout_weight="0.27" />
+
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Next"
+                android:id="@+id/buttonnNext"
+                android:layout_weight="0.31" />
+
+        </LinearLayout>
 
         <Button
             android:id="@+id/buttonSubmit"
@@ -158,8 +196,30 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="40dp"
+
             android:text="Submit" />
+
+
+
+            <TextView
+                android:id="@+id/textSearchDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:textSize="18sp"
+                android:text="Search by Date" />
+            <EditText
+                android:id="@+id/searchDateEditText"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:layout_marginTop="5dp"
+                android:inputType="text"
+                android:textSize="17sp"
+                android:ems="10" >
+            </EditText>
 
         <Button
             android:id="@+id/buttonUpdate"
@@ -167,8 +227,9 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="40dp"
-            android:text="update" />
+
+            android:text="Display" />
+
 
 
 
