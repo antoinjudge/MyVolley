@@ -1,6 +1,7 @@
 package myapps.myvolley;
 
 import android.app.AlertDialog;
+import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
@@ -13,6 +14,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -24,12 +26,17 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
+import java.text.DateFormat;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
-public class SendTimeSheet extends AppCompatActivity implements View.OnClickListener {
+public class SendTimeSheet extends AppCompatActivity implements View.OnClickListener{
     private static final String REGISTER_URL = "http://www.antoinjudge.hol.es/myVolley/updateTimesheet.php";
     private static final String UPDATE_URL = "http://www.antoinjudge.hol.es/myVolley/updateTimesheet.php";
     public static final String KEY_BASIC = "basic";
@@ -53,6 +60,8 @@ public class SendTimeSheet extends AppCompatActivity implements View.OnClickList
     private Button btnSave;
     private TextView dayView;
     private EditText searchEditText;
+    private Context _context;
+
 
     SimpleDateFormat currentDate = new SimpleDateFormat("yyyy/MM/dd");
     Date todayDate = new Date();
@@ -62,9 +71,10 @@ public class SendTimeSheet extends AppCompatActivity implements View.OnClickList
 
 
     private SQLiteDatabase db;
-
     private Cursor c;
     private Cursor cur;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,6 +91,7 @@ public class SendTimeSheet extends AppCompatActivity implements View.OnClickList
         editTextMileage = (EditText) findViewById(R.id.editTextMileage);
         editTextDate = (EditText) findViewById(R.id.editTextDate);
         searchEditText =(EditText)findViewById(R.id.searchDateEditText);
+        searchEditText.setOnClickListener(this);
         dayView =(TextView)findViewById(R.id.dayTv);
         btnNext=(Button)findViewById(R.id.buttonnNext);
         btnNext.setOnClickListener(this);
@@ -89,13 +100,10 @@ public class SendTimeSheet extends AppCompatActivity implements View.OnClickList
         buttonSubmit = (Button) findViewById(R.id.buttonSubmit);
         buttonSubmit.setOnClickListener(this);
         buttonUpdate= (Button ) findViewById(R.id.buttonUpdate);
+        buttonUpdate.setVisibility(View.INVISIBLE);
         buttonUpdate.setOnClickListener(this);
         btnSave=(Button)findViewById(R.id.buttonSave);
         btnSave.setOnClickListener(this);
-
-
-
-
 
 
         c = db.rawQuery(SELECT_SQL, null);
@@ -107,11 +115,10 @@ public class SendTimeSheet extends AppCompatActivity implements View.OnClickList
         else{
             Toast.makeText(getApplicationContext(), "No records in Database", Toast.LENGTH_LONG).show();
             dayView.setText(today);
+            btnNext.setVisibility(View.INVISIBLE);
+            btnSave.setVisibility(View.INVISIBLE);
+            btnPrev.setVisibility(View.INVISIBLE);
         }
-
-
-
-
 
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
@@ -123,6 +130,7 @@ public class SendTimeSheet extends AppCompatActivity implements View.OnClickList
             }
         });
     }
+
 
     public void onClick(View v) {
         if(v == buttonSubmit){
@@ -161,25 +169,56 @@ public class SendTimeSheet extends AppCompatActivity implements View.OnClickList
         if (v == btnPrev) {
             moveNext();
         }
+        if(v==searchEditText){
+            Calendar c = Calendar.getInstance();
+            int mYear = c.get(Calendar.YEAR);
+            int mMonth = c.get(Calendar.MONTH);
+            int mDay = c.get(Calendar.DAY_OF_MONTH);
+           // SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+           // String currentData = sdf.format(c);
+
+            DatePickerDialog dialog = new DatePickerDialog(SendTimeSheet.this,
+                    new mDateSetListener(), mYear, mMonth, mDay);
+            dialog.show();
+        }
+
 
          if(v == buttonUpdate){
-             String date= searchEditText.getText().toString().trim();
-             String SINGLE_SQL = "SELECT * FROM times WHERE date ='"+date+"' ";
-             cur = db.rawQuery(SINGLE_SQL, null);
-             if (  cur.moveToFirst() ) {
-                 // start activity a
-                 cur.moveToFirst();
-                 showDaily();
-                 btnNext.setVisibility(View.INVISIBLE);
-                 btnSave.setVisibility(View.INVISIBLE);
-                 btnPrev.setVisibility(View.INVISIBLE);
-             }
-             else{
-                 Toast.makeText(getApplicationContext(), "No records in Database", Toast.LENGTH_LONG).show();
-                 dayView.setText(today);
-             }
+             searchDate();
         }
     }
+
+    class mDateSetListener implements DatePickerDialog.OnDateSetListener {
+
+        @Override
+        public void onDateSet(DatePicker view, int year, int monthOfYear,
+                              int dayOfMonth) {
+            // TODO Auto-generated method stub
+            // getCalender();
+            int mYear = year;
+            NumberFormat formatter = new DecimalFormat("00");
+            String theYear =formatter.format(mYear);
+            int mMonth = monthOfYear;
+            String theMonth =formatter.format(mMonth+1);
+            int mDay = dayOfMonth;
+            String theDay =formatter.format(mDay);
+            String theDate =theYear+"/"+theMonth+"/"+theDay+" ";
+            searchEditText.setText(theDate);
+            searchDate();
+
+
+
+            //searchEditText.setText(new StringBuilder()
+                    // Month is 0 based so add 1
+                    //.append(mYear ).append("/").append(mMonth + 1).append("/")
+                    //.append(mDay).append(" "));
+           // System.out.println(searchEditText.getText().toString());
+
+
+        }
+    }
+
+
     protected void openDatabase() {
         db = openOrCreateDatabase("ThisDailyTS", Context.MODE_PRIVATE, null);
     }
@@ -192,8 +231,9 @@ public class SendTimeSheet extends AppCompatActivity implements View.OnClickList
         String mileage = c.getString(4);
         String date =c.getString(5);
 
-        editTextEmpid.setText(emplid);
+
         editTextBasic.setText(basic);
+        editTextBasic.setEnabled(false);
         editTextOver.setText(overtime);
         editTextMeal.setText(meals);
         editTextMileage.setText(mileage);
@@ -209,13 +249,32 @@ public class SendTimeSheet extends AppCompatActivity implements View.OnClickList
         String mileage = cur.getString(4);
         String date =cur.getString(5);
 
-        editTextEmpid.setText(emplid);
+
         editTextBasic.setText(basic);
         editTextOver.setText(overtime);
         editTextMeal.setText(meals);
         editTextMileage.setText(mileage);
         editTextDate.setText(date);
         dayView.setText(date);
+    }
+
+    protected void searchDate(){
+        String date= searchEditText.getText().toString().trim();
+        String SINGLE_SQL = "SELECT * FROM times WHERE date ='"+date+"' AND sent = '0' ";
+        cur = db.rawQuery(SINGLE_SQL, null);
+        if (  cur.moveToFirst() ) {
+            // start activity a
+            cur.moveToFirst();
+            showDaily();
+            btnNext.setVisibility(View.INVISIBLE);
+            btnSave.setVisibility(View.INVISIBLE);
+            btnPrev.setVisibility(View.INVISIBLE);
+        }
+        else{
+            Toast.makeText(getApplicationContext(), "No Records that have not been sent for that date", Toast.LENGTH_LONG).show();
+            dayView.setText(today);
+
+        }
     }
 
 

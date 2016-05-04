@@ -120,7 +120,7 @@ public class ViewTimeSheet extends AppCompatActivity implements View.OnClickList
         editTOT.setText("Overtime Hours : "+overtime);
         editTMeals.setText("Meals : "+meals);
         editTMileage.setText("Mileage : "+ mileage);
-        editDate.setText("Date : "+ date);
+        editDate.setText( date);
         statusTV.setText("Status :"+ sts);
     }
 
@@ -164,8 +164,7 @@ public class ViewTimeSheet extends AppCompatActivity implements View.OnClickList
         String date = editDate.getText().toString().trim();
         String overtime = editTOT.getText().toString().trim();
 
-        String sql = "DELETE FROM  times WHERE  empid='" + myempid
-                + "'";
+        String sql = "DELETE FROM  times WHERE  empid='" + myempid + "' AND date = '" + date +"' ";
 
       //  if (basic.equals("") || overtime.equals("") || empid.equals("")) {
            // Toast.makeText(getApplicationContext(), "You cannot save blank values", Toast.LENGTH_LONG).show();
@@ -175,7 +174,7 @@ public class ViewTimeSheet extends AppCompatActivity implements View.OnClickList
         db.execSQL(sql);
         Toast.makeText(getApplicationContext(), "Records Deleted Successfully", Toast.LENGTH_LONG).show();
         c = db.rawQuery(SELECT_SQL, null);
-        c.moveToPosition(Integer.parseInt(empid));
+        c.moveToPosition(myempid);
     }
 
     @Override
