@@ -15,6 +15,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -47,6 +48,7 @@ public class JourneyActivity extends AppCompatActivity {
     TextView endLatLongTV;
     TextView output ;
     TextView distanceTV;
+    TextView manualTV;
 
     private static final String SELECT_SQL = "SELECT * FROM times  ";
     private SQLiteDatabase db;
@@ -79,9 +81,10 @@ public class JourneyActivity extends AppCompatActivity {
 
         addressTV = (TextView) findViewById(R.id.startAddressTV);
         latLongTV = (TextView) findViewById(R.id.latLongTV);
+        manualTV=(TextView) findViewById(R.id.manualTV);
 
         addressButton = (Button) findViewById(R.id.addressButton);
-        changeTS =(Button) findViewById(R.id.changeSubmit);
+        ///changeTS =(Button) findViewById(R.id.changeSubmit);
         addButton =(Button) findViewById(R.id.addtoDatabase);
         addButton.setVisibility(View.INVISIBLE);
         distanceTV =(TextView) findViewById(R.id.distanceTV);
@@ -89,11 +92,21 @@ public class JourneyActivity extends AppCompatActivity {
         requestQueue = Volley.newRequestQueue(this);
         output = (TextView) findViewById(R.id.latLongTV);
 
-        changeTS.setOnClickListener(new View.OnClickListener() {
+       // changeTS.setOnClickListener(new View.OnClickListener() {
 
-            public void onClick(View view) {
+         //   public void onClick(View view) {
+           //     Intent i = new Intent(getApplicationContext(),
+            //            SendTimeSheet.class);
+             //   startActivity(i);
+              //  finish();
+          //  }
+       // });
+
+        manualTV.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
                 Intent i = new Intent(getApplicationContext(),
-                        SendTimeSheet.class);
+                        AutoCompleteActivity.class);
                 startActivity(i);
                 finish();
             }
@@ -110,9 +123,14 @@ public class JourneyActivity extends AppCompatActivity {
                 output.setText("");
                 EditText editText = (EditText) findViewById(R.id.startAddressET);
                 startAddress = editText.getText().toString();
-               // GeocodingLocation locationAddress = new GeocodingLocation();
-                //locationAddress.getAddressFromLocation(startAddress,
-                  //      getApplicationContext(), new GeocoderHandler());
+
+                try  {
+                    InputMethodManager imm = (InputMethodManager)getSystemService(INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
+                } catch (Exception e) {
+
+                }
+
 
                 EditText endEditText = (EditText) findViewById(R.id.endAddressET);
                 endAddress = endEditText.getText().toString();
@@ -137,6 +155,8 @@ public class JourneyActivity extends AppCompatActivity {
                         .appendQueryParameter("destinations", endAddress)
                         .appendQueryParameter("key", "AIzaSyDDW-ZGLBHF8DybvfYmvXPY20l-4CIw-e4");
                 String myUrl = builder.build().toString();
+
+
 
                 JsonObjectRequest jor = new JsonObjectRequest(Request.Method.GET, myUrl, null,
                         new Response.Listener<JSONObject>() {
@@ -246,6 +266,7 @@ public class JourneyActivity extends AppCompatActivity {
         Toast.makeText(getApplicationContext(), "Saved Successfully", Toast.LENGTH_LONG).show();
         //}
     }
+
 
 
 

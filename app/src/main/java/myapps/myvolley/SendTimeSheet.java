@@ -86,6 +86,7 @@ public class SendTimeSheet extends AppCompatActivity implements View.OnClickList
 
         editTextBasic = (EditText) findViewById(R.id.editTextBasic);
         editTextOver = (EditText) findViewById(R.id.editTextOverTime);
+        //editTextOver.setEnabled(false);
         editTextEmpid = (EditText) findViewById(R.id.editTextEmpID);
         editTextMeal = (EditText) findViewById(R.id.editTextMeals);
         editTextMileage = (EditText) findViewById(R.id.editTextMileage);
@@ -233,7 +234,7 @@ public class SendTimeSheet extends AppCompatActivity implements View.OnClickList
 
 
         editTextBasic.setText(basic);
-        editTextBasic.setEnabled(false);
+       // editTextBasic.setEnabled(false);
         editTextOver.setText(overtime);
         editTextMeal.setText(meals);
         editTextMileage.setText(mileage);
@@ -272,7 +273,18 @@ public class SendTimeSheet extends AppCompatActivity implements View.OnClickList
         }
         else{
             Toast.makeText(getApplicationContext(), "No Records that have not been sent for that date", Toast.LENGTH_LONG).show();
-            dayView.setText(today);
+            dayView.setText(date);
+            editTextBasic.setText("");
+            editTextBasic.setEnabled(false);
+            editTextOver.setText("");
+            editTextOver.setEnabled(false);
+            editTextMeal.setText("");
+            editTextMeal.setEnabled(false);
+            editTextMileage.setText("");
+            editTextMileage.setEnabled(false);
+            editTextDate.setText("");
+            editTextDate.setEnabled(false);
+
 
         }
     }

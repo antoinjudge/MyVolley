@@ -12,10 +12,12 @@
     tools:context="myapps.myvolley.SendTimeSheet"
     tools:showIn="@layout/activity_send_time_sheet"
     xmlns:android="http://schemas.android.com/apk/res/android">
+
     <LinearLayout
         android:layout_width="fill_parent"
         android:orientation="vertical"
-        android:layout_height="fill_parent">
+        android:layout_height="fill_parent"
+        android:gravity="center">
 
         <TextView
             android:layout_width="match_parent"
@@ -26,6 +28,7 @@
             android:id="@+id/textView2"
             android:textSize="30dp"
             android:textColor="#ffffffff" />
+
         <TextView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -52,7 +55,10 @@
             android:layout_marginRight="15dp"
             android:layout_marginTop="5dp"
             android:inputType="text"
-            android:textSize="17sp"
+            android:gravity="center_horizontal"
+            android:background="@drawable/rounded_border"
+            android:textStyle="bold"
+            android:textSize="21sp"
             android:ems="10" >
 
             <requestFocus />
@@ -75,7 +81,10 @@
             android:layout_marginRight="15dp"
             android:layout_marginTop="5dp"
             android:inputType="text"
-            android:textSize="17sp"
+            android:gravity="center_horizontal"
+            android:background="@drawable/rounded_border"
+            android:textStyle="bold"
+            android:textSize="21sp"
             android:ems="10" >
         </EditText>
         <requestFocus />
@@ -96,7 +105,10 @@
             android:layout_marginRight="15dp"
             android:layout_marginTop="5dp"
             android:inputType="text"
-            android:textSize="17sp"
+            android:gravity="center_horizontal"
+            android:background="@drawable/rounded_border"
+            android:textStyle="bold"
+            android:textSize="21sp"
             android:ems="10" >
         </EditText>
         <requestFocus />
@@ -118,7 +130,10 @@
             android:layout_marginRight="15dp"
             android:layout_marginTop="5dp"
             android:inputType="text"
-            android:textSize="17sp"
+            android:gravity="center_horizontal"
+            android:background="@drawable/rounded_border"
+            android:textStyle="bold"
+            android:textSize="21sp"
             android:ems="10" >
         </EditText>
         <requestFocus />
@@ -142,7 +157,10 @@
             android:layout_marginRight="15dp"
             android:layout_marginTop="5dp"
             android:inputType="text"
-            android:textSize="17sp"
+            android:gravity="center_horizontal"
+            android:background="@drawable/rounded_border"
+            android:textStyle="bold"
+            android:textSize="21sp"
             android:ems="10" >
         </EditText>
         <requestFocus />
@@ -203,7 +221,7 @@
                 android:layout_marginRight="15dp"
                 android:layout_marginTop="5dp"
                 android:inputType="text"
-                android:textSize="17sp"
+                android:textSize="21sp"
                 android:ems="10"
                 android:focusable="false">
             </EditText>

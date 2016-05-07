@@ -1,10 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-
+<ScrollView
+    android:layout_width="fill_parent"
+    android:windowActionBar="false"
+    android:layout_height="fill_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@drawable/grad_two"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:padding="10dp"
+    tools:context="myapps.myvolley.ProfileActivity"
+    xmlns:android="http://schemas.android.com/apk/res/android">
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:background="@drawable/grad"
+    android:background="@drawable/grad_two"
     android:gravity="center"
     android:orientation="vertical"
     android:padding="10dp"
@@ -27,63 +37,67 @@
         android:layout_width="128dp"
         android:layout_height="wrap_content"
         android:id="@+id/fuelButton"
-        android:src="@drawable/petrol_64px"
+        android:src="@drawable/small_fuel"
         android:layout_weight="0.18" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="Calculate Journey"
+        android:text="Calculate Mileage"
+        android:textSize="17sp"
         android:id="@+id/textView4"
         android:layout_gravity="center_horizontal"
-        android:textColor="#ffffffff"/>
+        android:textColor="#272727"/>
 
     <ImageButton
         android:layout_width="128dp"
         android:layout_height="wrap_content"
         android:id="@+id/hoursButton"
-        android:src="@drawable/hours_64"
+        android:src="@drawable/forward_clock"
         android:layout_weight="0.18" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="Add Overtime"
+        android:text="Manage Hours"
+        android:textSize="17sp"
         android:id="@+id/textView5"
         android:layout_gravity="center_horizontal"
-        android:textColor="#ffffffff"/>
+        android:textColor="#272727"/>
 
     <ImageButton
         android:layout_width="128dp"
         android:layout_height="wrap_content"
         android:id="@+id/expenseButton"
-        android:src="@drawable/money_64"
+        android:src="@drawable/euro_small"
         android:layout_weight="0.18" />
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:text="Add Expenses"
+        android:textSize="17sp"
         android:id="@+id/textView6"
         android:layout_gravity="center_horizontal"
-        android:textColor="#ffffffff"/>
+        android:textColor="#272727"/>
 
     <ImageButton
         android:layout_width="128dp"
         android:layout_height="wrap_content"
         android:id="@+id/submitButton"
-        android:src="@drawable/hours_64"
+        android:src="@drawable/right_arrow"
         android:layout_weight="0.18" />
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:text="Submit Timesheet"
+        android:textSize="17sp"
         android:id="@+id/submitTv"
         android:layout_gravity="center_horizontal"
-        android:textColor="#ffffffff"/>
+        android:textColor="#272727"/>
 
 
 
@@ -101,3 +115,4 @@
 
 
 </LinearLayout>
+</ScrollView>

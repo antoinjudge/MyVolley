@@ -4,7 +4,7 @@
     android:windowActionBar="false"
     android:layout_height="fill_parent"
     xmlns:tools="http://schemas.android.com/tools"
-    android:background="@drawable/grad"
+    android:background="@drawable/grad_two"
     android:gravity="center"
     android:orientation="vertical"
     android:padding="10dp"
@@ -16,7 +16,8 @@
     <LinearLayout
         android:layout_width="fill_parent"
         android:orientation="vertical"
-        android:layout_height="fill_parent">
+        android:layout_height="fill_parent"
+        android:gravity="center">
         <TextView
             android:layout_width="match_parent"
             android:layout_height="81dp"
@@ -57,35 +58,46 @@
         android:layout_height="wrap_content"
         android:text="@string/addressBtnTxt"
         android:id="@+id/addressButton"
-         />
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Submit Timesheet"
-        android:id="@+id/changeSubmit"
+        android:background="@drawable/grad_two"
+        android:gravity="center"
+        android:layout_gravity="center"
+        android:singleLine="true"
          />
         <TextView
-            android:layout_width="match_parent"
-            android:layout_height="81dp"
-            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:layout_width="fill_parent"
+            android:layout_height="30dp"
+            android:background="@drawable/grad_two"
+            android:paddingLeft="8dp"
+            android:paddingTop="6dp"
+            android:text="Distance in Kilometers"
             android:gravity="center"
-            android:text="@string/distanceTV"
-            android:id="@+id/distanceTV"
-            android:textSize="30sp"
-            android:textColor="#ffffffff" />
+            android:textStyle="bold"
+            android:id="@+id/distanceTV"/>
+
+
 
     <TextView
-        android:layout_width="wrap_content"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text=""
+        android:gravity="center"
         android:id="@+id/latLongTV" />
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/addToDatabase"
+        android:background="@drawable/grad_two"
         android:id="@+id/addtoDatabase"
+        android:gravity="center"
          />
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Input manualy?"
+            android:gravity="center"
+            android:id="@+id/manualTV" />
 
 
 </LinearLayout>

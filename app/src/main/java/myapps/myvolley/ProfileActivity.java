@@ -32,6 +32,7 @@ public class ProfileActivity extends AppCompatActivity {
     private Button changeAddItem;
     private ImageButton journeyImgBtn;
     private ImageButton hoursImgBtn;
+    private ImageButton submitImgBtn;
     /**
      * ATTENTION: This was auto-generated to implement the App Indexing API.
      * See https://g.co/AppIndexing/AndroidStudio for more information.
@@ -47,10 +48,12 @@ public class ProfileActivity extends AppCompatActivity {
 
         //Initializing textview
         textView = (TextView) findViewById(R.id.textView);
+        textView.setVisibility(View.INVISIBLE);
 
        // changeAddItem=(Button) findViewById(R.id.buttonAddItem);
         journeyImgBtn =(ImageButton) findViewById(R.id.fuelButton);
         hoursImgBtn=(ImageButton) findViewById(R.id.hoursButton);
+        submitImgBtn=(ImageButton) findViewById(R.id.submitButton);
 
 
 
@@ -73,6 +76,16 @@ public class ProfileActivity extends AppCompatActivity {
                 finish();
             }
         });
+
+        submitImgBtn.setOnClickListener(new View.OnClickListener(){
+            public void onClick(View view) {
+                Intent i = new Intent(getApplicationContext(),
+                        SendTimeSheet.class);
+                startActivity(i);
+                finish();
+            }
+        });
+
         hoursImgBtn.setOnClickListener(new View.OnClickListener(){
             public void onClick(View view) {
                 Intent i = new Intent(getApplicationContext(),

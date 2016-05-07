@@ -1,10 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="myapps.myvolley">
+    <permission
+        android:name="com.kuliza.taxi.permission.MAPS_RECEIVE"
+        android:protectionLevel="signature" />
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
         android:allowBackup="true"
@@ -15,7 +21,7 @@
         <activity
             android:name=".MainActivity"
             android:label="Mobile TimeSheet"
-            android:theme="@style/AppTheme">
+            android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -48,8 +54,9 @@
         </activity>
         <activity
             android:name=".ProfileActivity"
+            android:configChanges="orientation"
             android:label="Mobile TimeSheet"
-            android:configChanges="orientation"/>
+            android:theme="@style/AppTheme.NoActionBar" />
         <!--
              ATTENTION: This was auto-generated to add Google Play services to your project for
              App Indexing.  See https://g.co/AppIndexing/AndroidStudio for more information.
@@ -59,28 +66,33 @@
             android:value="@integer/google_play_services_version" />
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="@string/google_api_key" />
+            android:value="AIzaSyDDW-ZGLBHF8DybvfYmvXPY20l-4CIw-e4" />
 
         <activity
             android:name=".JourneyActivity"
             android:label="@string/title_activity_journey"
             android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="stateAlwaysHidden" />
+        <activity
+            android:name=".AutoCompleteActivity"
+            android:label="@string/title_activity_auto_complete"
+            android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateAlwaysHidden"/>
+
         <activity
             android:name=".TimeSheet"
             android:label="@string/title_activity_time_sheet"
             android:theme="@style/AppTheme.NoActionBar"
-            android:windowSoftInputMode="stateAlwaysHidden"/>
+            android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
             android:name=".ViewTimeSheet"
             android:label="@string/title_activity_view_time_sheet"
-            android:theme="@style/AppTheme.NoActionBar"
-            />
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".SendTimeSheet"
             android:label="@string/title_activity_send_time_sheet"
             android:theme="@style/AppTheme.NoActionBar"
-            android:windowSoftInputMode="stateAlwaysHidden"></activity>
+            android:windowSoftInputMode="stateAlwaysHidden" />
     </application>
 
 </manifest>
