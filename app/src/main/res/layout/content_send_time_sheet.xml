@@ -5,7 +5,7 @@
     android:windowActionBar="false"
     android:layout_height="fill_parent"
     xmlns:tools="http://schemas.android.com/tools"
-    android:background="@drawable/grad"
+    android:background="@drawable/grad_two"
     android:gravity="center"
     android:orientation="vertical"
     android:padding="10dp"

@@ -69,22 +69,24 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void registerUser(){
+        //Getting users values from edit texts
         final String username = editTextUsername.getText().toString().trim();
         final String password = editTextPassword.getText().toString().trim();
         final String email = editTextEmail.getText().toString().trim();
         final String empid = editTextEmpid.getText().toString().trim();
-
+        //Creating a string request
         StringRequest stringRequest = new StringRequest(Request.Method.POST, REGISTER_URL,
                 new Response.Listener<String>() {
                     @Override
+                    //Recieves a response from the server indicating wether registration is successful or not
                     public void onResponse(String response) {
+                        //Displays the response to the user
                         Toast.makeText(MainActivity.this,response,Toast.LENGTH_LONG).show();
                     }
-
-
                 },
                 new Response.ErrorListener() {
                     @Override
+                    //Displays any error messages to the user
                     public void onErrorResponse(VolleyError error) {
                         Toast.makeText(MainActivity.this,error.toString(),Toast.LENGTH_LONG).show();
                     }

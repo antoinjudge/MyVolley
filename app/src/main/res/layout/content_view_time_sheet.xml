@@ -3,66 +3,123 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     xmlns:tools="http://schemas.android.com/tools"
-    android:background="@color/bg_login"
+    android:background="@drawable/grad_two"
     android:gravity="center"
     android:orientation="vertical"
     android:padding="10dp"
     tools:context="myapps.myvolley.ViewTimeSheet"
     tools:showIn="@layout/activity_view_time_sheet">
-
     <TextView
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="81dp"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:gravity="center"
+        android:text="@string/app_name"
+        android:id="@+id/textDay"
+        android:textSize="38sp"
+        android:textColor="#ffffffff" />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="81dp"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:gravity="center"
+        android:text="@string/app_name"
+        android:id="@+id/textDate"
+        android:textSize="38sp"
+        android:textColor="#ffffffff" />
+
+    <EditText
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginTop="5dp"
+        android:inputType="text"
+        android:gravity="center_horizontal"
+        android:background="@drawable/rounded_border"
+        android:singleLine="true"
         android:text="ID"
         android:id="@+id/textViewId" />
 
 
 
-    <TextView
-        android:layout_width="wrap_content"
+    <EditText
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginTop="5dp"
+        android:inputType="text"
+        android:gravity="center_horizontal"
+        android:background="@drawable/rounded_border"
         android:text="Basic"
         android:id="@+id/textViewBasic" />
 
 
 
-    <TextView
-        android:layout_width="wrap_content"
+    <EditText
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginTop="5dp"
+        android:inputType="text"
+        android:gravity="center_horizontal"
+        android:background="@drawable/rounded_border"
         android:text="Overtime"
         android:id="@+id/textViewOverTime" />
 
 
-    <TextView
-        android:layout_width="wrap_content"
+    <EditText
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginTop="5dp"
+        android:inputType="text"
+        android:gravity="center_horizontal"
+        android:background="@drawable/rounded_border"
         android:text="Meals"
         android:id="@+id/textViewMeals" />
 
 
-    <TextView
-        android:layout_width="wrap_content"
+    <EditText
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginTop="5dp"
+        android:inputType="text"
+        android:gravity="center_horizontal"
+        android:background="@drawable/rounded_border"
         android:text="Mileage"
         android:id="@+id/textViewMileage" />
 
 
-    <TextView
-        android:layout_width="wrap_content"
+    <EditText
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="Mileage"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginTop="5dp"
+        android:inputType="text"
+        android:gravity="center_horizontal"
+        android:background="@drawable/rounded_border"
+        android:text="Date"
         android:id="@+id/textViewDate" />
-    <TextView
-        android:layout_width="wrap_content"
+    <EditText
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginTop="5dp"
+        android:inputType="text"
+        android:gravity="center_horizontal"
+        android:background="@drawable/rounded_border"
         android:text="Status"
         android:id="@+id/textViewStatus" />
 
 
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/editTextMileage" />
 
 
 
@@ -73,26 +130,21 @@
         android:weightSum="1">
 
         <Button
-            android:layout_width="wrap_content"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:text="Previous"
             android:id="@+id/btnPrev"
-            android:layout_weight="0.20" />
+            android:layout_weight="0.50" />
 
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Save"
-            android:id="@+id/btnSave"
-            android:layout_weight="0.27" />
+
 
 
         <Button
-            android:layout_width="wrap_content"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:text="Next"
             android:id="@+id/btnNext"
-            android:layout_weight="0.31" />
+            android:layout_weight="0.50" />
 
     </LinearLayout>
 

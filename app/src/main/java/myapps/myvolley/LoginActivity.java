@@ -114,15 +114,14 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        //If we are getting success from server
+                        //Compares the response from the server with our LOGIN_SUCCESS constant
                         if(response.equalsIgnoreCase(LOGIN_SUCCESS)){
-                            //Creating a shared preference
+                            //Once logged in creates a shared preference to keep the username and password of the user while logged in
                             SharedPreferences sharedPreferences = LoginActivity.this.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
-
-                            //Creating editor to store values to shared preferences
+                            //Create an editor to store the shared preference values
                             SharedPreferences.Editor editor = sharedPreferences.edit();
 
-                            //Adding values to editor
+                            //Adding values to Shared Preference, boolean true and employee id and password
                             editor.putBoolean(LOGGEDIN_SHARED_PREF, true);
                             editor.putString(EMPID_SHARED_PREF, empid);
                             editor.putString(PASSWORD_SHARED_PREF, password);
@@ -130,13 +129,12 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                             //Saving values to editor
                             editor.commit();
 
-                            //Starting profile activity
+                            //Starting the users profile activity
                             Intent intent = new Intent(LoginActivity.this, ProfileActivity.class);
                             startActivity(intent);
                         }else{
-                            //If the server response is not success
-                            //Displaying an error message on toast
-                            Toast.makeText(LoginActivity.this, "Invalid username or password", Toast.LENGTH_LONG).show();
+                            //If the login is not successful show error message
+                            Toast.makeText(LoginActivity.this, "Invalid employee id or password", Toast.LENGTH_LONG).show();
                         }
                     }
                 },

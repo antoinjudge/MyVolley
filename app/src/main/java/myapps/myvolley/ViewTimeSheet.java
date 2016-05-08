@@ -15,19 +15,25 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 public class ViewTimeSheet extends AppCompatActivity implements View.OnClickListener {
 
-    private TextView editTEmpID;
-    private TextView editTBasic;
-    private TextView editTMeals;
-    private TextView editTMileage;
-    private TextView editTOT;
-    private TextView editDate;
-    private TextView statusTV;
+    private EditText editTEmpID;
+    private EditText editTBasic;
+    private EditText editTMeals;
+    private EditText editTMileage;
+    private EditText editTOT;
+    private EditText editDate;
+    private EditText statusTV;
     private Button btnPrev;
     private Button btnNext;
     private Button btnSave;
     private Button btnDelete;
+    private TextView dayTxt;
+    private TextView dateTxt;
 
     private static final String SELECT_SQL = "SELECT * FROM times";
     private SQLiteDatabase db;
@@ -41,22 +47,24 @@ public class ViewTimeSheet extends AppCompatActivity implements View.OnClickList
 
         openDatabase();
 
-        editTEmpID = (TextView) findViewById(R.id.textViewId);
-        editTBasic = (TextView) findViewById(R.id.textViewBasic);
-        editTOT = (TextView) findViewById(R.id.textViewOverTime);
-        editTMeals = (TextView) findViewById(R.id.textViewMeals);
-        editTMileage = (TextView) findViewById(R.id.textViewMileage);
-        editDate =(TextView) findViewById(R.id.textViewDate);
-        statusTV =(TextView) findViewById(R.id.textViewStatus);
+        editTEmpID = (EditText) findViewById(R.id.textViewId);
+        editTBasic = (EditText) findViewById(R.id.textViewBasic);
+        editTOT = (EditText) findViewById(R.id.textViewOverTime);
+        editTMeals = (EditText) findViewById(R.id.textViewMeals);
+        editTMileage = (EditText) findViewById(R.id.textViewMileage);
+        editDate =(EditText) findViewById(R.id.textViewDate);
+        statusTV =(EditText) findViewById(R.id.textViewStatus);
+        dayTxt=(TextView) findViewById(R.id.textDay);
+        dateTxt=(TextView)findViewById(R.id.textDate);
 
         btnPrev = (Button) findViewById(R.id.btnPrev);
         btnNext = (Button) findViewById(R.id.btnNext);
-        btnSave = (Button) findViewById(R.id.btnSave);
+        //btnSave = (Button) findViewById(R.id.btnSave);
         btnDelete = (Button) findViewById(R.id.btnDelete);
 
         btnNext.setOnClickListener(this);
         btnPrev.setOnClickListener(this);
-        btnSave.setOnClickListener(this);
+       // btnSave.setOnClickListener(this);
         btnDelete.setOnClickListener(this);
         //SharedPreferences sharedPreferences = getSharedPreferences(LoginActivity.SHARED_PREF_NAME, LoginActivity.MODE_PRIVATE);
        // String myempid = sharedPreferences.getString(LoginActivity.EMPID_SHARED_PREF, "Not Available");
@@ -122,6 +130,12 @@ public class ViewTimeSheet extends AppCompatActivity implements View.OnClickList
         editTMileage.setText("Mileage : "+ mileage);
         editDate.setText( date);
         statusTV.setText("Status :"+ sts);
+        dateTxt.setText(date);
+        SimpleDateFormat sdf = new SimpleDateFormat("EEEE");
+        Date d = new Date(date);
+        String dayOfTheWeek = sdf.format(d);
+        dayTxt.setText(dayOfTheWeek);
+
     }
 
     protected void moveNext() {
@@ -138,24 +152,24 @@ public class ViewTimeSheet extends AppCompatActivity implements View.OnClickList
         showRecords();
 
     }
-    protected void saveRecord() {
-        String empid = editTEmpID.getText().toString().trim();
-        String basic = editTBasic.getText().toString().trim();
-        String overtime = editTOT.getText().toString().trim();
+  //  protected void saveRecord() {
+   //     String empid = editTEmpID.getText().toString().trim();
+    //    String basic = editTBasic.getText().toString().trim();
+    //    String overtime = editTOT.getText().toString().trim();
+//
+    //    String sql = "UPDATE times SET empid='" + empid + "', basic='" + basic + "' WHERE empid=" + empid + "';";
 
-        String sql = "UPDATE times SET empid='" + empid + "', basic='" + basic + "' WHERE empid=" + empid + "';";
+    //    if (basic.equals("") || overtime.equals("") || empid.equals("")) {
+    //        Toast.makeText(getApplicationContext(), "You cannot save blank values", Toast.LENGTH_LONG).show();
+    //        return;
+    //    }
+//
 
-        if (basic.equals("") || overtime.equals("") || empid.equals("")) {
-            Toast.makeText(getApplicationContext(), "You cannot save blank values", Toast.LENGTH_LONG).show();
-            return;
-        }
-
-
-        db.execSQL(sql);
-        Toast.makeText(getApplicationContext(), "Records Saved Successfully", Toast.LENGTH_LONG).show();
-        c = db.rawQuery(SELECT_SQL, null);
-        c.moveToPosition(Integer.parseInt(empid));
-    }
+     //   db.execSQL(sql);
+      //  Toast.makeText(getApplicationContext(), "Records Saved Successfully", Toast.LENGTH_LONG).show();
+      //  c = db.rawQuery(SELECT_SQL, null);
+     //   c.moveToPosition(Integer.parseInt(empid));
+   // }
 
     protected void deleteRecord() {
         String empid = editTEmpID.getText().toString().trim();
@@ -187,9 +201,9 @@ public class ViewTimeSheet extends AppCompatActivity implements View.OnClickList
             movePrev();
         }
 
-        if (v == btnSave) {
-            saveRecord();
-        }
+       //if (v == btnSave) {
+        //    saveRecord();
+      //  }
         if (v == btnDelete) {
             deleteRecord();
         }

@@ -12,4 +12,10 @@ public class ExampleUnitTest {
     public void addition_isCorrect() throws Exception {
         assertEquals(4, 2 + 2);
     }
+    @Test
+    public void showPeoples() throws Exception{
+        assertEquals(8, 4+4);
+
+    }
+
 }

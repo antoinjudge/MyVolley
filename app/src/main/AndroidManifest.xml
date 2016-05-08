@@ -14,7 +14,7 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/calendar"
+        android:icon="@drawable/color_time"
         android:label="MobileTimeSheet"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
