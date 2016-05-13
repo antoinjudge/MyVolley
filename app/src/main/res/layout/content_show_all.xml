@@ -1,15 +1,137 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="myapps.myvolley.showAll"
-    tools:showIn="@layout/activity_show_all">
+    android:background="@drawable/grad_two"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:padding="10dp"
+    tools:context="myapps.myvolley.ShowAll"
+    >
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="81dp"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:gravity="center"
+        android:text="@string/app_name"
+        android:id="@+id/textDay"
+        android:textSize="38sp"
+        android:textColor="#ffffffff" />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="81dp"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:gravity="center"
+        android:text="@string/app_name"
+        android:id="@+id/textDate"
+        android:textSize="38sp"
+        android:textColor="#ffffffff" />
 
-</RelativeLayout>
+    <EditText
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginTop="5dp"
+        android:inputType="text"
+        android:gravity="center_horizontal"
+        android:background="@drawable/rounded_border"
+        android:singleLine="true"
+        android:text="ID"
+        android:id="@+id/editTextJourneyId" />
+
+
+
+    <EditText
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginTop="5dp"
+        android:inputType="text"
+        android:gravity="center_horizontal"
+        android:background="@drawable/rounded_border"
+        android:text="Basic"
+        android:id="@+id/editTextStartLoc" />
+
+
+
+    <EditText
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginTop="5dp"
+        android:inputType="text"
+        android:gravity="center_horizontal"
+        android:background="@drawable/rounded_border"
+        android:text="Overtime"
+        android:id="@+id/editTextEndLoc" />
+    <EditText
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginTop="5dp"
+        android:inputType="text"
+        android:gravity="center_horizontal"
+        android:background="@drawable/rounded_border"
+        android:text="Overtime"
+        android:id="@+id/editTextDist" />
+    <EditText
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginTop="5dp"
+        android:inputType="text"
+        android:gravity="center_horizontal"
+        android:background="@drawable/rounded_border"
+        android:text="Overtime"
+        android:id="@+id/editTextDate" />
+
+
+
+
+
+
+
+
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:weightSum="1">
+
+        <Button
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="Previous"
+            android:id="@+id/btnPrev"
+            android:layout_weight="0.50" />
+
+
+
+
+        <Button
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="Next"
+            android:id="@+id/btnNext"
+            android:layout_weight="0.50" />
+
+    </LinearLayout>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="send"
+        android:id="@+id/sendJourneyBtn" />
+
+
+</LinearLayout>
+
+
+

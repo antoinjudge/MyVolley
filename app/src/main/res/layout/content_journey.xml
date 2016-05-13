@@ -38,6 +38,7 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:id="@+id/startAddressET"
+        android:background="@drawable/rounded_border"
         android:singleLine="true"
         android:text="@string/startAddressHint" />
     <TextView
@@ -49,6 +50,7 @@
     <EditText
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
+        android:background="@drawable/rounded_border"
         android:id="@+id/endAddressET"
         android:singleLine="true"
         android:text="@string/startAddressHint" />
@@ -95,7 +97,8 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="Input manualy?"
+            android:text="Input Manually?"
+            android:textColor="#ffffffff"
             android:gravity="center"
             android:id="@+id/manualTV" />
 

@@ -119,33 +119,6 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:textSize="18sp"
-            android:text="Mileage" />
-
-        <EditText
-            android:id="@+id/editTextMileage"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_marginLeft="15dp"
-            android:layout_marginRight="15dp"
-            android:layout_marginTop="5dp"
-            android:inputType="text"
-            android:gravity="center_horizontal"
-            android:background="@drawable/rounded_border"
-            android:textStyle="bold"
-            android:textSize="21sp"
-            android:ems="10" >
-        </EditText>
-        <requestFocus />
-
-
-
-        <TextView
-            android:id="@+id/textViewDate"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:textSize="18sp"
             android:text="Date" />
 
         <EditText
@@ -164,6 +137,10 @@
             android:ems="10" >
         </EditText>
         <requestFocus />
+
+
+
+
 
         <LinearLayout
             android:orientation="horizontal"
@@ -223,6 +200,7 @@
                 android:inputType="text"
                 android:textSize="21sp"
                 android:ems="10"
+                android:gravity="center"
                 android:focusable="false">
             </EditText>
 

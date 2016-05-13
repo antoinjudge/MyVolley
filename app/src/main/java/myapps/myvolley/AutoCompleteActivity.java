@@ -98,8 +98,7 @@ public class AutoCompleteActivity extends AppCompatActivity implements GoogleApi
                 if (!s.toString().equals("") && mGoogleApiClient.isConnected()) {
                     mAutoCompleteAdapter.getFilter().filter(s.toString());
                 } else if (!mGoogleApiClient.isConnected()) {
-                    //Toast.makeText(getApplicationContext(), SyncStateContract.Constants.API_NOT_CONNECTED, Toast.LENGTH_SHORT).show();
-                    // Log.e(SyncStateContract.Constants.PlacesTag, SyncStateContract.Constants.API_NOT_CONNECTED);
+
                 }
 
             }
@@ -121,8 +120,7 @@ public class AutoCompleteActivity extends AppCompatActivity implements GoogleApi
                 if (!s.toString().equals("") && mGoogleApiClient.isConnected()) {
                     mAutoCompleteAdapterTwo.getFilter().filter(s.toString());
                 } else if (!mGoogleApiClient.isConnected()) {
-                    //Toast.makeText(getApplicationContext(), SyncStateContract.Constants.API_NOT_CONNECTED, Toast.LENGTH_SHORT).show();
-                    // Log.e(SyncStateContract.Constants.PlacesTag, SyncStateContract.Constants.API_NOT_CONNECTED);
+
                 }
 
             }

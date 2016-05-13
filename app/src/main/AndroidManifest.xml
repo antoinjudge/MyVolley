@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="myapps.myvolley">
+
     <permission
         android:name="com.kuliza.taxi.permission.MAPS_RECEIVE"
         android:protectionLevel="signature" />
@@ -77,8 +78,7 @@
             android:name=".AutoCompleteActivity"
             android:label="@string/title_activity_auto_complete"
             android:theme="@style/AppTheme.NoActionBar"
-            android:windowSoftInputMode="stateAlwaysHidden"/>
-
+            android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
             android:name=".TimeSheet"
             android:label="@string/title_activity_time_sheet"
@@ -93,6 +93,10 @@
             android:label="@string/title_activity_send_time_sheet"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateAlwaysHidden" />
+        <activity
+            android:name=".ViewWeekly"
+            android:label="@string/title_activity_view_weekly"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

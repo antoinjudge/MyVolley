@@ -17,6 +17,7 @@ import android.widget.Toast;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 public class ViewTimeSheet extends AppCompatActivity implements View.OnClickListener {
@@ -24,7 +25,7 @@ public class ViewTimeSheet extends AppCompatActivity implements View.OnClickList
     private EditText editTEmpID;
     private EditText editTBasic;
     private EditText editTMeals;
-    private EditText editTMileage;
+    //private EditText editTMileage;
     private EditText editTOT;
     private EditText editDate;
     private EditText statusTV;
@@ -35,15 +36,28 @@ public class ViewTimeSheet extends AppCompatActivity implements View.OnClickList
     private TextView dayTxt;
     private TextView dateTxt;
 
-    private static final String SELECT_SQL = "SELECT * FROM times";
+private static final String SELECT_SQL = "SELECT * FROM times";
+   // private static final String SELECT_SQL = "SELECT SUM(basic),SUM (overtime), SUM(meals) FROM times WHERE date BETWEEN '2016/05/11' AND '2016/05/14'";
     private SQLiteDatabase db;
 
     private Cursor c;
+    private Cursor cur;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_time_sheet);
+
+        //Get The Date of First Day Of Week
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        String firstDate = simpleDateFormat.format(calendar.getTime());
+
+        //Get todays Date
+        SimpleDateFormat currentDate = new SimpleDateFormat("yyyy/MM/dd");
+        Date todayDate = new Date();
+        String thisDate = currentDate.format(todayDate);
 
         openDatabase();
 
@@ -51,7 +65,7 @@ public class ViewTimeSheet extends AppCompatActivity implements View.OnClickList
         editTBasic = (EditText) findViewById(R.id.textViewBasic);
         editTOT = (EditText) findViewById(R.id.textViewOverTime);
         editTMeals = (EditText) findViewById(R.id.textViewMeals);
-        editTMileage = (EditText) findViewById(R.id.textViewMileage);
+        //editTMileage = (EditText) findViewById(R.id.textViewMileage);
         editDate =(EditText) findViewById(R.id.textViewDate);
         statusTV =(EditText) findViewById(R.id.textViewStatus);
         dayTxt=(TextView) findViewById(R.id.textDay);
@@ -61,6 +75,7 @@ public class ViewTimeSheet extends AppCompatActivity implements View.OnClickList
         btnNext = (Button) findViewById(R.id.btnNext);
         //btnSave = (Button) findViewById(R.id.btnSave);
         btnDelete = (Button) findViewById(R.id.btnDelete);
+        btnDelete.setVisibility(View.INVISIBLE);
 
         btnNext.setOnClickListener(this);
         btnPrev.setOnClickListener(this);
@@ -74,6 +89,16 @@ public class ViewTimeSheet extends AppCompatActivity implements View.OnClickList
 
 
            c = db.rawQuery(SELECT_SQL, null);
+        if ( c.moveToFirst() ) {
+            // start activity a
+            c.moveToFirst();
+            showRecords();
+        }
+        else{
+            Toast.makeText(getApplicationContext(), "No records in Database", Toast.LENGTH_LONG).show();
+        }
+
+        cur = db.rawQuery(SELECT_SQL, null);
         if ( c.moveToFirst() ) {
             // start activity a
             c.moveToFirst();
@@ -105,7 +130,7 @@ public class ViewTimeSheet extends AppCompatActivity implements View.OnClickList
 
 
     protected void openDatabase() {
-        db = openOrCreateDatabase("ThisDailyTS", Context.MODE_PRIVATE, null);
+        db = openOrCreateDatabase("CurrentDailyTS", Context.MODE_PRIVATE, null);
     }
 
     protected void showRecords() {
@@ -113,9 +138,9 @@ public class ViewTimeSheet extends AppCompatActivity implements View.OnClickList
         String basic = c.getString(1);
         String overtime = c.getString(2);
         String meals = c.getString(3);
-        String mileage = c.getString(4);
-        String date =c.getString(5);
-        String status=c.getString(6);
+       // String mileage = c.getString(4);
+        String date =c.getString(4);
+        String status=c.getString(5);
         String sts ="";
         if(status.equals("0")){
              sts="Not Submitted";
@@ -127,7 +152,7 @@ public class ViewTimeSheet extends AppCompatActivity implements View.OnClickList
         editTBasic.setText("Basic Hours : "+basic);
         editTOT.setText("Overtime Hours : "+overtime);
         editTMeals.setText("Meals : "+meals);
-        editTMileage.setText("Mileage : "+ mileage);
+        //editTMileage.setText("Mileage : "+ mileage);
         editDate.setText( date);
         statusTV.setText("Status :"+ sts);
         dateTxt.setText(date);

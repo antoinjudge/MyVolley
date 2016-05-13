@@ -37,8 +37,9 @@ public class TimeSheet extends AppCompatActivity implements View.OnClickListener
     private TextView dateTV;
 
     private Button btnAdd;
-    private EditText editTMiles;
+    //private EditText editTMiles;
     private  Button btnView;
+    private Button btnViewWeekly;
 
 
 
@@ -57,7 +58,7 @@ public class TimeSheet extends AppCompatActivity implements View.OnClickListener
         editTBasic = (EditText) findViewById(R.id.editTextBasic);
         editTOT = (EditText) findViewById(R.id.editTextOverTime);
         editTMeals = (EditText) findViewById(R.id.editTextMeals);
-        editTMiles = (EditText) findViewById(R.id.editTextMileage);
+        //editTMiles = (EditText) findViewById(R.id.editTextMileage);
         editTEmpID =(EditText) findViewById(R.id.editTextEmpID);
         dateTV=(TextView) findViewById(R.id.textView3);
         SimpleDateFormat sdf = new SimpleDateFormat("EEEE");
@@ -67,9 +68,12 @@ public class TimeSheet extends AppCompatActivity implements View.OnClickListener
 
         btnAdd = (Button) findViewById(R.id.buttonAddToTimeSheet);
         btnView = (Button) findViewById(R.id.buttonViewTimeSheet);
+        btnViewWeekly=(Button) findViewById(R.id.buttonViewWeeklySheet);
+
 
         btnAdd.setOnClickListener(this);
         btnView.setOnClickListener(this);
+        btnViewWeekly.setOnClickListener(this);
 
 
 
@@ -87,12 +91,14 @@ public class TimeSheet extends AppCompatActivity implements View.OnClickListener
     }
 
     protected void openDatabase() {
-        db = openOrCreateDatabase("ThisDailyTS", Context.MODE_PRIVATE, null);
+        db = openOrCreateDatabase("CurrentDailyTS", Context.MODE_PRIVATE, null);
     }
 
     protected void createDatabase(){
-        db=openOrCreateDatabase("ThisDailyTS", Context.MODE_PRIVATE, null);
-        db.execSQL("CREATE TABLE IF NOT EXISTS times(empid INTEGER , basic INTEGER  NOT NULL DEFAULT 0,overtime INTEGER NOT NULL DEFAULT 0, meals INTEGER NOT NULL DEFAULT 0, mileage INTEGER NOT NULL DEFAULT 0, date TEXT PRIMARY KEY  NOT NULL, sent INTEGER NOT NULL DEFAULT 0);");
+        db=openOrCreateDatabase("CurrentDailyTS", Context.MODE_PRIVATE, null);
+       // db.execSQL("CREATE TABLE IF NOT EXISTS times(empid INTEGER , basic INTEGER  NOT NULL DEFAULT 0,overtime INTEGER NOT NULL DEFAULT 0, meals INTEGER NOT NULL DEFAULT 0, mileage INTEGER NOT NULL DEFAULT 0, date TEXT PRIMARY KEY  NOT NULL, sent INTEGER NOT NULL DEFAULT 0);");
+        db.execSQL("CREATE TABLE IF NOT EXISTS times(empid INTEGER , basic INTEGER  NOT NULL DEFAULT 0,overtime INTEGER NOT NULL DEFAULT 0, meals INTEGER NOT NULL DEFAULT 0, date TEXT PRIMARY KEY  NOT NULL, sent INTEGER NOT NULL DEFAULT 0);");
+        db.execSQL("CREATE TABLE IF NOT EXISTS journey(journeyid INTEGER PRIMARY KEY AUTOINCREMENT, startloc TEXT , endloc TEXT, dist INTEGER, date TEXT);");
 
     }
 
@@ -112,11 +118,11 @@ public class TimeSheet extends AppCompatActivity implements View.OnClickListener
         int myOT = Integer.parseInt(overtime);
         String meals = editTMeals.getText().toString().trim();
         int myMeals = Integer.parseInt(meals);
-        String mileage = editTMiles.getText().toString().trim();
-        int myMileage = Integer.parseInt(mileage);
+        //String mileage = editTMiles.getText().toString().trim();
+        //int myMileage = Integer.parseInt(mileage);
         String date = thisDate.toUpperCase().trim();
 
-        if (basic.equals("") || overtime.equals("") || meals.equals("") || mileage.equals("") || empID.equals("")) {
+        if (basic.equals("") || overtime.equals("") || meals.equals("")  || empID.equals("")) {
             Toast.makeText(getApplicationContext(), "Please fill all fields", Toast.LENGTH_LONG).show();
             return;
         }
@@ -127,7 +133,8 @@ public class TimeSheet extends AppCompatActivity implements View.OnClickListener
         else {
             String query = "INSERT OR IGNORE INTO times (empid, date) VALUES('" + myEmpId + "',  '" + date + "' );";// UPDATE times SET( empId = '"+empID+"',basic = '"+(basic+ 100)+" WHERE date = '"+date+");";
             db.execSQL(query);
-            String query2 = "UPDATE times SET basic = basic +'" + mybasic + "',overtime= overtime+ '" + myOT + "', meals = meals +'" + myMeals + "', mileage = mileage + '" + myMileage + "' WHERE date = '" + date + "' AND empid = '" + myEmpId + "'";
+           // String query2 = "UPDATE times SET basic = basic +'" + mybasic + "',overtime= overtime+ '" + myOT + "', meals = meals +'" + myMeals + "', mileage = mileage + '" + myMileage + "' WHERE date = '" + date + "' AND empid = '" + myEmpId + "'";
+            String query2 = "UPDATE times SET basic = basic +'" + mybasic + "',overtime= overtime+ '" + myOT + "', meals = meals +'" + myMeals + "'  WHERE date = '" + date + "' AND empid = '" + myEmpId + "'";
             db.execSQL(query2);
             Toast.makeText(getApplicationContext(), "Saved Successfully", Toast.LENGTH_LONG).show();
             //}
@@ -182,6 +189,13 @@ public class TimeSheet extends AppCompatActivity implements View.OnClickListener
         if(v==btnView){
             showPeoples();
         }
+        if(v==btnViewWeekly){
+            Intent intent = new Intent(this,ViewWeekly.class);
+            startActivity(intent);
+            finish();
+
+        }
+
     }
 
     private void showPeoples(){

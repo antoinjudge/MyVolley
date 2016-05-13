@@ -4,7 +4,7 @@
     android:windowActionBar="false"
     android:layout_height="fill_parent"
     xmlns:tools="http://schemas.android.com/tools"
-    android:background="@drawable/grad"
+    android:background="@drawable/grad_two"
     android:gravity="center"
     android:orientation="vertical"
     android:padding="10dp"
@@ -54,7 +54,10 @@
         android:layout_marginRight="15dp"
         android:layout_marginTop="5dp"
         android:inputType="text"
-        android:textSize="17sp"
+        android:gravity="center_horizontal"
+        android:background="@drawable/rounded_border"
+        android:textStyle="bold"
+        android:textSize="21sp"
         android:ems="10" >
 
         <requestFocus />
@@ -76,7 +79,10 @@
         android:layout_marginRight="15dp"
         android:layout_marginTop="5dp"
         android:inputType="text"
-        android:textSize="17sp"
+        android:gravity="center_horizontal"
+        android:background="@drawable/rounded_border"
+        android:textStyle="bold"
+        android:textSize="21sp"
         android:ems="10" >
     </EditText>
 
@@ -96,30 +102,14 @@
         android:layout_marginRight="15dp"
         android:layout_marginTop="5dp"
         android:inputType="text"
-        android:textSize="17sp"
+        android:gravity="center_horizontal"
+        android:background="@drawable/rounded_border"
+        android:textStyle="bold"
+        android:textSize="21sp"
         android:ems="10" >
     </EditText>
 
-    <TextView
-        android:id="@+id/textViewMileage"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:textSize="18sp"
-        android:text="Mileage" />
 
-    <EditText
-        android:id="@+id/editTextMileage"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_marginLeft="15dp"
-        android:layout_marginRight="15dp"
-        android:layout_marginTop="5dp"
-        android:inputType="textPassword"
-        android:textSize="17sp"
-        android:ems="10" >
-    </EditText>
 
     <TextView
         android:id="@+id/textViewEmpID"
@@ -133,12 +123,14 @@
         android:id="@+id/editTextEmpID"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
         android:layout_marginLeft="15dp"
         android:layout_marginRight="15dp"
         android:layout_marginTop="5dp"
-        android:inputType="textPassword"
-        android:textSize="17sp"
+        android:inputType="text"
+        android:gravity="center_horizontal"
+        android:background="@drawable/rounded_border"
+        android:textStyle="bold"
+        android:textSize="21sp"
         android:ems="10" >
     </EditText>
 
@@ -151,14 +143,29 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="40dp"
         android:text="Add to Timesheet" />
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:weightSum="1">
     <Button
         android:id="@+id/buttonViewTimeSheet"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="40dp"
-        android:text="View Timesheet" />
+        android:text="Daily Timesheets"
+        android:layout_weight="0.50"/>
+
+        <Button
+            android:id="@+id/buttonViewWeeklySheet"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_centerHorizontal="true"
+            android:text="Weekly Timesheets"
+            android:layout_weight="0.50"/>
+        </LinearLayout>
 
 
 

@@ -7,8 +7,8 @@
     android:gravity="center"
     android:orientation="vertical"
     android:padding="10dp"
-    tools:context="myapps.myvolley.ViewTimeSheet"
-    tools:showIn="@layout/activity_view_time_sheet">
+    tools:context="myapps.myvolley.ViewWeekly"
+    tools:showIn="@layout/activity_view_weekly">
     <TextView
         android:layout_width="match_parent"
         android:layout_height="81dp"
@@ -108,6 +108,14 @@
         android:background="@drawable/rounded_border"
         android:text="Status"
         android:id="@+id/textViewStatus" />
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Search Date Range"
+        android:textColor="#ffffffff"
+        android:gravity="center"
+        android:id="@+id/dateRangeTV" />
 
 
 
@@ -119,21 +127,23 @@
         android:layout_height="wrap_content"
         android:weightSum="1">
 
-        <Button
+        <TextView
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text="Previous"
-            android:id="@+id/btnPrev"
+            android:text="Start Date"
+            android:id="@+id/startTV"
+            android:gravity="center"
             android:layout_weight="0.50" />
 
 
 
 
-        <Button
+        <TextView
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text="Next"
-            android:id="@+id/btnNext"
+            android:text="End Date"
+            android:id="@+id/endTV"
+            android:gravity="center"
             android:layout_weight="0.50" />
 
     </LinearLayout>
@@ -141,8 +151,8 @@
     <Button
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="Delete"
-        android:id="@+id/btnDelete" />
+        android:text="Search"
+        android:id="@+id/btnSearch" />
 
 </LinearLayout>
 

@@ -89,8 +89,9 @@ public class SendTimeSheet extends AppCompatActivity implements View.OnClickList
         //editTextOver.setEnabled(false);
         editTextEmpid = (EditText) findViewById(R.id.editTextEmpID);
         editTextMeal = (EditText) findViewById(R.id.editTextMeals);
-        editTextMileage = (EditText) findViewById(R.id.editTextMileage);
+        //editTextMileage = (EditText) findViewById(R.id.editTextMileage);
         editTextDate = (EditText) findViewById(R.id.editTextDate);
+
         searchEditText =(EditText)findViewById(R.id.searchDateEditText);
         searchEditText.setOnClickListener(this);
         dayView =(TextView)findViewById(R.id.dayTv);
@@ -105,6 +106,7 @@ public class SendTimeSheet extends AppCompatActivity implements View.OnClickList
         buttonUpdate.setOnClickListener(this);
         btnSave=(Button)findViewById(R.id.buttonSave);
         btnSave.setOnClickListener(this);
+        btnSave.setVisibility(View.INVISIBLE);
 
 
         c = db.rawQuery(SELECT_SQL, null);
@@ -117,7 +119,7 @@ public class SendTimeSheet extends AppCompatActivity implements View.OnClickList
             Toast.makeText(getApplicationContext(), "No records in Database", Toast.LENGTH_LONG).show();
             dayView.setText(today);
             btnNext.setVisibility(View.INVISIBLE);
-            btnSave.setVisibility(View.INVISIBLE);
+           // btnSave.setVisibility(View.INVISIBLE);
             btnPrev.setVisibility(View.INVISIBLE);
         }
 
@@ -139,7 +141,8 @@ public class SendTimeSheet extends AppCompatActivity implements View.OnClickList
             // Setting Dialog Title
             alertDialog.setTitle("Confirm Submission...");
             // Setting Icon to Dialog
-            alertDialog.setIcon(R.drawable.common_plus_signin_btn_icon_light_focused);
+            alertDialog.setIcon(R.drawable.color_time);
+
             // Setting Dialog Message
             alertDialog.setMessage("Are you sure?? Cannot be undone!!");
             // Setting Positive "Yes" Button
@@ -194,8 +197,7 @@ public class SendTimeSheet extends AppCompatActivity implements View.OnClickList
         @Override
         public void onDateSet(DatePicker view, int year, int monthOfYear,
                               int dayOfMonth) {
-            // TODO Auto-generated method stub
-            // getCalender();
+
             int mYear = year;
             NumberFormat formatter = new DecimalFormat("00");
             String theYear =formatter.format(mYear);
@@ -206,22 +208,13 @@ public class SendTimeSheet extends AppCompatActivity implements View.OnClickList
             String theDate =theYear+"/"+theMonth+"/"+theDay+" ";
             searchEditText.setText(theDate);
             searchDate();
-
-
-
-            //searchEditText.setText(new StringBuilder()
-                    // Month is 0 based so add 1
-                    //.append(mYear ).append("/").append(mMonth + 1).append("/")
-                    //.append(mDay).append(" "));
-           // System.out.println(searchEditText.getText().toString());
-
-
         }
     }
 
 
+
     protected void openDatabase() {
-        db = openOrCreateDatabase("ThisDailyTS", Context.MODE_PRIVATE, null);
+        db = openOrCreateDatabase("CurrentDailyTS", Context.MODE_PRIVATE, null);
     }
 
     protected void showRecords() {
@@ -229,18 +222,19 @@ public class SendTimeSheet extends AppCompatActivity implements View.OnClickList
         String basic = c.getString(1);
         String overtime = c.getString(2);
         String meals = c.getString(3);
-        String mileage = c.getString(4);
-        String date =c.getString(5);
+        String date = c.getString(4);
+        String sent =c.getString(5);
 
 
         editTextBasic.setText(basic);
        // editTextBasic.setEnabled(false);
         editTextOver.setText(overtime);
         editTextMeal.setText(meals);
-        editTextMileage.setText(mileage);
+
         editTextDate.setText(date);
         dayView.setText(date);
     }
+
     protected void showDaily(){
 
         String emplid = cur.getString(0);
@@ -268,7 +262,7 @@ public class SendTimeSheet extends AppCompatActivity implements View.OnClickList
             cur.moveToFirst();
             showDaily();
             btnNext.setVisibility(View.INVISIBLE);
-            btnSave.setVisibility(View.INVISIBLE);
+           // btnSave.setVisibility(View.INVISIBLE);
             btnPrev.setVisibility(View.INVISIBLE);
         }
         else{
@@ -280,8 +274,7 @@ public class SendTimeSheet extends AppCompatActivity implements View.OnClickList
             editTextOver.setEnabled(false);
             editTextMeal.setText("");
             editTextMeal.setEnabled(false);
-            editTextMileage.setText("");
-            editTextMileage.setEnabled(false);
+
             editTextDate.setText("");
             editTextDate.setEnabled(false);
 
@@ -317,15 +310,15 @@ public class SendTimeSheet extends AppCompatActivity implements View.OnClickList
         final String overtime = editTextOver.getText().toString().trim();
         final String meals = editTextMeal.getText().toString().trim();
        // final String empid = editTextEmpid.getText().toString().trim();
-        final String mileage = editTextMileage.getText().toString().trim();
-        final String password = pword.toString().trim();
+       // final String mileage = editTextMileage.getText().toString().trim();
+       // final String password = pword.toString().trim();
         final String empid = myempid.toString().trim();
         final String date = editTextDate.getText().toString().trim();
         SimpleDateFormat currentDate = new SimpleDateFormat("yyyy/MM/dd");
         Date todayDate = new Date();
         final String thisDate = currentDate.format(todayDate);
 
-        if (basic.equals("") || overtime.equals("") || meals.equals("") || mileage.equals("") || date.equals("")) {
+        if (basic.equals("") || overtime.equals("") || meals.equals("") ||  date.equals("")) {
             Toast.makeText(getApplicationContext(), "Please fill all fields", Toast.LENGTH_LONG).show();
             return;
         }
@@ -336,7 +329,6 @@ public class SendTimeSheet extends AppCompatActivity implements View.OnClickList
                     public void onResponse(String response) {
                         Toast.makeText(SendTimeSheet.this, response, Toast.LENGTH_LONG).show();
                     }
-
 
                 },
                 new Response.ErrorListener() {
@@ -354,14 +346,10 @@ public class SendTimeSheet extends AppCompatActivity implements View.OnClickList
                 params.put(KEY_BASIC, basic);
                 params.put(KEY_OVERTIME, overtime);
                 params.put(KEY_MEAL, meals);
-                params.put(KEY_MILEAGE, mileage);
+               // params.put(KEY_MILEAGE, mileage);
 
                 return params;
             }
-
-
-
-
 
         };
 
@@ -369,7 +357,8 @@ public class SendTimeSheet extends AppCompatActivity implements View.OnClickList
         requestQueue.add(stringRequest);
         String sql = "UPDATE times SET sent='1' WHERE empid = '"+empid+"' AND date ='"+date+"'";
         db.execSQL(sql);
-        Toast.makeText(getApplicationContext(), "Records Saved Successfully", Toast.LENGTH_LONG).show();
+        Toast.makeText(getApplicationContext(), "Submitted, and updated your records", Toast.LENGTH_LONG).show();
+        recreate();
 
     }
 

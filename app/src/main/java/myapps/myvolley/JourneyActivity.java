@@ -239,7 +239,7 @@ public class JourneyActivity extends AppCompatActivity {
 
     }
     protected void openDatabase() {
-        db = openOrCreateDatabase("ThisDailyTS", Context.MODE_PRIVATE, null);
+        db = openOrCreateDatabase("CurrentDailyTS", Context.MODE_PRIVATE, null);
     }
     protected void insertIntoDB(){
         SharedPreferences sharedPreferences = getSharedPreferences(LoginActivity.SHARED_PREF_NAME, LoginActivity.MODE_PRIVATE);
@@ -253,16 +253,23 @@ public class JourneyActivity extends AppCompatActivity {
         String mileage = output.getText().toString().trim();
         int myMileage = Integer.parseInt(mileage);
         String date = thisDate.toUpperCase().trim();
+        EditText editText = (EditText) findViewById(R.id.startAddressET);
+        startAddress = editText.getText().toString();
+        EditText endEditText = (EditText) findViewById(R.id.endAddressET);
+        endAddress = endEditText.getText().toString();
+
 
         //if(isEntry(date)){
         //  String myQuery = "UPDATE times SET empid = '"+empID+"', basic ='"+(basic + basic)+"', overtime = '"+(overtime+overtime)+"', meals = '"+(meals+meals)+"', mileage ='"+(mileage+mileage)+"', date ='"+date+"';";
         //db.execSQL(myQuery);
         //}
         //else {
-        String query = "INSERT OR IGNORE INTO times (empID, date) VALUES('" + myEmpId + "',  '" + date + "' );";// UPDATE times SET( empId = '"+empID+"',basic = '"+(basic+ 100)+" WHERE date = '"+date+");";
-        db.execSQL(query);
-        String query2 = "UPDATE times SET   mileage = mileage + '"+myMileage+"' WHERE date = '"+date+"' AND empID = '"+myEmpId+"'";
-        db.execSQL(query2);
+       // String query = "INSERT OR IGNORE INTO times (empID, date) VALUES('" + myEmpId + "',  '" + date + "' );";// UPDATE times SET( empId = '"+empID+"',basic = '"+(basic+ 100)+" WHERE date = '"+date+");";
+       // db.execSQL(query);
+       // String query2 = "UPDATE times SET   mileage = mileage + '"+myMileage+"' WHERE date = '"+date+"' AND empID = '"+myEmpId+"'";
+       // db.execSQL(query2);
+        String query3 = "INSERT INTO journey (startloc, endloc, dist, date )VALUES('"+startAddress+"', '"+endAddress+"', '"+myMileage+"' , '"+date+"');";
+        db.execSQL(query3);
         Toast.makeText(getApplicationContext(), "Saved Successfully", Toast.LENGTH_LONG).show();
         //}
     }

@@ -33,6 +33,7 @@ public class ProfileActivity extends AppCompatActivity {
     private ImageButton journeyImgBtn;
     private ImageButton hoursImgBtn;
     private ImageButton submitImgBtn;
+    private ImageButton expImgBtn;
     /**
      * ATTENTION: This was auto-generated to implement the App Indexing API.
      * See https://g.co/AppIndexing/AndroidStudio for more information.
@@ -54,6 +55,7 @@ public class ProfileActivity extends AppCompatActivity {
         journeyImgBtn =(ImageButton) findViewById(R.id.fuelButton);
         hoursImgBtn=(ImageButton) findViewById(R.id.hoursButton);
         submitImgBtn=(ImageButton) findViewById(R.id.submitButton);
+        expImgBtn=(ImageButton) findViewById(R.id.expenseButton);
 
 
 
@@ -72,6 +74,14 @@ public class ProfileActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent i = new Intent(getApplicationContext(),
                         JourneyActivity.class);
+                startActivity(i);
+                finish();
+            }
+        });
+        expImgBtn.setOnClickListener(new View.OnClickListener(){
+            public void onClick(View view) {
+                Intent i = new Intent(getApplicationContext(),
+                        showAll.class);
                 startActivity(i);
                 finish();
             }
