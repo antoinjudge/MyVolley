@@ -102,13 +102,31 @@
         android:layout_centerInParent="true"
         android:layout_gravity="center"
         android:singleLine="true"/>
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Distance"
+        android:layout_below="@+id/getDistBtn"
+        android:textColor="#ffffffff"
+        android:gravity="center"
+        android:id="@+id/distTV" />
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Add to Timesheet?"
+        android:layout_below="@+id/distTV"
+        android:textColor="#ffffffff"
+        android:gravity="center"
+        android:id="@+id/addTV" />
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/resetBtn"
-        android:layout_marginTop="20dp"
+
         android:id="@+id/resetBtn"
-        android:layout_below="@+id/getDistBtn"
+        android:layout_below="@+id/addTV"
         android:gravity="center"
         android:layout_centerInParent="true"
         android:layout_gravity="center"

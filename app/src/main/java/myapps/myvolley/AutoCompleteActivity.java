@@ -1,5 +1,6 @@
 package myapps.myvolley;
 
+import android.net.Uri;
 import android.os.Bundle;
 import android.provider.SyncStateContract;
 import android.support.v7.app.AppCompatActivity;
@@ -15,8 +16,15 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.PendingResult;
@@ -26,6 +34,11 @@ import com.google.android.gms.location.places.PlaceBuffer;
 import com.google.android.gms.location.places.Places;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import myapps.myvolley.AutoCompleteAdapter;
 import myapps.myvolley.RecyclerListener;
 import myapps.myvolley.AutoCompleteAdapter;
@@ -41,6 +54,7 @@ public class AutoCompleteActivity extends AppCompatActivity implements GoogleApi
             new LatLng(-0, 0), new LatLng(0, 0));
 
     private EditText mAutocompleteView;
+    TextView output ;
     private EditText mAutocompleteViewTwo;
     private RecyclerView mRecyclerView;
     private RecyclerView mRecyclerViewTwo;
@@ -49,6 +63,10 @@ public class AutoCompleteActivity extends AppCompatActivity implements GoogleApi
     private AutoCompleteAdapter mAutoCompleteAdapter;
     private AutoCompleteAdapter mAutoCompleteAdapterTwo;
     private Button getKms;
+    private TextView addTextView;
+    private TextView distTextView;
+    RequestQueue requestQueue;
+    String data = "";
     private Button reset;
     ImageView delete;
     @Override
@@ -65,30 +83,122 @@ public class AutoCompleteActivity extends AppCompatActivity implements GoogleApi
                 mGoogleApiClient, BOUNDS_INDIA, null);
         mAutoCompleteAdapterTwo =  new AutoCompleteAdapter(this, R.layout.search_adapter_two,
                 mGoogleApiClient, BOUNDS_INDIA, null);
-
+        //Recycler View 1
         mRecyclerView=(RecyclerView)findViewById(R.id.recyclerView);
         mRecyclerViewTwo=(RecyclerView)findViewById(R.id.recyclerViewTwo);
         mLinearLayoutManager=new LinearLayoutManager(this);
         mLinearLayoutManagerTwo=new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(mLinearLayoutManager);
         mRecyclerView.setAdapter(mAutoCompleteAdapter);
-
+        //Recycler View 2
         mRecyclerViewTwo.setLayoutManager(mLinearLayoutManagerTwo);
         mRecyclerViewTwo.setAdapter(mAutoCompleteAdapterTwo);
         delete.setOnClickListener(this);
+        requestQueue = Volley.newRequestQueue(this);
 
         reset =(Button) findViewById(R.id.resetBtn);
         reset.setVisibility(View.INVISIBLE);
+        addTextView=(TextView)findViewById(R.id.addTV);
+        addTextView.setOnClickListener(this);
+        addTextView.setVisibility(View.INVISIBLE);
+        distTextView=(TextView) findViewById(R.id.distTV);
+        distTextView.setVisibility(View.INVISIBLE);
+
 
         reset.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-             recreate();
+                recreate();
                 mAutocompleteViewTwo.setText("");
                 mAutocompleteView.setText("");
 
             }
         });
+        getKms.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                //mAutocompleteViewTwo.setText("");
+               //mAutocompleteView.setText("");
+                //EditText editText = (EditText) findViewById(R.id.autocomplete_places);
+                String startAddress = mAutocompleteView.getText().toString();
+                try  {
+                    InputMethodManager imm = (InputMethodManager)getSystemService(INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
+                } catch (Exception e) {
+
+                }
+
+                //EditText endEditText = (EditText) findViewById(R.id.autocomplete_places_two);
+                String endAddress = mAutocompleteViewTwo.getText().toString();
+
+                Uri.Builder builder = new Uri.Builder();
+                builder.scheme("https")
+                        .authority("maps.googleapis.com")
+                        .appendPath("maps")
+                        .appendPath("api")
+                        .appendPath("distancematrix")
+                        .appendPath("json")
+                        .appendQueryParameter("origins", startAddress)
+                        .appendQueryParameter("destinations", endAddress)
+                        .appendQueryParameter("key", "AIzaSyDDW-ZGLBHF8DybvfYmvXPY20l-4CIw-e4");
+                String myUrl = builder.build().toString();
+                JsonObjectRequest jor = new JsonObjectRequest(Request.Method.GET, myUrl, null,
+                        new Response.Listener<JSONObject>() {
+                            @Override
+                            public void onResponse(JSONObject response) {
+
+                                try{
+
+                                    JSONArray array = response.getJSONArray("rows");
+
+                                    for(int i=0; i < array.length(); i++) {
+                                        JSONObject myJ = array.getJSONObject(i);
+                                        String myD = myJ.getString("elements");
+
+                                        JSONArray jsonObject = new JSONArray(myD);
+                                        for (int j = 0; j < jsonObject.length(); j++) {
+                                            String theObj = jsonObject.getJSONObject(j).getString("distance");
+
+                                            JSONObject jObjt = new JSONObject(theObj);
+                                            String finalDist = jObjt.getString("value");
+                                            Integer myDist = Integer.valueOf(finalDist);
+                                            int distKm = (myDist / 1000);
+
+                                            data = distKm + "\n";
+                                            //addButton.setVisibility(View.VISIBLE);
+                                           // distanceTV.setVisibility(View.VISIBLE);
+                                            Toast.makeText(getApplicationContext(), "Distance i Kilometers is "+ distKm, Toast.LENGTH_LONG).show();
+
+                                        }
+                                    }
+                                    distTextView.setVisibility(View.VISIBLE);
+                                    distTextView.setText(data);
+                                    addTextView.setVisibility(View.VISIBLE);
+
+
+
+
+                                }catch(JSONException e){e.printStackTrace();}
+                            }
+                        },
+                        new Response.ErrorListener() {
+                            @Override
+                            public void onErrorResponse(VolleyError error) {
+                                Log.e("Volley","Error");
+
+                            }
+                        }
+                );
+                requestQueue.add(jor);
+
+
+            }
+
+
+        });
+
+
 
 
         mAutocompleteView.addTextChangedListener(new TextWatcher() {

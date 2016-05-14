@@ -134,10 +134,7 @@ public class JourneyActivity extends AppCompatActivity {
 
                 EditText endEditText = (EditText) findViewById(R.id.endAddressET);
                 endAddress = endEditText.getText().toString();
-                //GeocodingLocation endLocationAddress = new GeocodingLocation();
-                //endLocationAddress.getAddressFromLocation(endAddress,
-                    //    getApplicationContext(), new GeocoderHandler());
-                //route = "https://maps.googleapis.com/maps/api/distancematrix/json?origins="+startAddress+"&destinations="+endAddress+"&key=AIzaSyDDW-ZGLBHF8DybvfYmvXPY20l-4CIw-e4";
+
                 final String FORECAST_BASE_URL =
                         "https://maps.googleapis.com/maps/api/distancematrix/json?";
                 final String QUERY_PARAM = "origins";
