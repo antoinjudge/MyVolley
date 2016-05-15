@@ -159,10 +159,14 @@ public class ViewWeekly extends AppCompatActivity implements View.OnClickListene
         String empID = myempid.toString().trim();
         int myEmpId= Integer.parseInt(empID);
 
-        editTEmpID.setText("Employee ID :"+myEmpId);
-        editTBasic.setText("Basic Hours : "+basic);
-        editTOT.setText("Overtime Hours : "+overtime);
-        editTMeals.setText("Meals : "+meals);
+        editTEmpID.setText("Employee ID :" + myEmpId);
+        editTEmpID.setKeyListener(null);
+        editTBasic.setText("Basic Hours : " + basic);
+        editTBasic.setKeyListener(null);
+        editTOT.setText("Overtime Hours : " + overtime);
+        editTOT.setKeyListener(null);
+        editTMeals.setText("Meals : " + meals);
+        editTMeals.setKeyListener(null);
 
     }
 
@@ -172,8 +176,10 @@ public class ViewWeekly extends AppCompatActivity implements View.OnClickListene
         calendar.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
         String firstDate = simpleDateFormat.format(calendar.getTime());
-        editDate.setText( "Total Mileage :"+ dist);
+        editDate.setText("Total Mileage :" + dist);
+        editDate.setKeyListener(null);
         statusTV.setText( "Beginning week: " + firstDate);
+        statusTV.setKeyListener(null);
         dateTxt.setText("Current Week");
 
     }
@@ -240,10 +246,14 @@ public class ViewWeekly extends AppCompatActivity implements View.OnClickListene
         String empID = myempid.toString().trim();
         int myEmpId= Integer.parseInt(empID);
 
-        editTEmpID.setText("Employee ID :"+myEmpId);
-        editTBasic.setText("Basic Hours : "+basic);
-        editTOT.setText("Overtime Hours : "+overtime);
-        editTMeals.setText("Meals : "+meals);
+        editTEmpID.setText("Employee ID :" + myEmpId);
+        editTEmpID.setKeyListener(null);
+        editTBasic.setText("Basic Hours : " + basic);
+        editTBasic.setKeyListener(null);
+        editTOT.setText("Overtime Hours : " + overtime);
+        editTOT.setKeyListener(null);
+        editTMeals.setText("Meals : " + meals);
+        editTMeals.setKeyListener(null);
         statusTV.setVisibility(View.INVISIBLE);
 
 
@@ -252,6 +262,7 @@ public class ViewWeekly extends AppCompatActivity implements View.OnClickListene
     protected  void searchSumDist(){
         String dist = curR1.getString(0);
         editDate.setText( "Total Mileage :"+ dist);
+        editDate.setKeyListener(null);
 
     }
 

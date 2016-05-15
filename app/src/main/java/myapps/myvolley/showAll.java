@@ -77,6 +77,7 @@ public class showAll extends AppCompatActivity implements View.OnClickListener {
         btnNext.setOnClickListener(this);
         btnPrev.setOnClickListener(this);
         sendBtn.setOnClickListener(this);
+        sendBtn.setVisibility(View.INVISIBLE);
         datetext =(TextView) findViewById(R.id.textDate);
         dayText =(TextView) findViewById(R.id.textDay);
 
@@ -110,11 +111,16 @@ public class showAll extends AppCompatActivity implements View.OnClickListener {
 
 
 
-        editTextJId.setText("Journey ID :"+journeyid);
-        startLocEdit.setText(startloc);
-        endlocEdit.setText( endloc);
-        distEdit.setText(dist);
-        dateEdit.setText(date);
+        editTextJId.setText("Journey ID :" + journeyid);
+        editTextJId.setKeyListener(null);
+        startLocEdit.setText("Start: "+startloc);
+        startLocEdit.setKeyListener(null);
+        endlocEdit.setText("End: "+endloc);
+        endlocEdit.setKeyListener(null);
+        distEdit.setText("Kilometers: "+dist);
+        distEdit.setKeyListener(null);
+        dateEdit.setText("Date: "+date);
+        dateEdit.setKeyListener(null);
         datetext.setText( date);
         SimpleDateFormat sdf = new SimpleDateFormat("EEEE");
         Date d = new Date(date);
@@ -157,8 +163,6 @@ public class showAll extends AppCompatActivity implements View.OnClickListener {
         Date todayDate = new Date();
         final String thisDate = currentDate.format(todayDate);
 
-
-
         StringRequest stringRequest = new StringRequest(Request.Method.POST, UPDATE_URL,
                 new Response.Listener<String>() {
                     @Override
@@ -182,8 +186,7 @@ public class showAll extends AppCompatActivity implements View.OnClickListener {
                 params.put(KEY_START, startloc);
                 params.put(KEY_END, endloc);
                 params.put(KEY_DIST, dist);
-                params.put(KEY_DATE, theDate);
-
+               // params.put(KEY_DATE, theDate);
 
                 return params;
             }
@@ -192,9 +195,7 @@ public class showAll extends AppCompatActivity implements View.OnClickListener {
 
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         requestQueue.add(stringRequest);
-       // String sql = "UPDATE times SET sent='1' WHERE empid = '"+empid+"' AND date ='"+date+"'";
-       // db.execSQL(sql);
-       // Toast.makeText(getApplicationContext(), "Submitted, and updated your records", Toast.LENGTH_LONG).show();
+
 
     }
 

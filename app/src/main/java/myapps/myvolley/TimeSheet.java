@@ -131,8 +131,9 @@ public class TimeSheet extends AppCompatActivity implements View.OnClickListener
         //db.execSQL(myQuery);
         //}
         else {
-            String query = "INSERT OR IGNORE INTO times (empid, date) VALUES('" + myEmpId + "',  '" + date + "' );";// UPDATE times SET( empId = '"+empID+"',basic = '"+(basic+ 100)+" WHERE date = '"+date+");";
+            String query = "INSERT OR IGNORE INTO times (empid ,  date) VALUES('" + myEmpId + "',  '" + date + "' );";// UPDATE times SET( empId = '"+empID+"',basic = '"+(basic+ 100)+" WHERE date = '"+date+");";
             db.execSQL(query);
+
            // String query2 = "UPDATE times SET basic = basic +'" + mybasic + "',overtime= overtime+ '" + myOT + "', meals = meals +'" + myMeals + "', mileage = mileage + '" + myMileage + "' WHERE date = '" + date + "' AND empid = '" + myEmpId + "'";
             String query2 = "UPDATE times SET basic = basic +'" + mybasic + "',overtime= overtime+ '" + myOT + "', meals = meals +'" + myMeals + "'  WHERE date = '" + date + "' AND empid = '" + myEmpId + "'";
             db.execSQL(query2);

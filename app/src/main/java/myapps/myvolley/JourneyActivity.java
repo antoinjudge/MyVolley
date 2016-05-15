@@ -3,14 +3,20 @@ package myapps.myvolley;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.database.sqlite.SQLiteDatabase;
+import android.location.Address;
+import android.location.Criteria;
 import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -34,11 +40,13 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 
 
-public class JourneyActivity extends AppCompatActivity {
+public class JourneyActivity extends AppCompatActivity implements LocationListener{
 
     Button addressButton;
     Button changeTS;
@@ -46,25 +54,28 @@ public class JourneyActivity extends AppCompatActivity {
     TextView addressTV;
     TextView latLongTV;
     TextView endLatLongTV;
-    TextView output ;
+    TextView output;
     TextView distanceTV;
     TextView manualTV;
 
     private static final String SELECT_SQL = "SELECT * FROM times  ";
     private SQLiteDatabase db;
 
-    String journeyStart ="https://maps.googleapis.com/maps/api/distancematrix/json?origins=";
-    String mid ="&destinations=";
-    String journeyEnd ="&key=AIzaSyDDW-ZGLBHF8DybvfYmvXPY20l-4CIw-e4";
-    String loginURL="https://maps.googleapis.com/maps/api/distancematrix/json?origins=Drogheda&destinations=Cork&key=AIzaSyDDW-ZGLBHF8DybvfYmvXPY20l-4CIw-e4";
+    String journeyStart = "https://maps.googleapis.com/maps/api/distancematrix/json?origins=";
+    String mid = "&destinations=";
+    String journeyEnd = "&key=AIzaSyDDW-ZGLBHF8DybvfYmvXPY20l-4CIw-e4";
+    String loginURL = "https://maps.googleapis.com/maps/api/distancematrix/json?origins=Drogheda&destinations=Cork&key=AIzaSyDDW-ZGLBHF8DybvfYmvXPY20l-4CIw-e4";
     String data = "";
     //String URL="";
-    String startAddress="";
-    String endAddress="";
+    String startAddress = "";
+    String endAddress = "";
     //String route ="";
     StringBuilder stringBuilder = new StringBuilder();
     RequestQueue requestQueue;
     private static final String TAG = "myApp";
+    latLongTracker gps;
+    LocationManager locationManager;
+    String provider;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,12 +83,18 @@ public class JourneyActivity extends AppCompatActivity {
         setContentView(R.layout.activity_journey);
         openDatabase();
 
+
+
+
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         if(savedInstanceState!=null){
             Log.d("STATE", savedInstanceState.toString());
         }
+        Intent intent = new Intent(getApplicationContext(), latLongTracker.class);
+        startActivityForResult(intent, 1);
 
         addressTV = (TextView) findViewById(R.id.startAddressTV);
         latLongTV = (TextView) findViewById(R.id.latLongTV);
@@ -92,15 +109,8 @@ public class JourneyActivity extends AppCompatActivity {
         requestQueue = Volley.newRequestQueue(this);
         output = (TextView) findViewById(R.id.latLongTV);
 
-       // changeTS.setOnClickListener(new View.OnClickListener() {
 
-         //   public void onClick(View view) {
-           //     Intent i = new Intent(getApplicationContext(),
-            //            SendTimeSheet.class);
-             //   startActivity(i);
-              //  finish();
-          //  }
-       // });
+
 
         manualTV.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -111,6 +121,43 @@ public class JourneyActivity extends AppCompatActivity {
                 finish();
             }
         });
+        addressTV.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View arg0) {
+
+
+
+
+                EditText editText = (EditText) findViewById(R.id.startAddressET);
+                Geocoder gCoder = new Geocoder(getApplicationContext());
+                ArrayList<Address> addresses = null;
+                try {
+                    addresses = (ArrayList<Address>) gCoder.getFromLocation(53.7209, -6.3682, 1);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                if (addresses != null && addresses.size() > 0) {
+                    Address returnedAddress = addresses.get(0);
+                    StringBuilder strReturnedAddress = new StringBuilder();
+                    for(int i=0; i<returnedAddress.getMaxAddressLineIndex(); i++) {
+                        strReturnedAddress.append(returnedAddress.getAddressLine(i)).append("\n");
+                    }
+
+
+                    editText.setText(strReturnedAddress.toString());
+                }else{
+                    editText.setText("No Address!!");
+
+                }
+
+                    Toast.makeText(getApplicationContext(), "country: " + addresses.get(0).getMaxAddressLineIndex(), Toast.LENGTH_LONG).show();
+                }
+
+
+
+
+        });
+
 
 
 
@@ -200,6 +247,7 @@ public class JourneyActivity extends AppCompatActivity {
                 requestQueue.add(jor);
 
 
+
             }
 
 
@@ -226,6 +274,7 @@ public class JourneyActivity extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
+
 
 
 
@@ -271,8 +320,35 @@ public class JourneyActivity extends AppCompatActivity {
         //}
     }
 
+    @Override
+    public void onLocationChanged(Location location) {
+        // Getting reference to TextView tv_longitude
+        TextView tvLongitude = (TextView)findViewById(R.id.startAddressET);
 
+        // Getting reference to TextView tv_latitude
+        TextView tvLatitude = (TextView)findViewById(R.id.endAddressET);
 
+        // Setting Current Longitude
+        tvLongitude.setText("Longitude:" + location.getLongitude());
+
+        // Setting Current Latitude
+        tvLatitude.setText("Latitude:" + location.getLatitude() );
+    }
+
+    @Override
+    public void onStatusChanged(String provider, int status, Bundle extras) {
+
+    }
+
+    @Override
+    public void onProviderEnabled(String provider) {
+
+    }
+
+    @Override
+    public void onProviderDisabled(String provider) {
+
+    }
 
 
     private class GeocoderHandler extends Handler {

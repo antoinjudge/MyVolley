@@ -49,7 +49,7 @@ public class ProfileActivity extends AppCompatActivity {
 
         //Initializing textview
         textView = (TextView) findViewById(R.id.textView);
-        textView.setVisibility(View.INVISIBLE);
+
 
        // changeAddItem=(Button) findViewById(R.id.buttonAddItem);
         journeyImgBtn =(ImageButton) findViewById(R.id.fuelButton);
@@ -57,18 +57,6 @@ public class ProfileActivity extends AppCompatActivity {
         submitImgBtn=(ImageButton) findViewById(R.id.submitButton);
         expImgBtn=(ImageButton) findViewById(R.id.expenseButton);
 
-
-
-
-        //changeAddItem.setOnClickListener(new View.OnClickListener() {
-
-           // public void onClick(View view) {
-            //    Intent i = new Intent(getApplicationContext(),
-             //           TimeSheet.class);
-             //   startActivity(i);
-             //   finish();
-          //  }
-       // });
 
         journeyImgBtn.setOnClickListener(new View.OnClickListener(){
             public void onClick(View view) {
@@ -104,13 +92,12 @@ public class ProfileActivity extends AppCompatActivity {
                 finish();
             }
         });
+        textView.setOnClickListener(new View.OnClickListener(){
+            public void onClick(View view) {
 
-
-
-
-
-
-
+                logout();
+            }
+        });
 
         //Fetching employee id from shared preferences
         SharedPreferences sharedPreferences = getSharedPreferences(LoginActivity.SHARED_PREF_NAME, LoginActivity.MODE_PRIVATE);
@@ -122,7 +109,7 @@ public class ProfileActivity extends AppCompatActivity {
         String thisDate = currentDate.format(todayDate);
 
         //Showing the current logged in email to textview
-        textView.setText( pword+ " Is Logged in " + empid + " " + todayDate );
+        //textView.setText( pword+ " Is Logged in " + empid + " " + todayDate );
         // ATTENTION: This was auto-generated to implement the App Indexing API.
         // See https://g.co/AppIndexing/AndroidStudio for more information.
         client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
@@ -143,7 +130,7 @@ public class ProfileActivity extends AppCompatActivity {
                         //Getting editor
                         SharedPreferences.Editor editor = preferences.edit();
 
-                        //Puting the value false for loggedin
+                        //Putting the value false for loggedin
                         editor.putBoolean(LoginActivity.LOGGEDIN_SHARED_PREF, false);
 
                         //Putting blank value to emp;oyeeId

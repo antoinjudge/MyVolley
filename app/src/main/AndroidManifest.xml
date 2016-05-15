@@ -94,8 +94,11 @@
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
-            android:name=".ViewWeekly"
-            android:label="@string/title_activity_view_weekly"
+        android:name=".ViewWeekly"
+        android:label="@string/title_activity_view_weekly"
+        android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity
+            android:name=".latLongTracker"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 

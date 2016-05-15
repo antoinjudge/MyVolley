@@ -148,13 +148,19 @@ private static final String SELECT_SQL = "SELECT * FROM times";
             sts ="Submitted";
         }
 
-        editTEmpID.setText("Employee ID :"+emplid);
-        editTBasic.setText("Basic Hours : "+basic);
-        editTOT.setText("Overtime Hours : "+overtime);
-        editTMeals.setText("Meals : "+meals);
+        editTEmpID.setText("Employee ID :" + emplid);
+        editTEmpID.setKeyListener(null);
+        editTBasic.setText("Basic Hours : " + basic);
+        editTBasic.setKeyListener(null);
+        editTOT.setText("Overtime Hours : " + overtime);
+        editTOT.setKeyListener(null);
+        editTMeals.setText("Meals : " + meals);
+        editTMeals.setKeyListener(null);
         //editTMileage.setText("Mileage : "+ mileage);
-        editDate.setText( date);
+        editDate.setText(date);
+        editDate.setKeyListener(null);
         statusTV.setText("Status :"+ sts);
+        statusTV.setKeyListener(null);
         dateTxt.setText(date);
         SimpleDateFormat sdf = new SimpleDateFormat("EEEE");
         Date d = new Date(date);

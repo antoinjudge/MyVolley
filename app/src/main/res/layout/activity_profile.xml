@@ -19,6 +19,17 @@
     android:orientation="vertical"
     android:padding="10dp"
     android:weightSum="1">
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textColor="#ffffffff"
+        android:text="Log-out"
+        android:id="@+id/textView"
+        android:gravity="right"
+        android:layout_gravity="right"
+        android:textStyle="italic"
+        android:theme="@style/Base.TextAppearance.AppCompat.Small.Inverse" />
 
 
 
@@ -32,6 +43,7 @@
         android:id="@+id/textView2"
         android:textSize="30sp"
         android:textColor="#ffffffff" />
+
 
     <ImageButton
         android:layout_width="128dp"
@@ -106,12 +118,7 @@
 
 
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="New Text"
-        android:id="@+id/textView"
-        android:layout_gravity="center_horizontal" />
+
 
 
 </LinearLayout>

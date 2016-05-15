@@ -1,8 +1,11 @@
 package myapps.myvolley;
 
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.os.Bundle;
-import android.provider.SyncStateContract;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -24,6 +27,7 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -39,22 +43,28 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import myapps.myvolley.AutoCompleteAdapter;
-import myapps.myvolley.RecyclerListener;
-import myapps.myvolley.AutoCompleteAdapter;
-import  myapps.myvolley.Config;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
+
 
 /**
  * Created by Antoin on 06/05/2016.
  */
 public class AutoCompleteActivity extends AppCompatActivity implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, View.OnClickListener {
     protected GoogleApiClient mGoogleApiClient;
+    private static final String UPDATE_URL = "http://www.antoinjudge.hol.es/myVolley/updateJourney.php";
+    public static final String KEY_START = "startloc";
+    public static final String KEY_END = "endloc";
+    public static final String KEY_DIST = "dist";
+    public static final String KEY_EMPID = "empid";
+    public static final String KEY_DATE = "date";
 
     private static final LatLngBounds BOUNDS_INDIA = new LatLngBounds(
             new LatLng(-0, 0), new LatLng(0, 0));
 
     private EditText mAutocompleteView;
-    TextView output ;
     private EditText mAutocompleteViewTwo;
     private RecyclerView mRecyclerView;
     private RecyclerView mRecyclerViewTwo;
@@ -69,11 +79,13 @@ public class AutoCompleteActivity extends AppCompatActivity implements GoogleApi
     String data = "";
     private Button reset;
     ImageView delete;
+    private SQLiteDatabase db;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         buildGoogleApiClient();
         setContentView(R.layout.activity_search);
+        openDatabase();
         getKms =(Button) findViewById(R.id.getDistBtn);
         getKms.setVisibility(View.INVISIBLE);
         mAutocompleteView = (EditText)findViewById(R.id.autocomplete_places);
@@ -118,9 +130,7 @@ public class AutoCompleteActivity extends AppCompatActivity implements GoogleApi
             @Override
             public void onClick(View v) {
 
-                //mAutocompleteViewTwo.setText("");
-               //mAutocompleteView.setText("");
-                //EditText editText = (EditText) findViewById(R.id.autocomplete_places);
+
                 String startAddress = mAutocompleteView.getText().toString();
                 try  {
                     InputMethodManager imm = (InputMethodManager)getSystemService(INPUT_METHOD_SERVICE);
@@ -173,11 +183,9 @@ public class AutoCompleteActivity extends AppCompatActivity implements GoogleApi
                                         }
                                     }
                                     distTextView.setVisibility(View.VISIBLE);
-                                    distTextView.setText(data);
+                                    distTextView.setText(data );
                                     addTextView.setVisibility(View.VISIBLE);
-
-
-
+                                    getKms.setVisibility(View.INVISIBLE);
 
                                 }catch(JSONException e){e.printStackTrace();}
                             }
@@ -191,12 +199,17 @@ public class AutoCompleteActivity extends AppCompatActivity implements GoogleApi
                         }
                 );
                 requestQueue.add(jor);
+            }
+        });
 
+        addTextView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                insertIntoDB();
 
             }
-
-
         });
+
 
 
 
@@ -208,9 +221,7 @@ public class AutoCompleteActivity extends AppCompatActivity implements GoogleApi
                 if (!s.toString().equals("") && mGoogleApiClient.isConnected()) {
                     mAutoCompleteAdapter.getFilter().filter(s.toString());
                 } else if (!mGoogleApiClient.isConnected()) {
-
                 }
-
             }
 
             public void beforeTextChanged(CharSequence s, int start, int count,
@@ -325,6 +336,94 @@ public class AutoCompleteActivity extends AppCompatActivity implements GoogleApi
 
     }
 
+    protected void openDatabase() {
+        db = openOrCreateDatabase("CurrentDailyTS", Context.MODE_PRIVATE, null);
+    }
+
+    protected void insertIntoDB(){
+        SharedPreferences sharedPreferences = getSharedPreferences(LoginActivity.SHARED_PREF_NAME, LoginActivity.MODE_PRIVATE);
+        String myempid = sharedPreferences.getString(LoginActivity.EMPID_SHARED_PREF, "Not Available");
+        SimpleDateFormat currentDate = new SimpleDateFormat("yyyy/MM/dd");
+        Date todayDate = new Date();
+        String thisDate = currentDate.format(todayDate);
+
+        String empID = myempid.toString().trim();
+        int myEmpId= Integer.parseInt(empID);
+        String mileage = distTextView.getText().toString().trim();
+        int myMileage = Integer.parseInt(mileage);
+        String date = thisDate.toUpperCase().trim();
+        EditText editText = (EditText) findViewById(R.id.autocomplete_places);
+        String startAddress = editText.getText().toString();
+        EditText endEditText = (EditText) findViewById(R.id.autocomplete_places_two);
+        String endAddress = endEditText.getText().toString();
+
+
+        String query3 = "INSERT INTO journey (startloc, endloc, dist, date )VALUES('"+startAddress+"', '"+endAddress+"', '"+myMileage+"' , '"+date+"');";
+        db.execSQL(query3);
+        sendJourney();
+        Toast.makeText(getApplicationContext(), "Saved Successfully", Toast.LENGTH_LONG).show();
+        Intent i = new Intent(getApplicationContext(),
+                ProfileActivity.class);
+        startActivity(i);
+        finish();
+
+    }
+    private void sendJourney() {
+        //Fetching email from shared preferences
+        SharedPreferences sharedPreferences = getSharedPreferences(LoginActivity.SHARED_PREF_NAME, LoginActivity.MODE_PRIVATE);
+        String email = sharedPreferences.getString(LoginActivity.EMPID_SHARED_PREF, "Not Available");
+        final String pword =sharedPreferences.getString(LoginActivity.PASSWORD_SHARED_PREF, "Not Available");
+        final String myempid =sharedPreferences.getString(LoginActivity.EMPID_SHARED_PREF, "Not Available");
+        SimpleDateFormat currentDate = new SimpleDateFormat("yyyy/MM/dd");
+        Date todayDate = new Date();
+        String thisDate = currentDate.format(todayDate);
+
+        final String date = thisDate.toUpperCase().trim();
+        EditText editText = (EditText) findViewById(R.id.autocomplete_places);
+        final String startAddress = editText.getText().toString();
+        EditText endEditText = (EditText) findViewById(R.id.autocomplete_places_two);
+        final String endAddress = endEditText.getText().toString();
+        String mileage = distTextView.getText().toString().trim();
+        final int myMileage = Integer.parseInt(mileage);
+        final String distance = String.valueOf(myMileage);
+        final String empid = myempid.toString().trim();
+
+
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, UPDATE_URL,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        Toast.makeText(AutoCompleteActivity.this, response, Toast.LENGTH_LONG).show();
+                    }
+
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Toast.makeText(AutoCompleteActivity.this, error.toString(), Toast.LENGTH_LONG).show();
+                    }
+
+                }) {
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put(KEY_EMPID, empid);
+                params.put(KEY_DATE, date);
+                params.put(KEY_START, startAddress);
+                params.put(KEY_END, endAddress);
+                params.put(KEY_DIST, distance);
+                // params.put(KEY_DATE, theDate);
+
+                return params;
+            }
+
+        };
+
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        requestQueue.add(stringRequest);
+
+
+    }
 
 
     @Override
