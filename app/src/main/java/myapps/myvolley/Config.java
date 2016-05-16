@@ -11,6 +11,7 @@ public class Config {
     public static final String KEY_EMPID = "empid";
     public static final String JSON_ARRAY = "result";
     public static final String API_NOT_CONNECTED = "Google API not connected";
-    public static final String SOMETHING_WENT_WRONG = "OOPs!!! Something went wrong...";
+    public static final String AUTO_ERROR= "OOPs!!! Something went wrong...";
     public static String PlacesTag = "Google Places Auto Complete";
+
 }

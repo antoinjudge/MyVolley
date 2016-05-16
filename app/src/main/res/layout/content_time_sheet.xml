@@ -119,20 +119,7 @@
         android:textSize="18sp"
         android:text="Employee ID" />
 
-    <EditText
-        android:id="@+id/editTextEmpID"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="15dp"
-        android:layout_marginRight="15dp"
-        android:layout_marginTop="5dp"
-        android:inputType="text"
-        android:gravity="center_horizontal"
-        android:background="@drawable/rounded_border"
-        android:textStyle="bold"
-        android:textSize="21sp"
-        android:ems="10" >
-    </EditText>
+
 
 
     <Button
@@ -143,20 +130,27 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="40dp"
         android:text="Add to Timesheet" />
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:weightSum="1">
+
     <Button
         android:id="@+id/buttonViewTimeSheet"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
+        android:layout_marginTop="30dp"
         android:layout_centerHorizontal="true"
         android:text="Daily Timesheets"
         android:layout_weight="0.50"/>
 
+
+
+            <Button
+                android:id="@+id/btnViewMileage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="10dp"
+                android:text="View Journeys" />
         <Button
             android:id="@+id/buttonViewWeeklySheet"
             android:layout_width="wrap_content"
@@ -165,7 +159,8 @@
             android:layout_centerHorizontal="true"
             android:text="Weekly Timesheets"
             android:layout_weight="0.50"/>
-        </LinearLayout>
+
+
 
 
 

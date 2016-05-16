@@ -124,11 +124,22 @@
 
     </LinearLayout>
 
-    <Button
-        android:layout_width="wrap_content"
+    <TextView
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="send"
-        android:id="@+id/sendJourneyBtn" />
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Search Date"
+
+        android:gravity="center"
+        android:id="@+id/dateTV" />
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text=""
+
+        android:gravity="center"
+        android:id="@+id/resultDate" />
 
 
 </LinearLayout>

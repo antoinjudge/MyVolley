@@ -1,6 +1,8 @@
 package myapps.myvolley;
 
+import android.app.DatePickerDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -11,6 +13,7 @@ import android.app.ProgressDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -25,7 +28,10 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -49,6 +55,7 @@ public class showAll extends AppCompatActivity implements View.OnClickListener {
     private EditText dateEdit;
     private TextView dayText;
     private TextView datetext;
+    private TextView resultDate;
     private Button btnPrev;
     private Button btnNext;
     private Button sendBtn;
@@ -73,11 +80,14 @@ public class showAll extends AppCompatActivity implements View.OnClickListener {
         dateEdit =(EditText) findViewById(R.id.editTextDate);
         btnPrev = (Button) findViewById(R.id.btnPrev);
         btnNext = (Button) findViewById(R.id.btnNext);
-        sendBtn=(Button)findViewById(R.id.sendJourneyBtn);
+        resultDate=(TextView) findViewById(R.id.resultDate);
+        resultDate.setOnClickListener(this);
+
+        //sendBtn=(Button)findViewById(R.id.sendJourneyBtn);
         btnNext.setOnClickListener(this);
         btnPrev.setOnClickListener(this);
-        sendBtn.setOnClickListener(this);
-        sendBtn.setVisibility(View.INVISIBLE);
+        //sendBtn.setOnClickListener(this);
+        //sendBtn.setVisibility(View.INVISIBLE);
         datetext =(TextView) findViewById(R.id.textDate);
         dayText =(TextView) findViewById(R.id.textDay);
 
@@ -100,6 +110,26 @@ public class showAll extends AppCompatActivity implements View.OnClickListener {
     }
     protected void openDatabase() {
         db = openOrCreateDatabase("CurrentDailyTS", Context.MODE_PRIVATE, null);
+    }
+
+    protected void searchDate(){
+        String date= resultDate.getText().toString().trim();
+        String SelectDate= "SELECT * FROM journey WHERE date = '"+date+"'";
+        c = db.rawQuery(SelectDate, null);
+        if ( c.moveToFirst() ) {
+
+            c.moveToFirst();
+            showRecords();
+        }
+        else{
+            Toast.makeText(getApplicationContext(), "No records for that Date", Toast.LENGTH_LONG).show();
+            Intent i = new Intent(getApplicationContext(),
+                    showAll.class);
+            startActivity(i);
+            finish();
+        }
+
+
     }
 
     protected void showRecords() {
@@ -144,60 +174,26 @@ public class showAll extends AppCompatActivity implements View.OnClickListener {
         showRecords();
 
     }
+    class mDateSetListener implements DatePickerDialog.OnDateSetListener {
 
-    private void sendJourney() {
-        //Fetching email from shared preferences
-        SharedPreferences sharedPreferences = getSharedPreferences(LoginActivity.SHARED_PREF_NAME, LoginActivity.MODE_PRIVATE);
-        String email = sharedPreferences.getString(LoginActivity.EMPID_SHARED_PREF, "Not Available");
-        final String pword =sharedPreferences.getString(LoginActivity.PASSWORD_SHARED_PREF,"Not Available");
-        final String myempid =sharedPreferences.getString(LoginActivity.EMPID_SHARED_PREF, "Not Available");
+        @Override
+        public void onDateSet(DatePicker view, int year, int monthOfYear,
+                              int dayOfMonth) {
 
-        final String date = dateEdit.getText().toString().trim();
-        final String startloc = startLocEdit.getText().toString().trim();
-        final String endloc = endlocEdit.getText().toString().trim();
-        final String dist = distEdit.getText().toString().trim();
-
-        final String empid = myempid.toString().trim();
-        final String theDate = dateEdit.getText().toString().trim();
-        SimpleDateFormat currentDate = new SimpleDateFormat("yyyy/MM/dd");
-        Date todayDate = new Date();
-        final String thisDate = currentDate.format(todayDate);
-
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, UPDATE_URL,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        Toast.makeText(showAll.this, response, Toast.LENGTH_LONG).show();
-                    }
-
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(showAll.this, error.toString(), Toast.LENGTH_LONG).show();
-                    }
-
-                }) {
-            @Override
-            protected Map<String, String> getParams() {
-                Map<String, String> params = new HashMap<String, String>();
-                params.put(KEY_EMPID, empid);
-                params.put(KEY_DATE, date);
-                params.put(KEY_START, startloc);
-                params.put(KEY_END, endloc);
-                params.put(KEY_DIST, dist);
-               // params.put(KEY_DATE, theDate);
-
-                return params;
-            }
-
-        };
-
-        RequestQueue requestQueue = Volley.newRequestQueue(this);
-        requestQueue.add(stringRequest);
-
-
+            int mYear = year;
+            NumberFormat formatter = new DecimalFormat("00");
+            String theYear =formatter.format(mYear);
+            int mMonth = monthOfYear;
+            String theMonth =formatter.format(mMonth+1);
+            int mDay = dayOfMonth;
+            String theDay =formatter.format(mDay);
+            String theDate =theYear+"/"+theMonth+"/"+theDay+" ";
+            resultDate.setText(theDate);
+            searchDate();
+        }
     }
+
+
 
 
 
@@ -209,9 +205,20 @@ public class showAll extends AppCompatActivity implements View.OnClickListener {
         if (v == btnNext) {
             moveNext();
         }
-        if (v == sendBtn) {
-            sendJourney();
+
+        if(v==resultDate){
+            Calendar c = Calendar.getInstance();
+            int mYear = c.get(Calendar.YEAR);
+            int mMonth = c.get(Calendar.MONTH);
+            int mDay = c.get(Calendar.DAY_OF_MONTH);
+            // SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+            // String currentData = sdf.format(c);
+
+            DatePickerDialog dialog = new DatePickerDialog(showAll.this,
+                    new mDateSetListener(), mYear, mMonth, mDay);
+            dialog.show();
         }
+
 
         if (v == btnPrev) {
             movePrev();

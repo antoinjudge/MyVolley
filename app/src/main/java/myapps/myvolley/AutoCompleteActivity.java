@@ -61,7 +61,7 @@ public class AutoCompleteActivity extends AppCompatActivity implements GoogleApi
     public static final String KEY_EMPID = "empid";
     public static final String KEY_DATE = "date";
 
-    private static final LatLngBounds BOUNDS_INDIA = new LatLngBounds(
+    private static final LatLngBounds MY_BOUNDS = new LatLngBounds(
             new LatLng(-0, 0), new LatLng(0, 0));
 
     private EditText mAutocompleteView;
@@ -74,6 +74,7 @@ public class AutoCompleteActivity extends AppCompatActivity implements GoogleApi
     private AutoCompleteAdapter mAutoCompleteAdapterTwo;
     private Button getKms;
     private TextView addTextView;
+    private TextView distHeader;
     private TextView distTextView;
     RequestQueue requestQueue;
     String data = "";
@@ -86,15 +87,18 @@ public class AutoCompleteActivity extends AppCompatActivity implements GoogleApi
         buildGoogleApiClient();
         setContentView(R.layout.activity_search);
         openDatabase();
+        distHeader=(TextView) findViewById(R.id.distHead);
+        distHeader.setVisibility(View.INVISIBLE);
         getKms =(Button) findViewById(R.id.getDistBtn);
         getKms.setVisibility(View.INVISIBLE);
         mAutocompleteView = (EditText)findViewById(R.id.autocomplete_places);
         mAutocompleteViewTwo=(EditText ) findViewById(R.id.autocomplete_places_two);
         delete=(ImageView)findViewById(R.id.cross);
         mAutoCompleteAdapter =  new AutoCompleteAdapter(this, R.layout.search_adapter,
-                mGoogleApiClient, BOUNDS_INDIA, null);
+                mGoogleApiClient, MY_BOUNDS, null);
         mAutoCompleteAdapterTwo =  new AutoCompleteAdapter(this, R.layout.search_adapter_two,
-                mGoogleApiClient, BOUNDS_INDIA, null);
+                mGoogleApiClient, MY_BOUNDS, null);
+
         //Recycler View 1
         mRecyclerView=(RecyclerView)findViewById(R.id.recyclerView);
         mRecyclerViewTwo=(RecyclerView)findViewById(R.id.recyclerViewTwo);
@@ -115,8 +119,6 @@ public class AutoCompleteActivity extends AppCompatActivity implements GoogleApi
         addTextView.setVisibility(View.INVISIBLE);
         distTextView=(TextView) findViewById(R.id.distTV);
         distTextView.setVisibility(View.INVISIBLE);
-
-
         reset.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -176,13 +178,12 @@ public class AutoCompleteActivity extends AppCompatActivity implements GoogleApi
                                             int distKm = (myDist / 1000);
 
                                             data = distKm + "\n";
-                                            //addButton.setVisibility(View.VISIBLE);
-                                           // distanceTV.setVisibility(View.VISIBLE);
-                                            Toast.makeText(getApplicationContext(), "Distance i Kilometers is "+ distKm, Toast.LENGTH_LONG).show();
+
 
                                         }
                                     }
                                     distTextView.setVisibility(View.VISIBLE);
+                                    distHeader.setVisibility(View.VISIBLE);
                                     distTextView.setText(data );
                                     addTextView.setVisibility(View.VISIBLE);
                                     getKms.setVisibility(View.INVISIBLE);
@@ -205,7 +206,7 @@ public class AutoCompleteActivity extends AppCompatActivity implements GoogleApi
         addTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                insertIntoDB();
+                sendJourney();
 
             }
         });
@@ -262,7 +263,7 @@ public class AutoCompleteActivity extends AppCompatActivity implements GoogleApi
                     public void onItemClick(View view, int position) {
                         final AutoCompleteAdapter.PlaceAutocomplete item = mAutoCompleteAdapter.getItem(position);
                         final String placeId = String.valueOf(item.placeId);
-                        Log.i("TAG", "Autocomplete item selected: " + item.description);
+
                         /*
                              Issue a request to the Places Geo Data API to retrieve a Place object with additional details about the place.
                          */
@@ -280,12 +281,11 @@ public class AutoCompleteActivity extends AppCompatActivity implements GoogleApi
                                     places.release();
 
                                 } else {
-                                    Toast.makeText(getApplicationContext(), Constants.SOMETHING_WENT_WRONG, Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(getApplicationContext(), Config.AUTO_ERROR, Toast.LENGTH_SHORT).show();
                                 }
                             }
                         });
-                        Log.i("TAG", "Clicked: " + item.description);
-                        Log.i("TAG", "Called getPlaceById to get Place details for " + item.placeId);
+
                     }
                 })
         );
@@ -296,7 +296,7 @@ public class AutoCompleteActivity extends AppCompatActivity implements GoogleApi
                     public void onItemClick(View view, int position) {
                         final AutoCompleteAdapter.PlaceAutocomplete item = mAutoCompleteAdapterTwo.getItem(position);
                         final String placeId = String.valueOf(item.placeId);
-                        Log.i("TAG", "Autocomplete item selected: " + item.description);
+
                         /*
                              Issue a request to the Places Geo Data API to retrieve a Place object with additional details about the place.
                          */
@@ -314,22 +314,20 @@ public class AutoCompleteActivity extends AppCompatActivity implements GoogleApi
                                     places.release();
                                     getKms.setVisibility(View.VISIBLE);
                                     reset.setVisibility(View.VISIBLE);
-                                    try  {
-                                        InputMethodManager imm = (InputMethodManager)getSystemService(INPUT_METHOD_SERVICE);
+                                    try {
+                                        InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
                                         imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
                                     } catch (Exception e) {
 
                                     }
 
 
-
                                 } else {
-                                    Toast.makeText(getApplicationContext(), Constants.SOMETHING_WENT_WRONG, Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(getApplicationContext(), Config.AUTO_ERROR, Toast.LENGTH_SHORT).show();
                                 }
                             }
                         });
-                        Log.i("TAG", "Clicked: " + item.description);
-                        Log.i("TAG", "Called getPlaceById to get Place details for " + item.placeId);
+
                     }
                 })
         );
@@ -360,7 +358,7 @@ public class AutoCompleteActivity extends AppCompatActivity implements GoogleApi
 
         String query3 = "INSERT INTO journey (startloc, endloc, dist, date )VALUES('"+startAddress+"', '"+endAddress+"', '"+myMileage+"' , '"+date+"');";
         db.execSQL(query3);
-        sendJourney();
+
         Toast.makeText(getApplicationContext(), "Saved Successfully", Toast.LENGTH_LONG).show();
         Intent i = new Intent(getApplicationContext(),
                 ProfileActivity.class);
@@ -393,14 +391,18 @@ public class AutoCompleteActivity extends AppCompatActivity implements GoogleApi
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        Toast.makeText(AutoCompleteActivity.this, response, Toast.LENGTH_LONG).show();
+
+                        insertIntoDB();
+                        Toast.makeText(AutoCompleteActivity.this, "Journey added to Database, and recorded on device", Toast.LENGTH_LONG).show();
+
                     }
 
                 },
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(AutoCompleteActivity.this, error.toString(), Toast.LENGTH_LONG).show();
+
+                        Toast.makeText(AutoCompleteActivity.this, "Check your internet connection, Journey not submitted, Timesheet not updated", Toast.LENGTH_LONG).show();
                     }
 
                 }) {

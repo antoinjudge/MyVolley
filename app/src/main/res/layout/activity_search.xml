@@ -96,19 +96,36 @@
         android:layout_height="wrap_content"
         android:text="@string/addressBtnTxt"
         android:layout_marginTop="20dp"
+        android:background="@drawable/rounded_border"
         android:id="@+id/getDistBtn"
         android:layout_below="@+id/autocomplete_places_two"
         android:gravity="center"
         android:layout_centerInParent="true"
         android:layout_gravity="center"
-        android:singleLine="true"/>
+        android:singleLine="true"
+        android:paddingRight="10dp"
+        android:paddingLeft="10dp"
+        android:paddingBottom="5dp"
+        android:paddingTop="5dp"/>
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="Distance in Kilometers"
+        android:layout_below="@+id/getDistBtn"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:background="@android:color/transparent"
+        android:textStyle="bold"
+        android:gravity="center"
+        android:id="@+id/distHead" />
     <TextView
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Distance"
-        android:layout_below="@+id/getDistBtn"
-        android:textColor="#ffffffff"
+        android:text=""
+        android:layout_below="@+id/distHead"
+        android:background="@android:color/transparent"
+        android:textStyle="bold"
         android:gravity="center"
         android:id="@+id/distTV" />
     <TextView
@@ -117,15 +134,15 @@
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="Add to Timesheet?"
         android:layout_below="@+id/distTV"
-        android:textColor="#ffffffff"
         android:gravity="center"
         android:id="@+id/addTV" />
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/resetBtn"
-
+        android:background="@drawable/rounded_border"
         android:id="@+id/resetBtn"
+        android:layout_marginTop="10dp"
         android:layout_below="@+id/addTV"
         android:gravity="center"
         android:layout_centerInParent="true"

@@ -22,6 +22,7 @@ import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
 
 public class ViewWeekly extends AppCompatActivity implements View.OnClickListener {
 
@@ -43,8 +44,8 @@ public class ViewWeekly extends AppCompatActivity implements View.OnClickListene
 
 
 
-    // private static final String SELECT_SQL = "SELECT * FROM times";
-    private static final String SELECT_SQL = "SELECT SUM(basic),SUM (overtime), SUM(meals) FROM times WHERE date BETWEEN '2016/05/11' AND '2016/05/14'";
+     private static final String SELECT_SQL = "SELECT * FROM times";
+    //private static final String SELECT_SQL = "SELECT SUM(basic),SUM (overtime), SUM(meals) FROM times WHERE date BETWEEN '2016/05/11' AND '2016/05/14'";
     // private static final String SELECT_SQL2 = "SELECT SUM(dist) FROM journey WHERE date BETWEEN '"+firstDate+"' AND '"+thisDate+"'";
     private SQLiteDatabase db;
 
@@ -59,7 +60,9 @@ public class ViewWeekly extends AppCompatActivity implements View.OnClickListene
         setContentView(R.layout.activity_view_weekly);
 
         //Get The Date of First Day Of Week
-        Calendar calendar = Calendar.getInstance();
+
+
+        Calendar calendar = Calendar.getInstance(Locale.GERMANY);
         calendar.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
         String firstDate = simpleDateFormat.format(calendar.getTime());
@@ -69,7 +72,7 @@ public class ViewWeekly extends AppCompatActivity implements View.OnClickListene
         Date todayDate = new Date();
         String thisDate = currentDate.format(todayDate);
 
-        String SELECT_SQL1 = "SELECT SUM(basic),SUM (overtime), SUM(meals) FROM times WHERE date BETWEEN '2016/05/11' AND '2016/05/14'";
+        String SELECT_SQL1 = "SELECT SUM(basic),SUM (overtime), SUM(meals) FROM times WHERE date BETWEEN '"+firstDate+"' AND '"+thisDate+"'";
         String SELECT_SQL2 = "SELECT SUM(dist) FROM journey WHERE date BETWEEN '"+firstDate+"' AND '"+thisDate+"'";
 
 
@@ -172,7 +175,7 @@ public class ViewWeekly extends AppCompatActivity implements View.OnClickListene
 
     protected void showSumDist(){
         String dist = cur.getString(0);
-        Calendar calendar = Calendar.getInstance();
+        Calendar calendar = Calendar.getInstance(Locale.GERMANY);
         calendar.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
         String firstDate = simpleDateFormat.format(calendar.getTime());
@@ -255,6 +258,7 @@ public class ViewWeekly extends AppCompatActivity implements View.OnClickListene
         editTMeals.setText("Meals : " + meals);
         editTMeals.setKeyListener(null);
         statusTV.setVisibility(View.INVISIBLE);
+        dateTxt.setText("User Defined Range");
 
 
     }

@@ -78,7 +78,7 @@ public class ProfileActivity extends AppCompatActivity {
         submitImgBtn.setOnClickListener(new View.OnClickListener(){
             public void onClick(View view) {
                 Intent i = new Intent(getApplicationContext(),
-                        SendTimeSheet.class);
+                        ViewWeekly.class);
                 startActivity(i);
                 finish();
             }
