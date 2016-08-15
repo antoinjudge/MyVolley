@@ -16,7 +16,7 @@
     <LinearLayout
         android:layout_width="fill_parent"
         android:orientation="vertical"
-        android:layout_height="fill_parent"
+        android:layout_height="wrap_content"
         android:gravity="center">
         <TextView
             android:layout_width="match_parent"
@@ -31,7 +31,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Start Journey!"
+        android:text="@string/txtStartJ"
         android:background="@drawable/rounded_border"
         android:id="@+id/startAddressTV"
         android:paddingRight="10dp"
@@ -51,7 +51,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Stop Journey"
+        android:text="@string/txtStopJ"
         android:id="@+id/endAddressTV"
         android:background="@drawable/rounded_border"
         android:textAppearance="?android:attr/textAppearanceLarge"
@@ -90,7 +90,7 @@
             android:background="@android:color/transparent"
             android:paddingLeft="8dp"
             android:paddingTop="6dp"
-            android:text="Distance in Kilometers"
+            android:text="@string/distKM"
             android:gravity="center"
             android:textStyle="bold"
             android:id="@+id/distanceTV"/>
@@ -121,7 +121,7 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="Input Manually?"
+            android:text="@string/txtManual"
             android:textColor="#272727"
             android:gravity="center"
             android:id="@+id/manualTV"

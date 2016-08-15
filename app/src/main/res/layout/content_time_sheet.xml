@@ -128,18 +128,28 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_centerHorizontal="true"
+        android:background="@drawable/rounded_border"
         android:layout_marginTop="40dp"
-        android:text="Add to Timesheet" />
+        android:text="Add to Timesheet"
+        android:paddingRight="10dp"
+        android:paddingLeft="10dp"
+        android:paddingBottom="5dp"
+        android:paddingTop="5dp"/>
 
     <Button
         android:id="@+id/buttonViewTimeSheet"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="50dp"
         android:layout_centerHorizontal="true"
-        android:text="Daily Timesheets"
-        android:layout_weight="0.50"/>
+        android:background="@drawable/rounded_border"
+        android:text="View Daily Timesheets"
+        android:layout_weight="0.50"
+        android:paddingRight="10dp"
+        android:paddingLeft="10dp"
+        android:paddingBottom="5dp"
+        android:paddingTop="5dp"/>
 
 
 
@@ -149,16 +159,26 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_centerHorizontal="true"
+                android:background="@drawable/rounded_border"
                 android:layout_marginTop="10dp"
-                android:text="View Journeys" />
+                android:text="View Mileage Claims"
+                android:paddingRight="10dp"
+                android:paddingLeft="10dp"
+                android:paddingBottom="5dp"
+                android:paddingTop="5dp"/>
         <Button
             android:id="@+id/buttonViewWeeklySheet"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:background="@drawable/rounded_border"
             android:layout_gravity="center"
             android:layout_centerHorizontal="true"
             android:text="Weekly Timesheets"
-            android:layout_weight="0.50"/>
+            android:layout_weight="0.50"
+            android:paddingRight="10dp"
+            android:paddingLeft="10dp"
+            android:paddingBottom="5dp"
+            android:paddingTop="5dp"/>
 
 
 

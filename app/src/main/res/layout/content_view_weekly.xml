@@ -38,7 +38,7 @@
         android:gravity="center_horizontal"
         android:background="@drawable/rounded_border"
         android:singleLine="true"
-        android:text="ID"
+        android:text="@string/textID"
         android:id="@+id/textViewId" />
 
 
@@ -52,7 +52,7 @@
         android:inputType="text"
         android:gravity="center_horizontal"
         android:background="@drawable/rounded_border"
-        android:text="Basic"
+        android:text="@string/editTextBasic"
         android:id="@+id/textViewBasic" />
 
 
@@ -66,7 +66,7 @@
         android:inputType="text"
         android:gravity="center_horizontal"
         android:background="@drawable/rounded_border"
-        android:text="Overtime"
+        android:text="@string/editTextOT"
         android:id="@+id/textViewOverTime" />
 
 
@@ -79,7 +79,7 @@
         android:inputType="text"
         android:gravity="center_horizontal"
         android:background="@drawable/rounded_border"
-        android:text="Meals"
+        android:text="@string/editTextMeals"
         android:id="@+id/textViewMeals" />
 
 
@@ -95,7 +95,7 @@
         android:inputType="text"
         android:gravity="center_horizontal"
         android:background="@drawable/rounded_border"
-        android:text="Date"
+        android:text="@string/editTextDate"
         android:id="@+id/textViewDate" />
     <EditText
         android:layout_width="fill_parent"
@@ -106,14 +106,14 @@
         android:inputType="text"
         android:gravity="center_horizontal"
         android:background="@drawable/rounded_border"
-        android:text="Status"
+        android:text="@string/editTextStatus"
         android:id="@+id/textViewStatus" />
     <TextView
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Search Date Range"
-        android:textColor="#D3D3D3"
+        android:text="@string/editTextDateRange"
+        android:layout_marginTop="10dp"
         android:gravity="center"
         android:id="@+id/dateRangeTV" />
 
@@ -155,7 +155,7 @@
     <Button
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="Search"
+        android:text="@string/editBtnSearch"
         android:id="@+id/btnSearch" />
 
 </LinearLayout>

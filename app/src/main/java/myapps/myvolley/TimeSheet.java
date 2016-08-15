@@ -252,6 +252,9 @@ public class TimeSheet extends AppCompatActivity implements View.OnClickListener
                         Toast.makeText(TimeSheet.this, response, Toast.LENGTH_LONG).show();
                         insertIntoDB();
                         Toast.makeText(getApplicationContext(), "Submitted, and updated your records", Toast.LENGTH_LONG).show();
+                        editTBasic.setText("");
+                        editTOT.setText("");
+                        editTMeals.setText("");
 
 
                     }

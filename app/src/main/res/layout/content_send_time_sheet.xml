@@ -34,7 +34,7 @@
             android:layout_height="match_parent"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:gravity="center"
-            android:text="day"
+            android:text="@string/txtDay"
             android:id="@+id/dayTv"
             android:textSize="30dp"
             android:textColor="#ffffffff" />
@@ -45,7 +45,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:textSize="18sp"
-            android:text="Basic Hours" />
+            android:text="@string/txtBasicHrs" />
 
         <EditText
             android:id="@+id/editTextBasic"
@@ -70,7 +70,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="18sp"
-            android:text="Overtime Hours" />
+            android:text="@string/txtOThrs" />
 
 
         <EditText
@@ -95,7 +95,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="18sp"
-            android:text="Meal Allowance" />
+            android:text="@string/txtMealAll" />
 
         <EditText
             android:id="@+id/editTextMeals"
@@ -119,7 +119,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:textSize="18sp"
-            android:text="Date" />
+            android:text="@string/txtDate" />
 
         <EditText
             android:id="@+id/editTextDate"
@@ -151,14 +151,14 @@
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Previous"
+                android:text="@string/txtPrev"
                 android:id="@+id/buttonPrev"
                 android:layout_weight="0.20" />
 
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Save"
+                android:text="@string/txtSave"
                 android:id="@+id/buttonSave"
                 android:layout_weight="0.27" />
 
@@ -166,7 +166,7 @@
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Next"
+                android:text="@string/txtNext"
                 android:id="@+id/buttonnNext"
                 android:layout_weight="0.31" />
 
@@ -178,7 +178,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_centerHorizontal="true"
-            android:text="Submit" />
+            android:text="@string/txtSubmit" />
 
 
 
@@ -188,7 +188,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:textSize="18sp"
-                android:text="Search by Date" />
+                android:text="@string/txtSearchDate" />
             <EditText
                 android:id="@+id/searchDateEditText"
                 android:layout_width="fill_parent"
@@ -211,7 +211,7 @@
             android:layout_gravity="center"
             android:layout_centerHorizontal="true"
 
-            android:text="Display" />
+            android:text="@string/txtDisplay" />
 
 
     </LinearLayout>

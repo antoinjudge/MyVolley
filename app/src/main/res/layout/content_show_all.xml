@@ -77,7 +77,7 @@
         android:inputType="text"
         android:gravity="center_horizontal"
         android:background="@drawable/rounded_border"
-        android:text="Overtime"
+        android:text="Meals"
         android:id="@+id/editTextDist" />
     <EditText
         android:layout_width="fill_parent"
@@ -88,7 +88,7 @@
         android:inputType="text"
         android:gravity="center_horizontal"
         android:background="@drawable/rounded_border"
-        android:text="Overtime"
+        android:text="Date"
         android:id="@+id/editTextDate" />
 
 

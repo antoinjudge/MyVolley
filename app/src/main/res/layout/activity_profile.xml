@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
+<LinearLayout
     android:layout_width="fill_parent"
     android:windowActionBar="false"
     android:layout_height="fill_parent"
@@ -24,7 +24,7 @@
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:textColor="#ffffffff"
-        android:text="Log-out"
+        android:text="@string/txtLogOut"
         android:id="@+id/textView"
         android:gravity="right"
         android:layout_gravity="right"
@@ -56,7 +56,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="Calculate Mileage"
+        android:text="@string/txtMileageCalc"
         android:textSize="17sp"
         android:id="@+id/textView4"
         android:layout_gravity="center_horizontal"
@@ -73,7 +73,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="Manage Hours"
+        android:text="@string/txtManageHrs"
         android:textSize="17sp"
         android:id="@+id/textView5"
         android:layout_gravity="center_horizontal"
@@ -89,7 +89,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="View Journeys"
+        android:text="@string/txtViewJourneys"
         android:textSize="17sp"
         android:id="@+id/textView6"
         android:layout_gravity="center_horizontal"
@@ -105,7 +105,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="Weekly Timesheets"
+        android:text="@string/txtWeekTS"
         android:textSize="17sp"
         android:id="@+id/submitTv"
         android:layout_gravity="center_horizontal"
@@ -122,4 +122,4 @@
 
 
 </LinearLayout>
-</ScrollView>
+</LinearLayout>

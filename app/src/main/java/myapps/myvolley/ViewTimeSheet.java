@@ -37,7 +37,7 @@ public class ViewTimeSheet extends AppCompatActivity implements View.OnClickList
     private TextView dateTxt;
 
 private static final String SELECT_SQL = "SELECT * FROM times";
-   // private static final String SELECT_SQL = "SELECT SUM(basic),SUM (overtime), SUM(meals) FROM times WHERE date BETWEEN '2016/05/11' AND '2016/05/14'";
+
     private SQLiteDatabase db;
 
     private Cursor c;
@@ -68,6 +68,7 @@ private static final String SELECT_SQL = "SELECT * FROM times";
         //editTMileage = (EditText) findViewById(R.id.textViewMileage);
         editDate =(EditText) findViewById(R.id.textViewDate);
         statusTV =(EditText) findViewById(R.id.textViewStatus);
+        statusTV.setVisibility(View.INVISIBLE);
         dayTxt=(TextView) findViewById(R.id.textDay);
         dateTxt=(TextView)findViewById(R.id.textDate);
 

@@ -46,5 +46,37 @@
     <string name="reset">Reset</string>
     <string name="resetBtn">Reset</string>
     <string name="title_activity_view_weekly">ViewWeekly</string>
+    <string name="textID">ID</string>
+    <string name="editTextBasic">Basic</string>
+    <string name="editTextOT">Overtime</string>
+    <string name="editTextMeals">Meals</string>
+    <string name="editTextDate">Date</string>
+    <string name="editTextStatus">Status</string>
+    <string name="editTextDateRange">Search Date Range</string>
+    <string name="editBtnSearch">Search</string>
+    <string name="txtLogOut">Log-out</string>
+    <string name="txtMileageCalc">Calculate Mileage</string>
+    <string name="txtManageHrs">Manage Hours</string>
+    <string name="txtViewJourneys">View Journeys</string>
+    <string name="txtWeekTS">Weekly Timesheets</string>
+    <string name="txtAddToTS">Add to Timesheet?</string>
+    <string name="txtDistKM">Distance in Kilometers</string>
+    <string name="txtDest">Destination</string>
+    <string name="hintStartLoc">Start Location</string>
+    <string name="distKM">Distance in Kilometers</string>
+    <string name="txtManual">Input Manually?</string>
+    <string name="txtStartJ">Start Journey!</string>
+    <string name="txtStopJ">Stop Journey</string>
+    <string name="txtDisplay">Display</string>
+    <string name="txtSearchDate">Search by Date</string>
+    <string name="txtSubmit">Submit</string>
+    <string name="txtNext">Next</string>
+    <string name="txtSave">Save</string>
+    <string name="txtPrev">Previous</string>
+    <string name="txtDate">Date</string>
+    <string name="txtMealAll">Meal Allowance</string>
+    <string name="txtOThrs">Overtime Hours</string>
+    <string name="txtBasicHrs">Basic Hours</string>
+    <string name="txtDay">day</string>
 
 </resources>
